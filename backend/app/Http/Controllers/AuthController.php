@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -24,6 +25,20 @@ class AuthController extends Controller
             ]);
         }else {
             return response()->json(['error' => 'Fill all parameters.']);
+        }
+    }
+
+    function login(Request $request){
+        $request->validate([
+            'name' => 'required|string',
+            'password' => 'required|string',
+            'roles_id' => 'required|integer',
+        ]);
+
+        if (Auth::attempt($request)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('dashboard');
         }
     }
 
