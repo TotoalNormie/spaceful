@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Products::class)->constrained()->cascadeOnDelete();
             $table->string('orderType');
             $table->string('supplier');
             $table->boolean('status');
