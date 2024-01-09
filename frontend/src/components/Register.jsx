@@ -1,14 +1,17 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [repeat, setRepeat] = useState('');
+    const navigate = useNavigate();
+    // Cookies.remove("token");
     // axios.post('http://localhost:8000/api/login', {
     //     name: username,
     //     password: password,
@@ -17,9 +20,24 @@ const Login = () => {
     //       }
     //     }
     // )
-    const navigate = useNavigate();
 
-    function login(){
+    function register(){
+
+        if(password != repeat){
+            return alert("Passwords don't match.");
+        }
+
+        axios.post('http://localhost:8000/api/user', {
+            name: username,
+            password: password
+          })
+          .then(function (response) {
+            // console.log(response.data.token);
+          })
+          .catch(function (error) {
+            console.log(error);
+            alert(error);
+        });
 
         axios.post('http://localhost:8000/api/login', {
             name: username,
@@ -27,6 +45,7 @@ const Login = () => {
           })
           .then(function (response) {
             // console.log(response.data.token);
+            // Cookies
             Cookies.set('token', response.data.token);
             navigate("/");
           })
@@ -38,7 +57,7 @@ const Login = () => {
 
   return (
     <>
-    <div>Login</div>
+    <div>Register</div>
     <p>Token: {Cookies.get("token")}</p>
     <label>
     Username:
@@ -48,7 +67,11 @@ const Login = () => {
     Password:
     <input type='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
     </label>
-    <button onClick={login}>Login</button>
+    <label>
+    Repeat Password:
+    <input type='password' value={repeat} onChange={(e) => setRepeat(e.target.value)}></input>
+    </label>
+    <button onClick={register}>Register</button>
     </>
   )
 }

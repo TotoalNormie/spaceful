@@ -15,12 +15,18 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
-            'roles_id' => 'required|integer',
+            'roles_id' => 'integer',
         ]);
         // $user = new User();
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
-        $user->roles_id = $request->roles_id;
+
+        if(empty($request->roles_id)){
+            $user->roles_id = 1;
+        }else{
+            $user->roles_id = $request->roles_id;
+        }
+
         if($user->save()){
             return response()->json([
                 'message' => 'User added sucessfuly'
