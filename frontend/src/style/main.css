@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo&family=Roboto+Flex:opsz@8..144&display=swap');
+
+body {
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 18px;
+}
+
+h1 {
+    font-family: 'Arvo', serif;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+h2 {
+    font-family: 'Arvo', serif;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+h3 {
+    font-family: 'Arvo', serif;
+    font-family: 1.5em;
+}
