@@ -37,12 +37,6 @@ class AuthController extends Controller
     }
 
     function login(Request $request){
-        
-        // if (Auth::attempt($credentials)) {
-        //     $request->session()->regenerate();
-        
-        //     // return redirect()->intended('dashboard');
-        // }
             
         $request->validate([
             'name' => 'required|string',
@@ -74,6 +68,21 @@ class AuthController extends Controller
         // return response()->json([
         //     'token' => $token->plainTextToken,
         // ]);
+
+    }
+
+    function logout(Request $request){
+
+        if($request->user()->currentAccessToken()->delete()){
+            return response()->json([
+                'message' => 'User logged out sucessfuly'
+            ]);
+        }else{
+            return response()->json([
+                'error' => 'Error when logging user out'
+            ]);
+        }
+        // return redirect('/login');
 
     }
 
