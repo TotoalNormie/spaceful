@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Products::class)->constrained()->cascadeOnDelete();
             $table->string('shelfId', 25);
+            $table->string('name', 25);
+            $table->string('description', 4096);
             // $table->integer('productId');
             $table->string('amount');
             $table->timestamps();
