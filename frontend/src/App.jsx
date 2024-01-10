@@ -4,7 +4,9 @@ import Test from "./components/Test"
 import Home from "./components/Home"
 import Login from "./components/Login"
 import Register from "./components/Register"
+import AddNewProduct from "./components/AddNewProduct"
 import Logout from "./components/Logout"
+
 
 function App() {
 
@@ -15,6 +17,7 @@ function App() {
       <Route exact path='/test' element={<Test/>} />
       <Route exact path='/login' element={<Login/>} />
       <Route exact path='/register' element={<Register/>} />
+      <Route exact path='/addnewproduct' element={<AddNewProduct/>} />
       <Route exact path='/logout' element={<Logout/>} />
     </Routes>
     </BrowserRouter>
