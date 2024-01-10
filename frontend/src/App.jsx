@@ -1,18 +1,24 @@
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import './style/main.css';
-import Test from "./components/Test"
-import Home from "./components/Home"
+import Test from './components/Test';
+import Home from './components/Home';
+import Header from './components/Header';
+import Jabis from './components/Jabis';
 
 function App() {
-
-  return (
-    <BrowserRouter>
-    <Routes>
-      <Route exact path='/' element={<Home/>} />
-      <Route exact path='/test' element={<Test/>} />
-    </Routes>
-    </BrowserRouter>
-  )
+	return (
+		<BrowserRouter>
+			<Header />
+			<main>
+				<Routes>
+          
+					<Route exact path='/' element={<Home />} />
+					<Route exact path='/test' element={<Test />} />
+					<Route exact path='/resns' element={<Jabis />} />
+				</Routes>
+			</main>
+		</BrowserRouter>
+	);
 }
 
-export default App
+export default App;
