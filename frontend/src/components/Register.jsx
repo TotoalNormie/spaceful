@@ -21,6 +21,10 @@ const Login = () => {
     //     }
     // )
 
+    if(Cookies.get('token') != undefined){
+      navigate("/");
+    }
+
     function register(){
 
         if(password != repeat){
