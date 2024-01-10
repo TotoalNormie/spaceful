@@ -7,9 +7,11 @@ const Logout = () => {
     const navigate = useNavigate();
     axios.post('http://localhost:8000/api/logout',)
       .then(function (response) {
-        // console.log(response.data.token);
+        console.log(response.data.message);
+        if(response.data.message == "User logged out sucessfuly"){
+          navigate("/login");
+        }
         // Cookies.remove('token');
-        navigate("/login");
       })
       .catch(function (error) {
         console.log(error);
