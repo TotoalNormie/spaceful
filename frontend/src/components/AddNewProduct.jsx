@@ -10,18 +10,18 @@ const AddNewProduct = () => {
                 <h1>Add new product</h1>
                 <div className={css.inputContainer}>
                     <div className={css.splitContainer}>
-                        <input type='text' placeholder='Product' />
-                        <input type='text' placeholder='Product price' />
+                        <input className={css.input} type='text' placeholder='Product' />
+                        <input className={css.input} type='text' placeholder='Product price' />
                     </div>
                     <div className={css.splitContainer}>
-                        <input type='text' placeholder='Product description' />
-                        <input type='text' placeholder='Product quantity' />
+                        <input className={css.input} type='text' placeholder='Product description' />
+                        <input className={css.input} type='text' placeholder='Product quantity' />
                     </div>
                     <div className={css.splitContainer}>
-                        <input type='text' placeholder='Product image' />
-                        <textarea type='text'  placeholder='Other information about product' />
+                        <input className={css.input} type='text' placeholder='Product image' />
+                        <textarea className={css.textarea} type='text'  placeholder='Other information about product' />
                     </div>
-                    <button>Add new product</button>
+                    <button className={css.button}>Add new product</button>
                 </div>
             </div>
         </>
