@@ -9,6 +9,11 @@ const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    if(Cookies.get('token') != undefined){
+      navigate("/");
+    }
     // axios.post('http://localhost:8000/api/login', {
     //     name: username,
     //     password: password,
@@ -17,7 +22,7 @@ const Login = () => {
     //       }
     //     }
     // )
-    const navigate = useNavigate();
+    
 
     function login(){
 
