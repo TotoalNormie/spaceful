@@ -1,8 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Arvo&family=Roboto+Flex:opsz@8..144&display=swap');
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --dark-gray: #252525;
+    --gray: #303030;
+    --light-gray: #505050;
+    --light-color: #C5DFF8;
+    --middle-color: #A0BFE0;
+    --darker-color: #7895CB;
+    --main-color: #4A55A2;
+    --red: #A24A4A;
+}
 body {
     font-family: 'Roboto Flex', sans-serif;
-    font-size: 18px;
+    /* font-size: 15px; */
+    color: white;
+    margin: 0;
+    background-color: var(--dark-gray);
+}
+
+img {
+    width: 100%;
+    object-fit: cover;
 }
 
 h1 {
@@ -19,5 +41,5 @@ h2 {
 
 h3 {
     font-family: 'Arvo', serif;
-    font-family: 1.5em;
+    font-size: 1.5em;
 }

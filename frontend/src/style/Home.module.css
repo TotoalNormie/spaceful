@@ -1,4 +1,14 @@
 .title {
     font-family: 'Arvo', serif;
     font-size: 6em;
+    margin-block: 1rem;
+}
+
+.space {
+    height: 40rem;
+    background-image: url('../assets/space-bg-high-res.png');
+    background-size: cover;
+    display: grid;
+    place-items: center;
+    text-align: center;
 }
