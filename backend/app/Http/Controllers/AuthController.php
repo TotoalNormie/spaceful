@@ -28,52 +28,99 @@ class AuthController extends Controller
         }
 
         if($user->save()){
-            return response()->json([
-                'message' => 'User added sucessfuly'
+            // return response()->json([
+            //     'message' => 'User added sucessfuly'
+            // ]);
+
+            $credentials = $request->validate([
+                'name' => 'required|string',
+                'password' => 'required|string',
             ]);
+     
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+     
+                return response()->json([
+                    'message' => 'Yay 😎'
+                ], 200);
+                // return redirect()->intended('dashboard');
+            }
         }else {
             return response()->json(['error' => 'Fill all parameters.']);
         }
     }
 
     function login(Request $request){
-        
-        // if (Auth::attempt($credentials)) {
-        //     $request->session()->regenerate();
-        
-        //     // return redirect()->intended('dashboard');
-        // }
             
-        $request->validate([
-            'name' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string',
+        //     'password' => 'required|string',
+        // ]);
         
-        $user = User::where('name', $request->name)->first();
-        if(!$user){
-            return response()->json([
-                'error' => 'User not found'
-            ]);
-        }
+        // $user = User::where('name', $request->name)->first();
+        // if(!$user){
+        //     return response()->json([
+        //         'error' => 'User not found'
+        //     ]);
+        // }
+
+        // $credentials = $request->validate([
+        //     'name' => 'required|string',
+        //     'password' => 'required|string',
+        // ]);
+
+        // if (!Auth::attempt($credentials)) {
+        //     return response()->json([
+        //         'message' => 'Unauthorized'
+        //     ], 401);
+        // }
+
+        // $token = $request->user()->createToken('Personal Access Token');
+        // return ['token' => $token->plainTextToken];
+
 
         $credentials = $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
         ]);
-
-        if (!Auth::attempt($credentials)) {
+ 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+ 
             return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+                'message' => 'Yay 😎'
+            ], 200);
+            // return redirect()->intended('dashboard');
         }
+ 
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
 
-        // $token = $request->user()->createToken('MyApp')->accessToken;
-        // $token = $request->name->createToken()->accessToken;
-        $token = $request->user()->createToken('Personal Access Token');
-        return ['token' => $token->plainTextToken];
-        // return response()->json([
-        //     'token' => $token->plainTextToken,
-        // ]);
+    }
+
+    function logout(Request $request){
+
+        Auth::logout();
+    
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+    
+        return response()->json([
+            'message' => 'User logged out sucessfuly'
+        ], 200);
+        // return redirect('/login');
+
+        // if($request->user()->currentAccessToken()->delete()){
+        //     return response()->json([
+        //         'message' => 'User logged out sucessfuly'
+        //     ]);
+        // }else{
+        //     return response()->json([
+        //         'error' => 'Error when logging user out'
+        //     ]);
+        // }
 
     }
 
