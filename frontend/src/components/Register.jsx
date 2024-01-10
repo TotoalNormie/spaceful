@@ -21,9 +21,7 @@ const Login = () => {
     //     }
     // )
 
-    if(Cookies.get('token') != undefined){
-      navigate("/");
-    }
+    Cookies.remove('token');
 
     function register(){
 
@@ -62,7 +60,6 @@ const Login = () => {
   return (
     <>
     <div>Register</div>
-    <p>Token: {Cookies.get("token")}</p>
     <label>
     Username:
         <input type='text' name='name' value={username} onChange={(e) => setUsername(e.target.value)}></input>
