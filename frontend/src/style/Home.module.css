@@ -12,3 +12,8 @@
     place-items: center;
     text-align: center;
 }
+
+.text {
+    width: min(44rem, 100%);
+    margin-inline: auto;
+}
