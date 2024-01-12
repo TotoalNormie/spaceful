@@ -1,19 +1,39 @@
 .title {
-    font-family: 'Arvo', serif;
-    font-size: 6em;
-    margin-block: 1rem;
+	font-family: 'Arvo', serif;
+	font-size: 6em;
+	margin-block: 1rem;
 }
 
 .space {
-    height: 40rem;
-    background-image: url('../assets/space-bg-high-res.png');
-    background-size: cover;
-    display: grid;
-    place-items: center;
-    text-align: center;
+	height: 35rem;
+	background-image: url('../assets/space-bg-high-res.png');
+	background-size: cover;
+	display: grid;
+	place-items: center;
+	text-align: center;
+}
+.text {
+	width: min(44rem, 100%);
+	margin: 6rem auto;
 }
 
-.text {
-    width: min(44rem, 100%);
-    margin-inline: auto;
+.make-account {
+	margin-inline: auto;
+	padding: 0.5rem;
+	background: none;
+	font: inherit;
+	padding: 0.5rem 1rem;
+	color: var(--light-color, #c5dff8);
+	border-radius: 1rem;
+	border: 2px solid var(--darker-color, #7895cb);
+    cursor: pointer;
+	& > h2 {
+		margin: 0;
+	}
+}
+
+.wrap {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
 }
