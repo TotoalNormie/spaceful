@@ -2,7 +2,6 @@ import React from 'react';
 import css from '../style/Home.module.css';
 
 const Home = () => {
-	console.log(css);
 	return (
 		<>
 			<section className={css.space}>
