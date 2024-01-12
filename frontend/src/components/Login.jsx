@@ -1,7 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import style from "../style/Login.module.css";
 import flex from "../style/Flex.module.css";
@@ -9,11 +8,10 @@ import logo from '../assets/logo.png';
 import { User, Lock } from '@phosphor-icons/react/dist/ssr';
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("null");
+  const [password, setPassword] = useState("null");
   const navigate = useNavigate();
 
-  Cookies.remove("token");
   // axios.post('http://localhost:8000/api/login', {
   //     name: username,
   //     password: password,
@@ -23,6 +21,39 @@ const Login = () => {
   //     }
   // )
 
+  useEffect(
+    () => {
+      axios
+      .post("http://localhost:8000/api/login", {
+        name: username,
+        password: password,
+      })
+      .then(function (response) {
+        // console.log(response.data.token);
+        navigate("/");
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert(error);
+      });
+    }, []);
+  // function checkLogin(){
+  //   axios
+  //     .post("http://localhost:8000/api/login", {
+  //       name: username,
+  //       password: password,
+  //     })
+  //     .then(function (response) {
+  //       // console.log(response.data.token);
+  //       navigate("/");
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //       alert(error);
+  //     });
+  // }
+
+
   function login() {
     axios
       .post("http://localhost:8000/api/login", {
@@ -31,7 +62,6 @@ const Login = () => {
       })
       .then(function (response) {
         // console.log(response.data.token);
-        Cookies.set("token", response.data.token);
         navigate("/");
       })
       .catch(function (error) {
@@ -69,6 +99,7 @@ const Login = () => {
         </div>
         </label>
         <button onClick={login}>Sign In</button>
+        <img src={logo} className={[style.logo].join(' ')}/>
       </div>
     </div>
   );

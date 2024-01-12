@@ -12,14 +12,21 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     function create(Request $request, User $user){
+
+        if (Auth::check()) {
+            return redirect('/');
+        }
+
         $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
+            'email' => 'required|string',
             'roles_id' => 'integer',
         ]);
         // $user = new User();
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
+        $user->email = $request->email;
 
         if(empty($request->roles_id)){
             $user->roles_id = 1;
@@ -50,7 +57,7 @@ class AuthController extends Controller
         }
     }
 
-    function login(Request $request){
+    function login(Request $request, User $user){
             
         // $request->validate([
         //     'name' => 'required|string',
@@ -78,6 +85,17 @@ class AuthController extends Controller
         // $token = $request->user()->createToken('Personal Access Token');
         // return ['token' => $token->plainTextToken];
 
+        $found = User::where('name', $request->name)->first();
+
+        if(!$found){
+            return response()->json([
+                'error' => 'User not found'
+            ], 404);
+        }
+
+        if (Auth::check()) {
+            return redirect('/');
+        }
 
         $credentials = $request->validate([
             'name' => 'required|string',
@@ -102,25 +120,20 @@ class AuthController extends Controller
     function logout(Request $request){
 
         Auth::logout();
-    
         $request->session()->invalidate();
-    
         $request->session()->regenerateToken();
-    
         return response()->json([
             'message' => 'User logged out sucessfuly'
         ], 200);
-        // return redirect('/login');
-
-        // if($request->user()->currentAccessToken()->delete()){
+        // if (Auth::check()) {
+        //     Auth::logout();
+        //     $request->session()->invalidate();
+        //     $request->session()->regenerateToken();
         //     return response()->json([
         //         'message' => 'User logged out sucessfuly'
-        //     ]);
-        // }else{
-        //     return response()->json([
-        //         'error' => 'Error when logging user out'
-        //     ]);
+        //     ], 200);
         // }
+        // return redirect('/login');
 
     }
 
