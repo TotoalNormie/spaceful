@@ -1,19 +1,22 @@
 .title {
 	font-family: 'Arvo', serif;
-	font-size: 6em;
+	font-size: clamp(4rem, calc(12vw + 1rem), 6rem);
 	margin-block: 1rem;
 }
 
 .space {
 	height: 35rem;
 	background-image: url('../assets/space-bg-high-res.png');
+    background-position: center;
 	background-size: cover;
 	display: grid;
 	place-items: center;
 	text-align: center;
+    padding: 1rem;
 }
 .text {
 	width: min(44rem, 100%);
+    padding: 1rem;
 	margin: 6rem auto;
 }
 
