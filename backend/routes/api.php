@@ -25,6 +25,8 @@ Route::get('/', [ProductsController::class, 'show']);
 
 Route::post('/user', [AuthController::class, 'create']);
 Route::delete('/user/{id}', [AuthController::class, 'destroy']);
+Route::get('/status', [AuthController::class, 'status']);
+Route::get('/user/warehouses/', [AuthController::class, 'getWarehouses']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 

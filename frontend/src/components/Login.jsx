@@ -8,8 +8,8 @@ import logo from '../assets/logo.png';
 import { User, Lock } from '@phosphor-icons/react/dist/ssr';
 
 const Login = () => {
-  const [username, setUsername] = useState("null");
-  const [password, setPassword] = useState("null");
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const navigate = useNavigate();
 
   // axios.post('http://localhost:8000/api/login', {
@@ -21,22 +21,22 @@ const Login = () => {
   //     }
   // )
 
-  useEffect(
-    () => {
-      axios
-      .post("http://localhost:8000/api/login", {
-        name: username,
-        password: password,
-      })
-      .then(function (response) {
-        // console.log(response.data.token);
-        navigate("/");
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert(error);
-      });
-    }, []);
+  // useEffect(
+  //   () => {
+  //     axios
+  //     .post("http://localhost:8000/api/login", {
+  //       name: username,
+  //       password: password,
+  //     })
+  //     .then(function (response) {
+  //       // console.log(response.data.token);
+  //       navigate("/");
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //       alert(error);
+  //     });
+  //   }, []);
   // function checkLogin(){
   //   axios
   //     .post("http://localhost:8000/api/login", {
@@ -61,7 +61,7 @@ const Login = () => {
         password: password,
       })
       .then(function (response) {
-        // console.log(response.data.token);
+        console.log(response.data);
         navigate("/");
       })
       .catch(function (error) {
