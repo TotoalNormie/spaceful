@@ -1,6 +1,8 @@
+import React from 'react'
 import axios from 'axios';
-const Test = () => {
-  axios.get('http://localhost:8000/api/user/warehouses/')
+
+const Status = () => {
+    axios.get('http://localhost:8000/api/status/')
     .then(function (response) {
       console.log(response.data);
       // Cookies.remove('token');
@@ -10,8 +12,8 @@ const Test = () => {
       alert(error.response.data.error);
     });
   return (
-    <div>Test</div>
+    <div>Status</div>
   )
 }
 
-export default Test
+export default Status
