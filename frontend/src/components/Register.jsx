@@ -2,28 +2,19 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import Cookies from "js-cookie";
+import flex from "../style/Flex.module.css";
+import style from "../style/Login.module.css";
+import logo from '../assets/logo.png';
+import { User, Lock, Envelope } from '@phosphor-icons/react/dist/ssr';
 
 
 const Login = () => {
 
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeat, setRepeat] = useState('');
     const navigate = useNavigate();
-    // Cookies.remove("token");
-    // axios.post('http://localhost:8000/api/login', {
-    //     name: username,
-    //     password: password,
-    //     headers: {
-    //         'Authorization': 'Bearer ' + token
-    //       }
-    //     }
-    // )
-
-    if(Cookies.get('token') != undefined){
-      navigate("/");
-    }
 
     function register(){
 
@@ -33,7 +24,8 @@ const Login = () => {
 
         axios.post('http://localhost:8000/api/user', {
             name: username,
-            password: password
+            password: password,
+            email: email
           })
           .then(function (response) {
             // console.log(response.data.token);
@@ -50,7 +42,6 @@ const Login = () => {
           .then(function (response) {
             // console.log(response.data.token);
             // Cookies
-            Cookies.set('token', response.data.token);
             navigate("/");
           })
           .catch(function (error) {
@@ -60,23 +51,37 @@ const Login = () => {
     }
 
   return (
-    <>
-    <div>Register</div>
-    <p>Token: {Cookies.get("token")}</p>
-    <label>
-    Username:
-        <input type='text' name='name' value={username} onChange={(e) => setUsername(e.target.value)}></input>
-    </label>
-    <label>
-    Password:
-    <input type='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
-    </label>
-    <label>
-    Repeat Password:
-    <input type='password' value={repeat} onChange={(e) => setRepeat(e.target.value)}></input>
-    </label>
-    <button onClick={register}>Register</button>
-    </>
+    <div className={[style.bg, flex.flex_cen].join(' ')}>
+      <div className={[flex.flex_c, style.box, flex.flex_cen].join(" ")}>
+        <h2 className={style.title}>Register</h2>
+        <label>
+          <div className={[style.border_bot, flex.flex_cen].join(' ')}>
+            <User fill="#000000" size='1.5rem'/>
+            <input type='text' placeholder='Username' name='name' value={username} onChange={(e) => setUsername(e.target.value)}></input>
+          </div>
+        </label>
+        <label>
+          <div className={[style.border_bot, flex.flex_cen].join(' ')}>
+            <Envelope fill="#000000" size='1.5rem'/>
+            <input type="email" placeholder='Email' name="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+          </div>
+        </label>
+        <label>
+          <div className={[style.border_bot, flex.flex_cen].join(' ')}>
+            <Lock fill="#000000" size='1.5rem'/>
+            <input type='password' placeholder='Password' name='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+          </div>
+        </label>
+        <label>
+          <div className={[style.border_bot, flex.flex_cen].join(' ')}>
+            <Lock fill="#000000" size='1.5rem'/>
+            <input type='password' placeholder='Repeat Password' value={repeat} onChange={(e) => setRepeat(e.target.value)}></input>
+          </div>
+        </label>
+        <button onClick={register}>Register</button>
+        <img src={logo} className={[style.logo].join(' ')}/>
+      </div>
+    </div>
   )
 }
 
