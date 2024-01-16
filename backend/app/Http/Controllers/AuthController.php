@@ -6,23 +6,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-// use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
     function create(Request $request, User $user){
 
-        if (Auth::check()) {
-            return  response()->json([
-                'message' => 'user logged in can\'t register'
-            ], 401);
-        }
-
         $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
-            'email' => 'required|string',
+            'email' => 'string',
             'roles_id' => 'integer',
         ]);
         // $user = new User();
@@ -41,19 +36,9 @@ class AuthController extends Controller
             //     'message' => 'User added sucessfuly'
             // ]);
 
-            $credentials = $request->validate([
-                'name' => 'required|string',
-                'password' => 'required|string',
-            ]);
-     
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
-     
-                return response()->json([
-                    'message' => 'Yay 😎'
-                ], 200);
-                // return redirect()->intended('dashboard');
-            }
+            $token = $user->createToken('Personal Access Token');
+            return ['token' => $token->plainTextToken];
+
         }else {
             return response()->json(['error' => 'Fill all parameters.']);
         }
@@ -73,48 +58,69 @@ class AuthController extends Controller
 
     function login(Request $request, User $user){
 
-        $found = User::where('name', $request->name)->first();
+        // $credentials = $request->validate([
+        //     'name' => 'required|string',
+        //     'password' => 'required|string',
+        // ]);
+ 
+        // if (Auth::attempt($credentials)) {
+        // // if (Auth::login($user)){
+        //     $request->session()->regenerate();
+ 
+        //     return response()->json([
+        //         'message' => 'Yay 😎'
+        //     ], 200);
+        // }
+        
+        $request->validate([
+            'name' => 'required|string',
+            'password' => 'required|string',
+        ]);
 
-        if(!$found){
+        $user = User::where('name', $request->name)->first();
+
+        if(!$user){
             return response()->json([
                 'error' => 'User not found'
             ], 404);
         }
 
-        if (Auth::check()) {
-            return redirect('/');
-        }
+        // $user->name = $request->name;
+        // $user->password = $request->password;
 
-        $credentials = $request->validate([
-            'name' => 'required|string',
-            'password' => 'required|string',
-        ]);
+
+        // $token = $request->user()->createToken($request->token_name);
+        // $token = $request->user()->createToken('Personal Access Token');
+
+        $token = $user->createToken('Personal Access Token');
  
-        if (Auth::attempt($credentials)) {
-        // if (Auth::login($user)){
-            $request->session()->regenerate();
- 
-            return response()->json([
-                'message' => 'Yay 😎'
-            ], 200);
-            // return redirect('/');
-        }
- 
-        return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
-        ])->onlyInput('name');
+        return ['token' => $token->plainTextToken];
+        
+        // return response()->json([
+        //     'message' => 'Yay 😎'
+        // ], 200);
 
     }
 
-    function logout(Request $request){
+    function logout(Request $request, User $user, PersonalAccessToken $token){
 
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return response()->json([
-            'message' => 'User logged out sucessfuly'
-        ], 200);
+        // Auth::logout();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
 
+        $fullToken = $request->bearerToken();
+        $tokenId = explode("|", $fullToken);
+        $token = PersonalAccessToken::where('id', $tokenId[0])->delete();
+        if($token){
+            return response()->json([
+                'message' => 'User logged out sucessfuly'
+            ], 200);
+        }else{
+            return response()->json([
+                'error' => 'Something went wrong'
+            ], 500);
+        }
+        
     }
 
     function destroy(Request $request, $id){

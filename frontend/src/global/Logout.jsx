@@ -1,15 +1,11 @@
 import React from 'react'
 import axios from 'axios';
-import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 const Logout = () => {
 
-    // const navigate = useNavigate();
-    // console.log(Cookies.get('token'));
-    // if(Cookies.get('token') == undefined){
-    //   navigate('/login');
-    // }
+    const navigate = useNavigate();
 
     const config = {
         headers: { Authorization: `Bearer ${Cookies.get('token')}` }
@@ -25,8 +21,8 @@ const Logout = () => {
         if(Cookies.get('token') != undefined){
           Cookies.remove('token');
         }
-        redirect('/login');
         return <Navigate to='/login'/>
+        navigate('/login');
       })
       .catch(function (error) {
         //fail

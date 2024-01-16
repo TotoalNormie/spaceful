@@ -6,7 +6,7 @@ import flex from "../style/Flex.module.css";
 import style from "../style/Login.module.css";
 import logo from '../assets/logo.png';
 import { User, Lock, Envelope } from '@phosphor-icons/react/dist/ssr';
-
+import Cookies from 'js-cookie';
 
 const Login = () => {
 
@@ -29,25 +29,14 @@ const Login = () => {
           })
           .then(function (response) {
             // console.log(response.data.token);
+            Cookies.set('token', response.data.token);
+            navigate("/");
           })
           .catch(function (error) {
             console.log(error);
             alert(error);
         });
 
-        axios.post('http://localhost:8000/api/login', {
-            name: username,
-            password: password
-          })
-          .then(function (response) {
-            // console.log(response.data.token);
-            // Cookies
-            navigate("/");
-          })
-          .catch(function (error) {
-            console.log(error);
-            alert(error);
-          });
     }
 
   return (

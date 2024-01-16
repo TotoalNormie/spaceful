@@ -1,7 +1,5 @@
 import React from 'react';
 import css from "../style/AddNewProduct.module.css";
-import Header from "./Header";
-
 
 const AddNewProduct = () => {
 	return (
