@@ -5,7 +5,7 @@
 }
 
 .space {
-	height: 35rem;
+	min-height: 35rem;
 	background-image: url('../assets/space-bg-high-res.png');
     background-position: center;
 	background-size: cover;
@@ -13,11 +13,16 @@
 	place-items: center;
 	text-align: center;
     padding: 1rem;
+	& div {
+		display: grid;
+		justify-items: center;
+	}
 }
 .text {
 	width: min(44rem, 100%);
     padding: 1rem;
 	margin: 6rem auto;
+
 }
 
 .make-account {
@@ -40,3 +45,11 @@
     display: flex;
     justify-content: center;
 }
+
+.scroll {
+	--_background: rgba(0, 0, 0, 0.2);
+	width: fit-content;
+	padding: .5rem;
+	box-shadow: 0 0 2rem 1rem var(--_background);
+	background-color: var(--_background);	
+	}

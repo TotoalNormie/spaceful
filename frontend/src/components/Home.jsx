@@ -1,5 +1,6 @@
 import React from 'react';
 import css from '../style/Home.module.css';
+import Select from './Select';
 
 const Home = () => {
 	return (
@@ -8,6 +9,7 @@ const Home = () => {
 				<div>
 					<p className={css.title}>spaceful</p>
 					<h1>the best solution for your warehouse management needs</h1>
+					<p className={css.scroll}>Scroll down to see more</p>
 				</div>
 			</section>
 			<section className={css.text}>
