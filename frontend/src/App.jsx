@@ -8,7 +8,7 @@ import Login from './components/Login';
 import Status from './components/Status';
 import Register from './components/Register';
 import AddNewProduct from './components/AddNewProduct';
-import Logout from './components/Logout';
+import Logout from './global/Logout';
 import AddToWarehouse from './components/AddToWarehouse';
 import Reports from './components/Reports';
 
@@ -25,7 +25,7 @@ function App() {
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/register' element={<Register />} />
 					<Route exact path='/addnewproduct' element={<AddNewProduct />} />
-					<Route exact path='/logout' element={<Logout />} />
+					{/* <Route exact path='/logout' element={<Logout />} /> */}
 					<Route exact path='/resns' element={<Jabis />} /> {/* !!! OBLIGATI ATSTAT !!!*/}
 					<Route exact path='/addtowarehouse' element={<AddToWarehouse />} />
 					<Route exact path='/reports' element={<Reports />} />

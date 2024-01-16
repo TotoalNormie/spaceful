@@ -6,11 +6,14 @@ import style from "../style/Login.module.css";
 import flex from "../style/Flex.module.css";
 import logo from '../assets/logo.png';
 import { User, Lock } from '@phosphor-icons/react/dist/ssr';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
+
+  // Cookies.remove('token');
 
   // axios.post('http://localhost:8000/api/login', {
   //     name: username,
@@ -61,7 +64,8 @@ const Login = () => {
         password: password,
       })
       .then(function (response) {
-        console.log(response.data);
+        console.log(response.data.token);
+        Cookies.set('token', response.data.token);
         navigate("/");
       })
       .catch(function (error) {
