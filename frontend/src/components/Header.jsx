@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import css from '../style/Header.module.css';
 import { List } from '@phosphor-icons/react/dist/ssr';
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 	const location = useLocation();

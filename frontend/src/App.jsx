@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Header from './components/Header';
 import Jabis from './components/Jabis';
 import Login from './components/Login';
+import Status from './components/Status';
 import Register from './components/Register';
 import AddNewProduct from './components/AddNewProduct';
 import Logout from './components/Logout';
@@ -16,6 +17,8 @@ function App() {
 			<Header />
 			<main>
 				<Routes>
+					<Route exact path='/test' element={<Test />} />
+					<Route exact path='/status' element={<Status />} />
 					<Route exact path='/' element={<Home />} />
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/register' element={<Register />} />
