@@ -1,1 +1,1 @@
-winget install -e --id Postman.Postman
+cd backend\ && php artisan db:seed --class=RoleSeeder
