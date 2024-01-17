@@ -10,10 +10,15 @@ import Cookies from 'js-cookie';
 
 const Login = () => {
   const [username, setUsername] = useState();
+  const [usernameError, setusernameError] = useState(false);
   const [password, setPassword] = useState();
+  const [passError, setpassError] = useState(false);
   const navigate = useNavigate();
 
   // Cookies.remove('token');
+  if(Cookies.get('token') != undefined){
+    navigate('/');
+  }
 
   // axios.post('http://localhost:8000/api/login', {
   //     name: username,
@@ -58,19 +63,32 @@ const Login = () => {
 
 
   function login() {
+    if(username == undefined && password == undefined){
+      setusernameError(true);
+      setpassError(true);
+      return;
+    }
+    if(username == undefined){
+      setusernameError(true);
+      return;
+    }
+    if(password == undefined){
+      setpassError(true);
+      return;
+    }
     axios
       .post("http://localhost:8000/api/login", {
         name: username,
         password: password,
       })
       .then(function (response) {
-        console.log(response.data.token);
+        // console.log(response.data.token);
         Cookies.set('token', response.data.token);
         navigate("/");
       })
       .catch(function (error) {
-        console.log(error);
-        alert(error);
+        console.log(error.response.data.error);
+        // alert(error.response.data.error);
       });
   }
 
@@ -81,28 +99,38 @@ const Login = () => {
         <label>
           <div className={[style.border_bot, flex.flex_cen].join(' ')}>  
             <User fill="#000000" size='1.5rem'/>
-            <input
-              type="text"
-              placeholder="Username"
-              name="name"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            ></input>
+            <div className={[flex.flex_c].join(' ')}>
+              <input
+                type="text"
+                placeholder="Username"
+                name="name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              ></input>
+              {usernameError &&
+              <p className={style.error}>Username can't be empty.</p>
+              }
+            </div>
           </div>
         </label>
         <label>
         <div className={[style.border_bot, flex.flex_cen].join(' ')}>
           <Lock fill="#000000" size='1.5rem'/>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></input>
+          <div className={[flex.flex_c].join(' ')}>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></input>
+            {passError &&
+            <p className={style.error}>Password can't be empty.</p>
+            }
+          </div>
         </div>
         </label>
-        <button onClick={login}>Sign In</button>
+        <button onClick={login} className={style.button}>Sign In</button>
         <img src={logo} className={[style.logo].join(' ')}/>
       </div>
     </div>

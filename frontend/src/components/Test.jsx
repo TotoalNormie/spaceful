@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Logout from './Logout';
+import Logout from '../global/Logout';
 const Test = () => {
   return (
     <div onClick={() => {Logout();}}>Test</div>

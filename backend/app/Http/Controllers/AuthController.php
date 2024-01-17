@@ -20,6 +20,20 @@ class AuthController extends Controller
             'email' => 'string',
             'roles_id' => 'integer',
         ]);
+
+        $found = User::where('name', $request->name)->first();
+        if($found){
+            return response()->json([
+                'error' => 'User already in database.'
+            ], 404);
+        }
+        $email = User::where('email', $request->email)->first();
+        if($email){
+            return response()->json([
+                'error' => 'User with that email aleady exists.'
+            ], 404);
+        }
+
         // $user = new User();
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
@@ -109,9 +123,18 @@ class AuthController extends Controller
         // $request->session()->regenerateToken();
 
         $fullToken = $request->bearerToken();
+
         $tokenId = explode("|", $fullToken);
-        $token = PersonalAccessToken::where('id', $tokenId[0])->delete();
-        if($token){
+        if(empty($fullToken) || $fullToken == 'undefined'){
+            return response()->json([
+                'error' => 'Already logged out'
+            ], 500);
+        }
+        // return response()->json([
+        //     'error' => $fullToken
+        // ], 500);
+        // $token = ;
+        if(PersonalAccessToken::where('id', $tokenId[0])->delete()){
             return response()->json([
                 'message' => 'User logged out sucessfuly'
             ], 200);
