@@ -1,5 +1,4 @@
-
-import '../style/ProductSearchungus.css';
+// import '../style/ProductSearchungus.css';
 
 const ProductSearch = () => {
 	const productArray = [
@@ -25,7 +24,8 @@ const ProductSearch = () => {
 			inStock: 'amount3',
 		},
 	];
-	const listProducts = productArray.map(products => <li>{products}</li>);
+	const listProducts = productArray.map(products => <li>{products.id}</li>);
+
 	return (
 		<div class='center'>
 			<>
@@ -33,7 +33,7 @@ const ProductSearch = () => {
 					<input type='text' placeholder='Search...' className='Search' />
 					<button class='FilterButton'>filter options</button>
 				</div>
-				<ul>{listProducts}</ul>;
+				<ul>{listProducts}</ul>
 			</>
 		</div>
 	);

@@ -47,7 +47,7 @@
 }
 
 .scroll {
-	--_background: rgba(0, 0, 0, 0.2);
+	--_background: rgba(0, 0, 0, 0.15);
 	width: fit-content;
 	padding: .5rem;
 	box-shadow: 0 0 2rem 1rem var(--_background);

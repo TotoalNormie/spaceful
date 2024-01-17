@@ -72,6 +72,9 @@ input {
 	border: none;
 	border-bottom: 1px solid var(--middle-color);
 	border-radius: 0.25rem 0.25rem 0 0;
+	&::placeholder {
+		color: var(--gray);
+	}
 }
 input[type='checkbox'] {
 	height: 1.2rem;
