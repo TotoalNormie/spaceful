@@ -11,6 +11,7 @@ import AddNewProduct from './components/AddNewProduct';
 import Logout from './global/Logout';
 import AddToWarehouse from './components/AddToWarehouse';
 import Reports from './components/Reports';
+import EditProfile from './components/EditProfile';
 
 function App() {
 	return (
@@ -20,7 +21,6 @@ function App() {
 				<Routes>
 					<Route exact path='/test' element={<Test />} />
 					<Route exact path='/status' element={<Status />} />
-
 					<Route exact path='/' element={<Home />} />
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/register' element={<Register />} />
@@ -29,6 +29,7 @@ function App() {
 					<Route exact path='/resns' element={<Jabis />} /> {/* !!! OBLIGATI ATSTAT !!!*/}
 					<Route exact path='/addtowarehouse' element={<AddToWarehouse />} />
 					<Route exact path='/reports' element={<Reports />} />
+					<Route exact path='/editprofile' element={<EditProfile />} />
 				</Routes>
 			</main>
 		</BrowserRouter>
