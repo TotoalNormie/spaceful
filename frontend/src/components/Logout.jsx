@@ -30,7 +30,7 @@ const Logout = () => {
       })
       .catch(function (error) {
         //fail
-        console.error(error.response.data.error);
+        console.error(error.response.data);
         alert(error.response.data.error);
       });
 

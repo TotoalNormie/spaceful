@@ -1,42 +1,9 @@
-// import '../style/ProductSearchungus.css';
+import axios from 'axios';
+import Logout from '../global/Logout';
+const Test = () => {
+  return (
+    <div onClick={() => {Logout();}}>Test</div>
+  )
+}
 
-const ProductSearch = () => {
-	const productArray = [
-		{
-			id: 'value1',
-			productName: 'name',
-			img: 'link',
-			shelfNumber: 'number',
-			inStock: 'amount',
-		},
-		{
-			id: 'value2',
-			productName: 'name2',
-			img: 'link2',
-			shelfNumber: 'number2',
-			inStock: 'amount2',
-		},
-		{
-			id: 'value3',
-			productName: 'name3',
-			img: 'link3',
-			shelfNumber: 'number3',
-			inStock: 'amount3',
-		},
-	];
-	const listProducts = productArray.map(products => <li>{products.id}</li>);
-
-	return (
-		<div class='center'>
-			<>
-				<div class='SearchBox'>
-					<input type='text' placeholder='Search...' className='Search' />
-					<button class='FilterButton'>filter options</button>
-				</div>
-				<ul>{listProducts}</ul>
-			</>
-		</div>
-	);
-};
-
-export default ProductSearch;
+export default Test

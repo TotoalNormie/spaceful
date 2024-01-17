@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import './style/main.css';
 import Home from './components/Home';
@@ -11,6 +11,10 @@ import AddNewProduct from './components/AddNewProduct';
 import Test from './components/Test';
 import AddToWarehouse from './components/AddToWarehouse';
 import Reports from './components/Reports';
+import EditProfile from './components/EditProfile';
+import CreateWarehouse from './components/CreateWarehouse';
+
+<<<<<<< HEAD
 import CreateWarehouse from './components/CreateWarehouse';
 import Error404 from './components/Error404';
 import axios from 'axios';
@@ -46,6 +50,9 @@ const NestedComponent = () => {
 		</div>
 	);
 };
+=======
+import EditProfile from './components/EditProfile';
+>>>>>>> main
 
 function App() {
 	const isLoggedIn = Boolean(Cookies.get('token'));
@@ -62,6 +69,7 @@ function App() {
 					<Route path='/addtowarehouse' element={<AddToWarehouse />} />
 					<Route path='/reports' element={<Reports />} />
 					<Route path='/createwarehouse' element={<CreateWarehouse />} />
+					<Route exact path='/editprofile' element={<EditProfile />} />
 					{/* Nested route */}
 					<Route path='/warehouse/:warehouseId/'element={!isLoggedIn && <Navigate replace to='/'/> }>
 						<Route path='' element={<NestedComponent />} />
