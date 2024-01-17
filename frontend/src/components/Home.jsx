@@ -1,5 +1,7 @@
 import React from 'react';
 import css from '../style/Home.module.css';
+import Select from './Select';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
 	return (
@@ -8,6 +10,7 @@ const Home = () => {
 				<div>
 					<p className={css.title}>spaceful</p>
 					<h1>the best solution for your warehouse management needs</h1>
+					<p className={css.scroll}>Scroll down to see more</p>
 				</div>
 			</section>
 			<section className={css.text}>
@@ -41,9 +44,9 @@ const Home = () => {
 					spaceful today and take your warehouse operations to the next level!
 				</p>
 				<div className={css.wrap}>
-					<button className={css['make-account']}>
+					<Link to='/createwarehouse' className={css['make-account']}>
 						<h2>Start your journey</h2>
-					</button>
+					</Link>
 				</div>
 			</section>
 		</>

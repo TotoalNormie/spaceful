@@ -1,0 +1,30 @@
+.select {
+	padding: 0.25rem 0.5rem;
+	display: inline-grid;
+	grid-template-columns: auto auto;
+	gap: .25rem;
+
+	background-color: var(--dark-gray);
+	border-radius: 0.25rem;
+	
+	& select {
+		appearance: none;
+		border: none;
+		background-color: transparent;
+		margin: 0;
+		width: fit-content;
+		font-family: inherit;
+		font-size: inherit;
+		cursor: pointer;
+		& option {
+		background-color: var(--dark-gray);
+		}
+	}
+	&::after {
+		content: '';
+		width: 1rem;
+		height: 1rem;
+		background-image: url('../assets/caret-down.svg');
+		background-size: contain;
+	}
+}

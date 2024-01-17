@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RolesUrlsController;
+use App\Http\Controllers\WarehouseAppController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,8 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/roles', [RolesController::class, 'create']);
 Route::post('/roles/url', [RolesUrlsController::class, 'create']);
 // Route::delete('/{id}', [TodoController::class, 'destroy']);
+
+Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
+Route::middleware(['cors'])->group(function () {
+    Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
+});

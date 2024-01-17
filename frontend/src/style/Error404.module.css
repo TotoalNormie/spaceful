@@ -1,0 +1,14 @@
+.wrapper {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    & .title {
+        font-family: 'Arvo', serif;
+        font-size: clamp(4rem, calc(3vw + 1rem), 6rem);
+        font-weight: 700;
+        text-align: center;
+    }   
+    & h3 {
+        text-align: center;
+    }
+}
