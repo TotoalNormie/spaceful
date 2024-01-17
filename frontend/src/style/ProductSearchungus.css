@@ -9,13 +9,14 @@ body {
 } */
 .center {
     display:grid;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
 .SearchBox {
-    flex-direction: row;
+    flex-direction: row;     
 }
 
 .Search {
@@ -34,4 +35,21 @@ body {
     border: solid #4A55A2;
     cursor: pointer;
 
+}
+
+.ProductBox {
+    display: grid;
+    flex-direction: row;
+    width: 18rem;
+    height: 10rem;
+    background: #393939;
+    opacity: 80%;
+    margin: 15px;
+
+
+}
+
+.ProductList {
+    display: grid;
+    flex-direction: row;
 }
