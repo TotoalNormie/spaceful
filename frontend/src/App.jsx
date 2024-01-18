@@ -70,6 +70,7 @@ function App() {
 						<Route path='addnewproduct' element={<AddNewProduct />} />
 						<Route path='addtowarehouse' element={<AddToWarehouse />} />
 						<Route path='reports' element={<Reports />} />
+						<Route path='ProductSearch' element={<ProductSearch/>} />
 					</Route>
 					<Route path='*' element={<Error404 />} />
 		  <Route exact path='/ProductSearch' element={<ProductSearch/>} />
