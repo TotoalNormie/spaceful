@@ -1,6 +1,8 @@
+import axios from 'axios';
+import Logout from '../global/Logout';
 const Test = () => {
   return (
-    <div>Test</div>
+    <div onClick={() => {Logout();}}>Test</div>
   )
 }
 

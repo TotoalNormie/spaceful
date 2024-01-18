@@ -20,6 +20,8 @@ return new class extends Migration
             $table->boolean('manageRoles')->default(0);
             $table->timestamps();
         });
+
+        
     }
 
     /**

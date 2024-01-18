@@ -1,26 +1,39 @@
 import React from 'react'
 import axios from 'axios';
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 const Logout = () => {
-    const navigate = useNavigate();
-    axios.post('http://localhost:8000/api/logout',)
+
+    // const navigate = useNavigate();
+    // console.log(Cookies.get('token'));
+    // if(Cookies.get('token') == undefined){
+    //   navigate('/login');
+    // }
+
+    const config = {
+        headers: { Authorization: `Bearer ${Cookies.get('token')}` }
+    };
+
+    const result = axios.post('http://localhost:8000/api/logout', {
+      withCredentials: true
+    }, config)
       .then(function (response) {
-        console.log(response.data.message);
-        if(response.data.message == "User logged out sucessfuly"){
-          navigate("/login");
+        //success
+        console.log(response.data);
+        alert(response.data.message);
+        if(Cookies.get('token') != undefined){
+          Cookies.remove('token');
         }
-        // Cookies.remove('token');
+        redirect('/login');
+        return <Navigate to='/login'/>
       })
       .catch(function (error) {
-        console.log(error);
-        alert(error);
+        //fail
+        console.error(error.response.data);
+        alert(error.response.data.error);
       });
 
-  return (
-    <div>Logout</div>
-  )
 }
 
 export default Logout

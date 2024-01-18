@@ -6,20 +6,38 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-// use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
     function create(Request $request, User $user){
+
         $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
+            'email' => 'string',
             'roles_id' => 'integer',
         ]);
+
+        $found = User::where('name', $request->name)->first();
+        if($found){
+            return response()->json([
+                'error' => 'User already in database.'
+            ], 404);
+        }
+        $email = User::where('email', $request->email)->first();
+        if($email){
+            return response()->json([
+                'error' => 'User with that email aleady exists.'
+            ], 404);
+        }
+
         // $user = new User();
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
+        $user->email = $request->email;
 
         if(empty($request->roles_id)){
             $user->roles_id = 1;
@@ -32,96 +50,100 @@ class AuthController extends Controller
             //     'message' => 'User added sucessfuly'
             // ]);
 
-            $credentials = $request->validate([
-                'name' => 'required|string',
-                'password' => 'required|string',
-            ]);
-     
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
-     
-                return response()->json([
-                    'message' => 'Yay 😎'
-                ], 200);
-                // return redirect()->intended('dashboard');
-            }
+            $token = $user->createToken('Personal Access Token');
+            return ['token' => $token->plainTextToken];
+
         }else {
             return response()->json(['error' => 'Fill all parameters.']);
         }
     }
 
-    function login(Request $request){
-            
-        // $request->validate([
-        //     'name' => 'required|string',
-        //     'password' => 'required|string',
-        // ]);
-        
-        // $user = User::where('name', $request->name)->first();
-        // if(!$user){
-        //     return response()->json([
-        //         'error' => 'User not found'
-        //     ]);
-        // }
+    function status(Request $request){
+        if (Auth::check()) {
+            return response()->json([
+                'message' => 'Logged in.'
+            ], 200);
+        }else{
+            return response()->json([
+                'error' => 'User not logged in'
+            ], 200);
+        }
+    }
+
+    function login(Request $request, User $user){
 
         // $credentials = $request->validate([
         //     'name' => 'required|string',
         //     'password' => 'required|string',
         // ]);
-
-        // if (!Auth::attempt($credentials)) {
+ 
+        // if (Auth::attempt($credentials)) {
+        // // if (Auth::login($user)){
+        //     $request->session()->regenerate();
+ 
         //     return response()->json([
-        //         'message' => 'Unauthorized'
-        //     ], 401);
+        //         'message' => 'Yay 😎'
+        //     ], 200);
         // }
-
-        // $token = $request->user()->createToken('Personal Access Token');
-        // return ['token' => $token->plainTextToken];
-
-
-        $credentials = $request->validate([
+        
+        $request->validate([
             'name' => 'required|string',
             'password' => 'required|string',
         ]);
- 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
- 
+
+        $user = User::where('name', $request->name)->first();
+
+        if(!$user){
             return response()->json([
-                'message' => 'Yay 😎'
-            ], 200);
-            // return redirect()->intended('dashboard');
+                'error' => 'User not found'
+            ], 404);
         }
+
+        // $user->name = $request->name;
+        // $user->password = $request->password;
+
+
+        // $token = $request->user()->createToken($request->token_name);
+        // $token = $request->user()->createToken('Personal Access Token');
+
+        $token = $user->createToken('Personal Access Token');
  
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return ['token' => $token->plainTextToken];
+        
+        // return response()->json([
+        //     'message' => 'Yay 😎'
+        // ], 200);
 
     }
 
-    function logout(Request $request){
+    function logout(Request $request, User $user, PersonalAccessToken $token){
 
-        Auth::logout();
-    
-        $request->session()->invalidate();
-    
-        $request->session()->regenerateToken();
-    
-        return response()->json([
-            'message' => 'User logged out sucessfuly'
-        ], 200);
-        // return redirect('/login');
+        // Auth::logout();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
 
-        // if($request->user()->currentAccessToken()->delete()){
-        //     return response()->json([
-        //         'message' => 'User logged out sucessfuly'
-        //     ]);
-        // }else{
-        //     return response()->json([
-        //         'error' => 'Error when logging user out'
-        //     ]);
-        // }
+        $fullToken = $request->bearerToken();
 
+        $tokenId = explode("|", $fullToken);
+        if(empty($fullToken) || $fullToken == 'undefined'){
+            return response()->json([
+                'error' => 'Already logged out'
+            ], 500);
+        }
+        // return response()->json([
+        //     'error' => $fullToken
+        // ], 500);
+        // $token = ;
+        if(PersonalAccessToken::where('id', $tokenId[0])->delete()){
+            return response()->json([
+                'message' => 'User logged out sucessfuly'
+            ], 200);
+        }else{
+            return response()->json([
+                'error' => 'Something went wrong'
+            ], 500);
+        }
+        
     }
 
     function destroy(Request $request, $id){
@@ -137,5 +159,38 @@ class AuthController extends Controller
         }else {
             return response()->json(['error' => 'Fill all parameters.']);
         }
+    }
+
+    function getWarehouses(Request $request){
+        // $foundUser = User::where('name', $request->name)->select('id')->first();
+        // $userId = 0;
+        // if(!$foundUser){
+        //     return response()->json([
+        //         'error' => 'User not found'
+        //     ], 500);
+        // }else{
+        //     $userId = $foundUser->id;
+        // }
+
+        if (!Auth::check()) {
+            return response()->json([
+                'error' => 'user not logged in'
+            ], 401);
+        }
+
+        return response()->json([
+            'userId' => Auth::id()
+        ], 200);
+
+        // $found = User::join('warehouses', 'users.id',  '=', 'warehouses.managerId')->select('warehouses.id')->where('users.id', Auth::id())->get();
+        // if($found){
+        //     $temp = [];
+        //     foreach($found as $foundWarehouses){
+        //         array_push($temp, $foundWarehouses->id);
+        //     }
+        //     return response()->json([
+        //         'message' => $temp
+        //     ], 200);
+        // }
     }
 }

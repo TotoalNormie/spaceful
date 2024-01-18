@@ -11,6 +11,7 @@ header {
 	display: flex;
 	align-items: center;
     gap: .5rem;
+	text-decoration: none;
 
 	& h2 {
 		color: var(--light-color);

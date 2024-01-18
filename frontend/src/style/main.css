@@ -1,45 +1,130 @@
 @import url('https://fonts.googleapis.com/css2?family=Arvo&family=Roboto+Flex:opsz@8..144&display=swap');
 
-*, *::before, *::after {
-    box-sizing: border-box;
+:root {
+	--text: #fff;
+	--dark-gray: #252525;
+	--gray: #303030;
+	--light-gray: #505050;
+	--light-color: #c5dff8;
+	--middle-color: #a0bfe0;
+	--darker-color: #7895cb;
+	--main-color: #4a55a2;
+	--red: #a24a4a;
 }
 
-:root {
-    --dark-gray: #252525;
-    --gray: #303030;
-    --light-gray: #505050;
-    --light-color: #C5DFF8;
-    --middle-color: #A0BFE0;
-    --darker-color: #7895CB;
-    --main-color: #4A55A2;
-    --red: #A24A4A;
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+*:focus {
+	outline: 2px solid var(--darker-color);
 }
 body {
-    font-family: 'Roboto Flex', sans-serif;
-    /* font-size: 15px; */
-    color: white;
-    margin: 0;
-    background-color: var(--dark-gray);
+	font-family: 'Roboto Flex', sans-serif;
+	font-size: 18px;
+	color: white;
+	margin: 0;
+	background-color: var(--dark-gray);
+}
+
+button {
+	font-family: Roboto Flex;
+	font-size: 1.22222rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+#root {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	min-height: 100svh;
 }
 
 img {
-    width: 100%;
-    object-fit: cover;
+	width: 100%;
+	object-fit: cover;
 }
 
 h1 {
-    font-family: 'Arvo', serif;
-    font-size: 2.5em;
-    font-weight: 700;
+	font-family: 'Arvo', serif;
+	font-size: clamp(2em, calc(3vw + 1rem), 2.75em);
+	font-weight: 700;
 }
 
 h2 {
-    font-family: 'Arvo', serif;
-    font-size: 2em;
-    font-weight: 700;
+	font-family: 'Arvo', serif;
+	font-size: clamp(1.75em, calc(3vw + 1rem), 2.25em);
+	font-weight: 700;
 }
 
 h3 {
-    font-family: 'Arvo', serif;
-    font-size: 1.5em;
+	font-family: 'Arvo', serif;
+	font-size: 1.5em;
+}
+
+input {
+	font: inherit;
+	color: inherit;
+	padding: 0.25rem 0.5rem;
+	background-color: var(--dark-gray);
+	border: none;
+	border-bottom: 1px solid var(--middle-color);
+	border-radius: 0.25rem 0.25rem 0 0;
+	&::placeholder {
+		color: var(--gray);
+	}
+}
+input[type='checkbox'] {
+	height: 1.2rem;
+	aspect-ratio: 1;
+	-webkit-appearance: none;
+	appearance: none;
+	background-color: transparent;
+	margin: 0;
+
+	position: relative;
+	align-self: center;
+	border-radius: 0.25rem;
+	border: none;
+	&::before {
+		content: '';
+		background-color: var(--gray);
+		position: absolute;
+		display: grid;
+		place-items: center;
+		inset: 0;
+		width: 1.2rem;
+		height: 100%;
+		border-radius: 0.25rem;
+	}
+	&:active::before {
+		background-color: var(--light-gray);
+	}
+	&:checked::before {
+		content: url('../assets/check.svg');
+	}
+}
+
+textarea {
+	form-sizing: normal;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--dark-gray, #252525);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--gray, #303030);
+	border-radius: 100vw;
+	transition: background-color 0.3s ease-in;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--light-gray, #505050);
 }

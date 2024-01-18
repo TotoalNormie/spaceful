@@ -1,7 +1,37 @@
 import React from 'react';
 import css from "../style/AddNewProduct.module.css";
-import Header from "./Header";
+import axios from 'axios';
 
+const NewProduct = () => {
+    const [product, setProduct] = useState('');
+    const [price, setprice] = useState('');
+    const [description, setDescription] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [image, setImage] = useState('');
+    const [other, setOther] = useState('');
+    const navigate = useNavigate();
+
+    const insert = e => {
+        e.preventDefault();
+        const result = axios
+            .post(
+                'http://localhost:8000/api/new-product/insert',
+                {
+                    withCredentials: true,   
+                },
+                config
+            )
+            .then(function (response) {
+                //success
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                //fail
+                alert('Failed to add new product!');
+                console.error(error);
+            });
+    };
+}
 
 const AddNewProduct = () => {
 	return (

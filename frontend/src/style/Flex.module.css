@@ -1,0 +1,16 @@
+.flex_r{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.flex_c{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.flex_cen{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
