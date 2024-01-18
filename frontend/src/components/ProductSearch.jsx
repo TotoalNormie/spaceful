@@ -1,47 +1,77 @@
-import '../style/ProductSearchungus.css';
+import "../style/ProductSearchungus.css";
 
 const ProductSearch = () => {
-    const productArray = [
-        {
-            id: 'value1',
-            productName: 'name',
-            img: 'link',
-            shelfNumber: 'number',
-            inStock: 'amount',
-        },
-        {
-            id: 'value2',
-            productName: 'name2',
-            img: 'link2',
-            shelfNumber: 'number2',
-            inStock: 'amount2',
-        },
-        {
-            id: 'value3',
-            productName: 'name3',
-            img: 'link3',
-            shelfNumber: 'number3',
-            inStock: 'amount3',
-        },
-    ];
-    const listProducts = productArray.map(products =>
-            <div className="ProductBox">{products.productName} {products.id}
-        </div>
-        );
+  const productArray = [
+    {
+      id: "value1",
+      productName: "name",
+      img: <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>,
+      shelfNumber: "number",
+      inStock: "amount",
+    },
+    {
+      id: "value2",
+      productName: "name2",
+      img: <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>,
+      shelfNumber: "number2",
+      inStock: "amount2",
+    },
+    {
+      id: "value3",
+      productName: "name3",
+      img: <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>,
+      shelfNumber: "number3",
+      inStock: "amount3",
+    },
+    {
+      id: "value4",
+      productName: "name4",
+      img: <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>,
+      shelfNumber: "number4",
+      inStock: "amount4",
+    },
+    {
+      id: "value5",
+      productName: "name5",
+      img: <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>,
+      shelfNumber: "number5",
+      inStock: "amount5",
+    },
+    {
+      id: "value6",
+      productName: "name6",
+      img: <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>,
+      shelfNumber: "number6",
+      inStock: "amount6",
+    },
+  ];
+  const listProducts = productArray.map((products) => (
+    <div className="ProductBox">
+      <div className="wrapper">
+        <p>{products.productName}</p>
+        <p>{products.id}</p>
+      </div>
+      <div className="wrapper2">
+        {products.img}
+      </div>
+      <div className="wrapper">
+        <p>{products.shelfNumber}</p>
+        <p>{products.inStock}</p>
+      </div>
+    </div>
+  ));
 
-    return (
-        <div class='center'>
-            <>
-                <div class='SearchBox'>
-                    <input type='text' placeholder='Search...' className='Search' />
-                    <button class='FilterButton'>filter options</button>
-                </div>
-                <div className="ProductList">
-                    {listProducts}
-                </div>
-            </>
+  return (
+    <div class="center">
+      <>
+        <div class="SearchBox">
+          <input type="text" placeholder="Search..." className="Search" />
+          <button class="FilterButton">filter options</button>
         </div>
-    );
+        <div className="ProductList">{listProducts}</div>
+      </>
+    </div>
+  );
 };
 
 export default ProductSearch;
