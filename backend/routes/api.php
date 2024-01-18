@@ -36,6 +36,5 @@ Route::post('/roles/url', [RolesUrlsController::class, 'create']);
 // Route::delete('/{id}', [TodoController::class, 'destroy']);
 
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
-Route::middleware(['cors'])->group(function () {
-    Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
-});
+Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
+
