@@ -2,9 +2,10 @@ import { Link, Outlet } from "react-router-dom"
 import css from '../style/Sidebar.module.css';
 import wrap from '../style/WarehouseWrapper.module.css';
 import Cookies from "js-cookie";
+import Logout from "../global/Logout";
 
 const WarehouseWrapper = () => {
-	const isLoggedIn = Boolean(Cookies.get('token'));
+	// const isLoggedIn = Boolean(Cookies.get('token'));
     console.log(wrap);
 
   return (
@@ -20,7 +21,7 @@ const WarehouseWrapper = () => {
 				<Link to='reports'>Reports</Link>
 			</div>
 			<div className={css.auth}>
-				{isLoggedIn ? <button>Logout</button> : <Link to='login'>Logout</Link>}
+				<button onClick={Logout}>Logout</button>
 			</div>
 		</nav>
     </div>
