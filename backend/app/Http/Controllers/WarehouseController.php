@@ -10,6 +10,15 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class WarehouseController extends Controller
 {
+    public function getWarehouse($id)
+    {
+
+        return response()->json([
+            'success' => 'you did it :3',
+            'id' => $id
+        ]);
+    }
+
     public function create(Request $request, Warehouse $warehouse, $id)
     {
         $fullToken = $request->bearerToken();
@@ -40,19 +49,5 @@ class WarehouseController extends Controller
         }else {
             return response()->json(['error' => 'Fill all parameters.']);
         }
-
-
-        // var_dump($tokenId);
-        // if (!$loggedIn)
-        //     return response()->json([
-        //         'error' => 'Not logged in'
-        //     ], 200);
-
-        // echo $this->authController->status();
-
-        // Your processing logic here
-
-        // Return a response if needed
-        // return response()->json(['message' => 'Data received successfully']);
     }
 }

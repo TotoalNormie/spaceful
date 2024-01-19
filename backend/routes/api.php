@@ -35,6 +35,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::post('/roles', [RolesController::class, 'create']);
 Route::post('/roles/url', [RolesUrlsController::class, 'create']);
+Route::get('/warehouse/{id}', [WarehouseController::class, 'getWarehouse']);
 // Route::delete('/{id}', [TodoController::class, 'destroy']);
 
 Route::post('/products/create', [ProductsController::class, 'create']);
