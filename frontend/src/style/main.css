@@ -112,6 +112,11 @@ textarea {
 	form-sizing: normal;
 }
 
+a {
+	color: var(--main-color);
+	text-decoration: none;
+}
+
 ::-webkit-scrollbar {
 	width: 12px;
 }

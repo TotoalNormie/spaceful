@@ -6,7 +6,9 @@ const Sidebar = () => {
 	const isLoggedIn = Boolean(Cookies.get('token'));
 	const { WarehouseId } = useParams();
 
-	const link = `warehouse/${WarehouseId}/`
+	const noHeader = ['/login', '/register', '/createwarehouse']
+	// console.log(location.pathname);
+	if (noHeader.includes(location.pathname)) return null;
 
 	return (
 		<nav>
