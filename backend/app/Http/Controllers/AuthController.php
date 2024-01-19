@@ -163,6 +163,7 @@ class AuthController extends Controller
 
 
 
+
     function getWarehouses(Request $request){
         // $foundUser = User::where('name', $request->name)->select('id')->first();
         // $userId = 0;
@@ -210,4 +211,5 @@ class AuthController extends Controller
 
         return response()->json(['data' => $data]);
     }
+
 }

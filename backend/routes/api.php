@@ -29,13 +29,17 @@ Route::post('/warehouse/{id}/addtowarehouse', [WarehouseController::class, 'crea
 Route::post('/user', [AuthController::class, 'create']);
 Route::delete('/user/{id}', [AuthController::class, 'destroy']);
 Route::get('/status', [AuthController::class, 'status']);
-Route::get('/user/warehouses/', [AuthController::class, 'getWarehouses']);
+// Route::get('/user/warehouses/', [AuthController::class, 'getWarehouses']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::post('/roles', [RolesController::class, 'create']);
 Route::post('/roles/url', [RolesUrlsController::class, 'create']);
 // Route::delete('/{id}', [TodoController::class, 'destroy']);
+
+Route::post('/products/create', [ProductsController::class, 'create']);
+Route::delete('/products/delete/{id}', [ProductsController::class, 'destroy']);
+Route::post('/test/{id}', [ProductsController::class, 'update']);
 
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
 Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
