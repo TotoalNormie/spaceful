@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import style from '../style/Login.module.css';
 import flex from '../style/Flex.module.css';
 import logo from '../assets/logo.png';
@@ -17,56 +17,14 @@ const Login = () => {
 
 	// Cookies.remove('token');
 	useEffect(() => {
-    const checkLoginStatus = () => {
-      if (Cookies.get('token') !== undefined) {
-        navigate('/');
-      }
-    };
+		const checkLoginStatus = () => {
+			if (Cookies.get('token') !== undefined) {
+				navigate('/');
+			}
+		};
 
-    checkLoginStatus();
-  }, [navigate]);
-
-
-	// axios.post('http://localhost:8000/api/login', {
-	//     name: username,
-	//     password: password,
-	//     headers: {
-	//         'Authorization': 'Bearer ' + token
-	//       }
-	//     }
-	// )
-
-	// useEffect(
-	//   () => {
-	//     axios
-	//     .post("http://localhost:8000/api/login", {
-	//       name: username,
-	//       password: password,
-	//     })
-	//     .then(function (response) {
-	//       // console.log(response.data.token);
-	//       navigate("/");
-	//     })
-	//     .catch(function (error) {
-	//       console.log(error);
-	//       alert(error);
-	//     });
-	//   }, []);
-	// function checkLogin(){
-	//   axios
-	//     .post("http://localhost:8000/api/login", {
-	//       name: username,
-	//       password: password,
-	//     })
-	//     .then(function (response) {
-	//       // console.log(response.data.token);
-	//       navigate("/");
-	//     })
-	//     .catch(function (error) {
-	//       console.log(error);
-	//       alert(error);
-	//     });
-	// }
+		checkLoginStatus();
+	}, [navigate]);
 
 	function login() {
 		if (username == undefined && password == undefined) {
@@ -111,7 +69,9 @@ const Login = () => {
 								placeholder='Username'
 								name='name'
 								value={username}
-								onChange={e => setUsername(e.target.value)}></input>
+								onChange={e => setUsername(e.target.value)}
+								className={style.input}
+							/>
 							{usernameError && (
 								<p className={style.error}>Username can't be empty.</p>
 							)}
@@ -127,7 +87,9 @@ const Login = () => {
 								placeholder='Password'
 								name='password'
 								value={password}
-								onChange={e => setPassword(e.target.value)}></input>
+								onChange={e => setPassword(e.target.value)}
+								className={style.input}
+							/>
 							{passError && <p className={style.error}>Password can't be empty.</p>}
 						</div>
 					</div>
@@ -136,6 +98,9 @@ const Login = () => {
 					Sign In
 				</button>
 				<img src={logo} className={[style.logo].join(' ')} />
+				<p className={style.redirect}>
+					Don’t have an account? <Link to='/register'>Sign Up here!</Link>
+				</p>
 			</div>
 		</div>
 	);
