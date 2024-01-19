@@ -1,8 +1,40 @@
 import React from 'react';
 import css from "../style/AddNewProduct.module.css";
+import axios from 'axios';
 
+//laika funkcija lai noteiktu datumu un ievietotu <input>
 var curr = new Date();
 var date = curr.toISOString().substring(0,10);
+
+const AddProductInWarehouse = () => {
+    const [product, setProduct] = useState('');
+    const [warehouse, setWarehouse] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [supplier, setSupplier] = useState('');
+    const [date, setDate] = useState('');
+    const navigate = useNavigate();
+
+    const insert = e => {
+        e.preventDefault();
+        const result = axios
+            .post(
+                'http://localhost:8000/api/add-product/insert',
+                {
+                    withCredentials: true,   
+                },
+                config
+            )
+            .then(function (response) {
+                //success
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                //fail
+                alert('Failed to add product in warehouse!');
+                console.error(error);
+            });
+    };
+}
 
 const AddToWarehouse = () => {
 	return (

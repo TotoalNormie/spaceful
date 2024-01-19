@@ -37,4 +37,3 @@ Route::post('/roles/url', [RolesUrlsController::class, 'create']);
 
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
 Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
-
