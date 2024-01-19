@@ -1,45 +1,23 @@
 nav {
-	background-color: var(--gray);
-	/* left: 100%; */
-	position: absolute;
-	height: 100%;
-	top: 0;
-	right: 0;
-	display: none;
-	transition: right 0.2s ease-in-out;
-	& .sticky {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		padding: 1rem 2rem;
-		position: sticky;
-		top: 0px;
-	}
-	& a,
-	button {
-		text-decoration: none;
-		color: inherit;
-		padding: 0.5rem 2rem;
-		border: 2px solid white;
-		border-radius: 0.5rem;
-		background: none;
-		cursor: pointer;
-		transition: background-color 0.3s ease;
-		&:hover {
-			background-color: var(--light-gray);
-		}
-	}
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: var(--gray);
 }
 
 .buttons {
-	display: grid;
-	gap: 0.5rem;
-}
-
-.auth {
-	display: grid;
-}
-
-.seen {
-	display: initial;
+    display: grid;
+    gap: .5rem;
+    & a {
+        text-decoration: none;
+        color: inherit;
+        padding: .5rem 1rem;
+        border: 1px solid white;
+        border-radius: .5rem;
+        &:hover {
+            background-color: var(--light-gray);
+        }
+    }
 }

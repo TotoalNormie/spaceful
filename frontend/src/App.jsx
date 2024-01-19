@@ -1,4 +1,4 @@
-import { BrowserRouter, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import './style/main.css';
 import Home from './components/Home';
 import Header from './components/Header';
@@ -16,32 +16,17 @@ import ProductSearch from "./components/ProductSearch";
 import WarehouseApp from './components/WarehouseApp';
 import Sidebar from './components/Sidebar';
 import WarehouseWrapper from './components/WarehouseWrapper';
-import { useState } from 'react';
-
-const WarehouseCheck = () => {
-	const location = useLocation();
-	const route = location.pathname.split('/')[0];
-	console.log(route);
-	const isWarehouse  = route === 'warehouse';
-
-};
 
 function App() {
 	const isLoggedIn = Boolean(Cookies.get('token'));
-	const [sidebarSeen, setSidebarSeen] = useState(false);
-
-	const toggleSidebar = () => {
-		setSidebarSeen(!sidebarSeen);
-	};
 	const isWarehouse = () => {
 		const location = useLocation();
 		const route = location.pathname.split('/')[0];
 		console.log(route);
-		return route === 'warehouse';
 	};
 	return (
 		<BrowserRouter>
-			<Header hamburger={toggleSidebar} />
+			<Header />
 			<main>
 				<Routes>
 					<Route path='/' element={<Home />} />
@@ -82,10 +67,8 @@ function App() {
 					<Route path='*' element={<Error404 />} />
 		  <Route exact path='/ProductSearch' element={<ProductSearch/>} />
 				</Routes>
-				<Sidebar seen={sidebarSeen}>
-					<NavLink to='/'>root</NavLink>
-				</Sidebar>
 			</main>
+			<Sidebar />
 			{/* {isLoggedIn ? <Sidebar /> : null} */}
 		</BrowserRouter>
 	);

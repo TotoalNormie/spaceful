@@ -1,27 +1,31 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Link, Outlet } from "react-router-dom"
 import css from '../style/Sidebar.module.css';
 import wrap from '../style/WarehouseWrapper.module.css';
-import Cookies from 'js-cookie';
-import Logout from '../global/Logout';
-import Sidebar from './Sidebar';
+import Cookies from "js-cookie";
+import Logout from "../global/Logout";
 
-const WarehouseWrapper = ({ seen }) => {
+const WarehouseWrapper = () => {
 	// const isLoggedIn = Boolean(Cookies.get('token'));
-	console.log(wrap);
+    console.log(wrap);
 
-	return (
-		<div className={wrap.wrapper}>
-			<div>
-				<Outlet />
+  return (
+    <div className={wrap.wrapper}>
+        <div>
+        <Outlet/>
+        </div>
+        <nav>
+			<div className={css.buttons}>
+				<Link to='addnewproduct'>Add new product</Link>
+				<Link to='addtowarehouse'>Add to warehouse</Link>
+				<Link to=''>main</Link>
+				<Link to='reports'>Reports</Link>
 			</div>
-			<Sidebar seen={seen}>
-				<NavLink to=''>Main</NavLink>
-				<NavLink to='addnewproduct'>Add new product</NavLink>
-				<NavLink to='addtowarehouse'>Add to warehouse</NavLink>
-				<NavLink to='reports'>Reports</NavLink>
-			</Sidebar>
-		</div>
-	);
-};
+			<div className={css.auth}>
+				<button onClick={Logout}>Logout</button>
+			</div>
+		</nav>
+    </div>
+  )
+}
 
-export default WarehouseWrapper;
+export default WarehouseWrapper
