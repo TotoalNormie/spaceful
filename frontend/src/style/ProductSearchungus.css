@@ -1,0 +1,100 @@
+/* 
+body {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+
+} */
+.center {
+  width: min(60rem, 100%);
+  margin: 0 auto;
+}
+
+.SearchBox {
+    display:flex;
+    align-items: center;
+}
+
+.Search {  
+    border-radius: 10px;
+    border: solid #4A55A2 6px; 
+    margin: 10px;
+    width: 100%;
+}
+
+.FilterButton {
+    width: 10rem;
+    height: 1.9rem;
+    color: white;
+    background-color: #4A55A2;
+    border-radius: 6px;
+    border: solid #4A55A2;
+    cursor: pointer;
+}
+
+.ProductBox {
+    flex-direction: row;
+    /* width: 18rem; */
+    /* height: 13rem; */
+    background: #393939;
+    opacity: 80%;
+    margin: 10px;
+    padding: 10px;
+
+
+}
+
+.ProductList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+@media only screen and (max-width: 600px) {
+
+
+}
+
+.ProductInfo {
+    display: flex;
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    
+    
+}
+.wrapper2 {
+    /* display: flex;
+    justify-content: center; */
+    padding-inline:1rem;
+    
+}
+
+img {
+    /* display: flex; */
+    width: 100%;
+    
+}
+
+.FilterHeader {
+background-color: #4A55A2;
+opacity: 80%;
+width: 100%;
+
+
+}
+
+.FilterBox {
+    display:flex;
+    width: 80%;
+}
+
+.Filters {
+    background-color: #545660;
+    opacity: 80%;
+    width: 100%;
+}
