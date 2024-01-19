@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import './style/main.css';
 import Home from './components/Home';
@@ -14,39 +13,10 @@ import Reports from './components/Reports';
 import EditProfile from './components/EditProfile';
 import CreateWarehouse from './components/CreateWarehouse';
 import Error404 from './components/Error404';
-import axios from 'axios';
 import Cookies from 'js-cookie';
-
-// Nested component for '/nested' route
-const NestedComponent = () => {
-	const { warehouseId } = useParams();
-	// const [name, setName] = useState('');
-	// const [description, setDescription] = useState('');
-	// const config = {
-	// 	headers: { Authorization: `Bearer ${Cookies.get('token')}` },
-	// };
-	// axios
-	// 	.get(
-	// 		`http://localhost:8000/api/warehouse-app/${warehouseId}`,
-	// 		{
-	// 			withCredentials: true,
-	// 		},
-	// 		config
-	// 	)
-	// 	.then(function (response) {
-	// 		console.log(response.data);
-	// 		set
-	// 	})
-	// 	.catch(function (error) {
-	// 		console.log(error);
-	// 		// alert(error);
-	// 	});
-	return (
-		<div>
-			<p>warehouse ID: {warehouseId}</p>
-		</div>
-	);
-};
+import WarehouseApp from './components/WarehouseApp';
+import Sidebar from './components/Sidebar';
+import WarehouseWrapper from './components/WarehouseWrapper';
 
 function App() {
 	const isLoggedIn = Boolean(Cookies.get('token'));
@@ -64,16 +34,18 @@ function App() {
 					<Route path='/reports' element={<Reports />} />
 					<Route path='/createwarehouse' element={<CreateWarehouse />} />
 					<Route exact path='/editprofile' element={<EditProfile />} />
-					<Route path='/warehouse/:warehouseId/'element={!isLoggedIn && <Navigate replace to='/'/> }>
-						<Route path='' element={<NestedComponent />} />
-						<Route path='status' element={<Status />} />
-						<Route path='addnewproduct' element={<AddNewProduct />} />
-						<Route path='addtowarehouse' element={<AddToWarehouse />} />
-						<Route path='reports' element={<Reports />} />
-					</Route>
+					{isLoggedIn ? (
+						<Route path='/warehouse/:warehouseId/*' element={<WarehouseWrapper/>}>
+							<Route index element={<WarehouseApp />} />
+							<Route path='addnewproduct' element={<AddNewProduct />} />
+							<Route path='addtowarehouse' element={<AddToWarehouse />} />
+							<Route path='reports' element={<Reports />} />
+						</Route>
+					) : null}
 					<Route path='*' element={<Error404 />} />
 				</Routes>
 			</main>
+			{/* {isLoggedIn ? <Sidebar /> : null} */}
 		</BrowserRouter>
 	);
 }
