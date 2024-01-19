@@ -7,9 +7,6 @@ import style from "../style/Login.module.css";
 
 const Logout = () => {
 
-  const [axiosError, setAxiosError] = useState(false);
-  const [axiosMessage, setAxiosMessage] = useState('');
-
   const config = {
       headers: { Authorization: `Bearer ${Cookies.get('token')}` }
   };
@@ -28,8 +25,8 @@ const Logout = () => {
     })
     .catch(function (error) {
       //fail
-      setAxiosError(true);
-      setAxiosMessage(error.response.data.error);
+      // setAxiosError(true);
+      // setAxiosMessage(error.response.data.error);
       console.error(error.response.data.error);
       // alert(error.response.data.error);
       // return navigate('/login');
@@ -65,14 +62,6 @@ const Logout = () => {
   //       return navigate('/login');
   //     });
   // });
-  return (
-    <>
-    {axiosError &&
-    <p className={style.error}>{axiosMessage}</p>
-    }
-    </>
-  )
-
 
 }
 

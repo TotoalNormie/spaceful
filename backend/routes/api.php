@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/', [ProductsController::class, 'show']);
+Route::get('/products/{id}', [ProductsController::class, 'show']);
 
 Route::post('/user', [AuthController::class, 'create']);
 Route::delete('/user/{id}', [AuthController::class, 'destroy']);
@@ -41,6 +41,4 @@ Route::delete('/products/delete/{id}', [ProductsController::class, 'destroy']);
 Route::post('/test/{id}', [ProductsController::class, 'update']);
 
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
-Route::middleware(['cors'])->group(function () {
 Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
-});
