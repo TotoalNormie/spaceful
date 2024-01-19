@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RolesUrlsController;
 use App\Http\Controllers\WarehouseAppController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/products/{id}', [ProductsController::class, 'show']);
 Route::get('/user', [AuthController::class, 'getUserData']);
-
+Route::post('/warehouse/{id}/addtowarehouse', [WarehouseController::class, 'create']);
 Route::post('/user', [AuthController::class, 'create']);
 Route::delete('/user/{id}', [AuthController::class, 'destroy']);
 Route::get('/status', [AuthController::class, 'status']);

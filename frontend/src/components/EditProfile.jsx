@@ -10,10 +10,11 @@ const EditProfile = () => {
         headers: { Authorization: `Bearer ${Cookies.get('token')}` }
     };
 
+    console.log(config);
+
     const result = axios
             .get(
                 'http://localhost:8000/api/user',
-
                 config
             )
             .then(function (response) {
