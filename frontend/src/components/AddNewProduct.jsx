@@ -1,10 +1,11 @@
-import React from 'react';
+import { useState } from 'react';
 import css from "../style/AddNewProduct.module.css";
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const NewProduct = () => {
+const AddNewProduct = () => {
     const [product, setProduct] = useState('');
-    const [price, setprice] = useState('');
+    const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [image, setImage] = useState('');
@@ -31,27 +32,57 @@ const NewProduct = () => {
                 console.error(error);
             });
     };
-}
 
-const AddNewProduct = () => {
 	return (
         <>
             <div className={css.mainContainer}>
                 <h1>Add new product</h1>
                 <div className={css.inputContainer}>
-                    <div className={css.splitContainer}>
-                        <input className={css.input} type='text' placeholder='Product' />
-                        <input className={css.input} type='text' placeholder='Product price' />
-                    </div>
-                    <div className={css.splitContainer}>
-                        <input className={css.input} type='text' placeholder='Product description' />
-                        <input className={css.input} type='text' placeholder='Product quantity' />
-                    </div>
-                    <div className={css.splitContainer}>
-                        <input className={css.input} type='text' placeholder='Product image' />
-                        <textarea className={css.textarea} type='text'  placeholder='Other information about product' />
-                    </div>
-                    <button className={css.button}>Add new product</button>
+                    <form className={css.form} onSubmit={insert}>
+                        <div className={css.splitContainer}>
+                            <input className={css.input} 
+                                type='text' 
+                                placeholder='Product' 
+                                onChange={e => setProduct(e.target.value)}
+                                value={product}
+                            />
+                            <input className={css.input} 
+                                type='text' 
+                                placeholder='Product price' 
+                                onChange={e => setPrice(e.target.value)}
+                                value={price}
+                            />
+                        </div>
+                        <div className={css.splitContainer}>
+                            <input className={css.input} 
+                                type='text' 
+                                placeholder='Product description' 
+                                onChange={e => setDescription(e.target.value)}
+                                value={description}
+                            />
+                            <input className={css.input} 
+                                type='text' 
+                                placeholder='Product quantity' 
+                                onChange={e => setQuantity(e.target.value)}
+                                value={quantity}
+                            />
+                        </div>
+                        <div className={css.splitContainer}>
+                            <input className={css.input} 
+                                type='text' 
+                                placeholder='Product image' 
+                                onChange={e => setImage(e.target.value)}
+                                value={image}
+                            />
+                            <textarea className={css.textarea} 
+                                type='text'  
+                                placeholder='Other information about product' 
+                                onChange={e => setOther(e.target.value)}
+                                value={other}
+                            />
+                        </div>
+                        <button className={css.button}>Add new product</button>
+                    </form>
                 </div>
             </div>
         </>
