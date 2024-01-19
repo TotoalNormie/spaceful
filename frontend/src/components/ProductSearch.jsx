@@ -82,7 +82,7 @@ const ProductSearch = () => {
         <p>{products.id}</p>
       </div>
       <div className="wrapper2">
-        cd
+        
         {products.img}
       </div>
       <div className="wrapper">
@@ -101,6 +101,16 @@ const ProductSearch = () => {
         </div>
         <div className="ProductList">{listProducts}</div>
       </>
+
+      <div className="FilterBox">
+        <div className="FilterHeader"></div>
+        <div className="Filters"></div>
+        <div className="Filters"></div>
+        <div className="Filters"></div>
+        <div className="Filters"></div>
+      </div>
+
+
     </div>
   );
 };

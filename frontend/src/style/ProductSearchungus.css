@@ -32,13 +32,12 @@ body {
     border-radius: 6px;
     border: solid #4A55A2;
     cursor: pointer;
-
 }
 
 .ProductBox {
     flex-direction: row;
     /* width: 18rem; */
-    height: 13rem;
+    /* height: 13rem; */
     background: #393939;
     opacity: 80%;
     margin: 10px;
@@ -69,14 +68,33 @@ body {
     
 }
 .wrapper2 {
-    display: flex;
-    justify-content: center;
-    
+    /* display: flex;
+    justify-content: center; */
+    padding-inline:1rem;
     
 }
 
 img {
-    display: flex;
-    width: 70%;
+    /* display: flex; */
+    width: 100%;
     
+}
+
+.FilterHeader {
+background-color: #4A55A2;
+opacity: 80%;
+width: 100%;
+
+
+}
+
+.FilterBox {
+    display:flex;
+    width: 80%;
+}
+
+.Filters {
+    background-color: #545660;
+    opacity: 80%;
+    width: 100%;
 }
