@@ -1,8 +1,31 @@
 import React, { useState } from 'react';
 import css from "../style/EditProfile.module.css";
 import { X } from "@phosphor-icons/react"
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const EditProfile = () => {
+
+    const config = {
+        headers: { Authorization: `Bearer ${Cookies.get('token')}` }
+    };
+
+    const result = axios
+            .get(
+                'http://localhost:8000/api/user',
+
+                config
+            )
+            .then(function (response) {
+                //success
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                //fail
+                // alert('Failed to add new product!');
+                console.error(error);
+            });
+
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordDisplay = () => {
