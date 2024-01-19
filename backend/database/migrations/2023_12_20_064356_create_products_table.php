@@ -19,10 +19,10 @@ return new class extends Migration
             $table->foreignIdFor(Categories::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(warehouse_app::class)->constrained()->cascadeOnDelete();
             // $table->integer('productId');
-            $table->float('price');
-            $table->float('weight');
+            $table->decimal('price', 6, 2 );
+            $table->decimal('weight', 6, 2);
             $table->string('supplier');
-            $table->string('supplierDescription');
+            $table->string('supplierDescription')->nullable();
             $table->timestamps();
         });
     }

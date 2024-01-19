@@ -161,36 +161,5 @@ class AuthController extends Controller
         }
     }
 
-    function getWarehouses(Request $request){
-        // $foundUser = User::where('name', $request->name)->select('id')->first();
-        // $userId = 0;
-        // if(!$foundUser){
-        //     return response()->json([
-        //         'error' => 'User not found'
-        //     ], 500);
-        // }else{
-        //     $userId = $foundUser->id;
-        // }
 
-        if (!Auth::check()) {
-            return response()->json([
-                'error' => 'user not logged in'
-            ], 401);
-        }
-
-        return response()->json([
-            'userId' => Auth::id()
-        ], 200);
-
-        // $found = User::join('warehouses', 'users.id',  '=', 'warehouses.managerId')->select('warehouses.id')->where('users.id', Auth::id())->get();
-        // if($found){
-        //     $temp = [];
-        //     foreach($found as $foundWarehouses){
-        //         array_push($temp, $foundWarehouses->id);
-        //     }
-        //     return response()->json([
-        //         'message' => $temp
-        //     ], 200);
-        // }
-    }
 }
