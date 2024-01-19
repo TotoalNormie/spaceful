@@ -18,9 +18,12 @@ return new class extends Migration
             $table->boolean('write')->default(0);
             $table->boolean('manageUser')->default(0);
             $table->boolean('manageRoles')->default(0);
+            $table->boolean('managePermissions')->default(0);
+            $table->boolean('createReports')->default(0);
+            $table->boolean('createOrders')->default(0);
+            $table->boolean('manageCategories')->default(0);
             $table->timestamps();
         });
-
         
     }
 

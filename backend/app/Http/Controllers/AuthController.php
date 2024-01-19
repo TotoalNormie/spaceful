@@ -161,6 +161,9 @@ class AuthController extends Controller
         }
     }
 
+
+
+
     function getWarehouses(Request $request){
         // $foundUser = User::where('name', $request->name)->select('id')->first();
         // $userId = 0;
@@ -193,4 +196,20 @@ class AuthController extends Controller
         //     ], 200);
         // }
     }
+
+    function getUserData(Request $request){
+        $fullToken = $request->bearerToken();
+        $tokenId = explode("|", $fullToken);
+        $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
+
+        if (!$token) {
+            return response()->json(['error' => 'not logged in'], 500);
+        }
+
+        $user_id = $token->tokenable_id;
+        $data = User::find($user_id);
+
+        return response()->json(['data' => $data]);
+    }
+
 }

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->boolean('status');
             $table->float('sum');
             $table->timestamps();
-            // $table->integer('productId');
         });
     }
 

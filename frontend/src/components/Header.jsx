@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
 	const location = useLocation();
 	const noHeader = ['/login', '/register', '/createwarehouse']
-	console.log(location.pathname);
+	// console.log(location.pathname);
 	if (noHeader.includes(location.pathname)) return null;
 	return (
 		<header>
