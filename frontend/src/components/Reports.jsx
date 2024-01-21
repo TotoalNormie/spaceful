@@ -25,6 +25,8 @@ const Reports = () => {
                     </div>
                 </div>
                 <button className={css.convertButton}>Convert to xml</button>
+                <button className={css.convertButton}><a href='/reports/products'>View Products Report</a></button>
+                <button className={css.convertButton}><a href='/reports/warehouse'>View Warehouses Report</a></button>
             </div>
         </>
     )
