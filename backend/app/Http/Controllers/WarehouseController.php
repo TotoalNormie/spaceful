@@ -6,7 +6,6 @@ use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
-use App\Models\Warehouse;
 use App\Models\warehouse_app;
 use Illuminate\Support\Facades\DB;
 
@@ -44,15 +43,8 @@ class WarehouseController extends Controller
     }
 
     public function create(Request $request, Warehouse $warehouse, $id)
-
-    public function create(Request $request)
     {
-        // $data = $request->all();
 
-        // print_r($data);
-
-        // $loggedIn = Auth::check();
-        // echo 'user:';
         $fullToken = $request->bearerToken();
         $tokenId = explode("|", $fullToken);
         $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
