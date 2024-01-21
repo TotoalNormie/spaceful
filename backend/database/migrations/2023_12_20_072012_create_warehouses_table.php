@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(warehouse_app::class)->constrained()->cascadeOnDelete();
             $table->string('shelfId', 25);
             $table->string('amount');
+            $table->date('date');
             $table->timestamps();
         });
     }

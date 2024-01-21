@@ -12,6 +12,7 @@ import EditProfile from './components/EditProfile';
 import CreateWarehouse from './components/CreateWarehouse';
 import Error404 from './components/Error404';
 import Cookies from 'js-cookie';
+import ProductSearch from "./components/ProductSearch";
 import WarehouseApp from './components/WarehouseApp';
 import Sidebar from './components/Sidebar';
 import WarehouseWrapper from './components/WarehouseWrapper';
@@ -52,6 +53,7 @@ function App() {
 									<Route path='addnewproduct' element={<AddNewProduct />} />
 									<Route path='addtowarehouse' element={<AddToWarehouse />} />
 									<Route path='reports' element={<Reports />} />
+                  <Route path='productsearch' element={<ProductSearch/>} />
 								</Route>,
 								<Route path='/createwarehouse' element={<CreateWarehouse />} />,
 								<Route exact path='/editprofile' element={<EditProfile />} />,
@@ -71,6 +73,7 @@ function App() {
 								/>,
 						  ]}
 					<Route path='*' element={<Error404 />} />
+		  <Route exact path='/ProductSearch' element={<ProductSearch/>} />
 				</Routes>
 			</main>
 			<Sidebar />
