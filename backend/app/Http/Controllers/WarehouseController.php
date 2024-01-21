@@ -6,11 +6,19 @@ use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Models\Warehouse;
 
 
 class WarehouseController extends Controller
 {
+    function report($id){
+        // $warehouse->join('products', 'warehouses.products_id', '=', 'products.id')->select('warehouses.*')->get();
+        $warehouse = Warehouse::where('warehouses.id', $id)->join('products', 'warehouses.products_id', '=', 'products.id')->select('warehouses.amount', 'products.name', 'warehouses.shelfId')->get();
+        return response()->json($warehouse);
+    }
+  
     public function getWarehouse($id)
+
     {
 
         return response()->json([

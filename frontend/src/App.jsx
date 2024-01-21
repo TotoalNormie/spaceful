@@ -16,6 +16,8 @@ import ProductSearch from './components/ProductSearch';
 import WarehouseApp from './components/WarehouseApp';
 import Sidebar from './components/Sidebar';
 import WarehouseWrapper from './components/WarehouseWrapper';
+import WarehouseReport from './components/WarehouseReport';
+import ProductsReport from './components/ProductsReport';
 import { useState } from 'react';
 
 const WarehouseCheck = ({ children }) => {
@@ -39,6 +41,10 @@ function App() {
 			<Header hamburger={toggleSidebar} />
 			<main>
 				<Routes>
+					{/* atskaites */}
+					<Route path='/reports/warehouse' element={<WarehouseReport />} />
+					<Route path='/reports/products' element={<ProductsReport />} />
+
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
