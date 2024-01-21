@@ -24,7 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::get('/products/', [ProductsController::class, 'show']);
+
+Route::get('/user', [AuthController::class, 'getUserData']);
+Route::post('/warehouse/{id}/addtowarehouse', [WarehouseController::class, 'create']);
+
 Route::post('/user', [AuthController::class, 'create']);
 Route::delete('/user/{id}', [AuthController::class, 'destroy']);
 Route::get('/status', [AuthController::class, 'status']);
@@ -34,6 +39,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::post('/roles', [RolesController::class, 'create']);
 Route::post('/roles/url', [RolesUrlsController::class, 'create']);
+Route::get('/warehouse/{id}', [WarehouseController::class, 'getWarehouse']);
 // Route::delete('/{id}', [TodoController::class, 'destroy']);
 
 Route::post('/products/create', [ProductsController::class, 'create']);

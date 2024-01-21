@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -15,34 +16,46 @@ class WarehouseController extends Controller
         $warehouse = Warehouse::where('warehouses.id', $id)->join('products', 'warehouses.products_id', '=', 'products.id')->select('warehouses.amount', 'products.name', 'warehouses.shelfId')->get();
         return response()->json($warehouse);
     }
-    public function create(Request $request)
+  
+    public function getWarehouse($id)
+
     {
-        $data = $request->all();
 
-        // print_r($data);
+        return response()->json([
+            'success' => 'you did it :3',
+            'id' => $id
+        ]);
+    }
 
-        // $loggedIn = Auth::check();
-        // echo 'user:';
+    public function create(Request $request, Warehouse $warehouse, $id)
+    {
         $fullToken = $request->bearerToken();
         $tokenId = explode("|", $fullToken);
         $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
         // var_dump($token);
-        if($token){
-            return response()->json(['success' => $token]);
-        }else{
+        if(!$token){
             return response()->json(['error' => 'not logged in']);
         }
-        // var_dump($tokenId);
-        // if (!$loggedIn)
-        //     return response()->json([
-        //         'error' => 'Not logged in'
-        //     ], 200);
 
-        // echo $this->authController->status();
+        $request->validate([
+            'product' => 'required|string',
+            'quantity' => 'required|integer',
+            'supplier' => 'required|string',
+            'product_id' => 'required|integer',
+            'date' => 'required|date',
+        ]);
 
-        // Your processing logic here
+        $warehouse->product = $request->product;
+        $warehouse->quantity = $request->quantity;
+        $warehouse->warehouse_app_id = $id;
+        $warehouse->product_id = $request->product_id;
+        $warehouse->supplier = $request->supplier;
+        $warehouse->date = $request->date;
 
-        // Return a response if needed
-        // return response()->json(['message' => 'Data received successfully']);
+        if($warehouse->save()){
+            return response()->json(['success' => 'Product added to warehouse.']);
+        }else {
+            return response()->json(['error' => 'Fill all parameters.']);
+        }
     }
 }
