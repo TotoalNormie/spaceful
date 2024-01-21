@@ -43,5 +43,5 @@ Route::post('/test/{id}', [ProductsController::class, 'update']);
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
 Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
 // atskaites
-Route::get('/warehouse/report/{id}', [WarehouseController::class, 'report']);
+Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);

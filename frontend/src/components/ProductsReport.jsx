@@ -44,7 +44,7 @@ const ProductsReport = () => {
             </tr>
         </thead>
         <tbody>
-                {products.map(product => <><tr><td key={product.name}>{product.name}</td><td>{product.categoryName}</td><td>{Math.round((product.price + Number.EPSILON) * 100)/100}</td><td>{product.supplier}</td><td>{product.weight} Kg</td></tr></>)}
+                {products.map(product => <><tr><td key={product.name}>{product.name}</td><td>{product.categoryName}</td><td>{Math.round(product.price * 100)/100}</td><td>{product.supplier}</td><td>{product.weight} Kg</td></tr></>)}
             {/* <tr>
                 <td>Product name</td>
                 <td>Product price</td>

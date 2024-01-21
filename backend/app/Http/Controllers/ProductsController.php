@@ -27,6 +27,7 @@ class ProductsController extends Controller
             'price' => ['required', 'decimal:1,2', 'min:0.01'],
             'weight' => ['required', 'decimal:1,2', 'min:0.01'],
             'supplier' => ['required', 'string'],
+            'appId' => ['required', 'integer'],
             'supplier_description' => ['string'],
             'category' => ['integer'],
         ]);
@@ -44,6 +45,7 @@ class ProductsController extends Controller
         $product->weight = $request->weight;
         $product->supplier = $request->supplier;
         $product->supplierDescription = $request->supplier_description;
+        $product->warehouse_app_id = $request->appId;
         if(empty($request->category)){
             $product->categories_id = 1;
         }

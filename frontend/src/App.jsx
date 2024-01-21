@@ -17,6 +17,7 @@ import Sidebar from './components/Sidebar';
 import WarehouseWrapper from './components/WarehouseWrapper';
 import WarehouseReport from './components/WarehouseReport';
 import ProductsReport from './components/ProductsReport';
+import Test from './components/Test';
 
 function App() {
 	const isLoggedIn = Boolean(Cookies.get('token'));
@@ -33,6 +34,7 @@ function App() {
 					{/* atskaites */}
 					<Route path='/reports/warehouse' element={<WarehouseReport />} />
 					<Route path='/reports/products' element={<ProductsReport />} />
+					<Route path='/test' element={<Test />} />
 
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />

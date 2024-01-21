@@ -48,7 +48,7 @@ class RoleSeeder extends Seeder
             'manageCategories' => true
         ]);
         DB::table('users')->insert([
-            'name' => 'Default',
+            'name' => 'amog',
             'password' => '$argon2id$v=19$m=65536,t=4,p=1$V3hocGpmbTRobmJsLnAvYw$ZUTkpVTisNKg7PXzEV+3eoqiHpQUERrODyGM1VLHMxQ',
             'roles_id' => 1,
         ]);
