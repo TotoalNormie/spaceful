@@ -23,9 +23,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/products/{id}', [ProductsController::class, 'show']);
+
+
+Route::get('/products/', [ProductsController::class, 'show']);
+
 Route::get('/user', [AuthController::class, 'getUserData']);
 Route::post('/warehouse/{id}/addtowarehouse', [WarehouseController::class, 'create']);
+
 Route::post('/user', [AuthController::class, 'create']);
 Route::delete('/user/{id}', [AuthController::class, 'destroy']);
 Route::get('/status', [AuthController::class, 'status']);
@@ -44,3 +48,6 @@ Route::post('/test/{id}', [ProductsController::class, 'update']);
 
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
 Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
+// atskaites
+Route::get('/warehouse/report/{id}', [WarehouseController::class, 'report']);
+Route::get('/products/report/', [ProductsController::class, 'report']);

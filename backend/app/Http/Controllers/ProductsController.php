@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -12,7 +13,12 @@ class ProductsController extends Controller
     function show(){
         $products = Products::all();
         return response()->json($products);
-        // return view('products');
+    }
+
+    function report(){
+        $products = DB::table('products')->join('categories', 'products.categories_id', '=', 'categories.id')->select('products.name', 'categories.categoryName', 'products.price', 'products.weight', 'products.supplier')->get();
+        // $products = Products::where(1)->join('categories', 'products.categories_id', '=', 'categories.id')->select('products.name', 'categories.categoryName', 'products.price', 'products.weight', 'products.supplier')->get();
+        return response()->json($products);
     }
 
     function create(Request $request){
