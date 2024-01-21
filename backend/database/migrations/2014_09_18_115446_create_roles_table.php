@@ -14,14 +14,11 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('roleName');
-            $table->boolean('read')->default(1);
-            $table->boolean('write')->default(0);
-            $table->boolean('manageUser')->default(0);
-            $table->boolean('manageRoles')->default(0);
-            $table->boolean('managePermissions')->default(0);
-            $table->boolean('createReports')->default(0);
-            $table->boolean('createOrders')->default(0);
-            $table->boolean('manageCategories')->default(0);
+            $table->boolean('addnewproduct')->default(true);
+            $table->boolean('addtowarehouse')->default(true);
+            $table->boolean('reports')->default(true);
+            $table->boolean('itemsearch')->default(true);
+            $table->boolean('productsearch')->default(true);
             $table->timestamps();
         });
         

@@ -161,10 +161,7 @@ class AuthController extends Controller
         }
     }
 
-
-
-
-    function getWarehouses(Request $request){
+    function getWarehouses(Request $request, User $user){
         // $foundUser = User::where('name', $request->name)->select('id')->first();
         // $userId = 0;
         // if(!$foundUser){
@@ -212,4 +209,36 @@ class AuthController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    function createWorker(Request $request, User $user) {
+        $request->validate([
+            'name' => 'required|string',
+            'password' => 'required|string',
+            'email' => 'string',
+            'roles_id' => 'integer',
+        ]);
+
+        $found = User::where('name', $request->name)->first();
+        if($found){
+            return response()->json([
+                'error' => 'User already in database.'
+            ], 404);
+        }
+        $email = User::where('email', $request->email)->first();
+        if($email){
+            return response()->json([
+                'error' => 'User with that email aleady exists.'
+            ], 404);
+        }
+
+        // $user = new User();
+        $user->name = $request->name;
+        $user->password = Hash::make($request->password);
+        $user->email = $request->email;
+
+        if(empty($request->roles_id)){
+            $user->roles_id = 1;
+        }else{
+            $user->roles_id = $request->roles_id;
+        }
+    }
 }
