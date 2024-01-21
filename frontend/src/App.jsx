@@ -15,6 +15,8 @@ import Cookies from 'js-cookie';
 import WarehouseApp from './components/WarehouseApp';
 import Sidebar from './components/Sidebar';
 import WarehouseWrapper from './components/WarehouseWrapper';
+import WarehouseReport from './components/WarehouseReport';
+import ProductsReport from './components/ProductsReport';
 
 function App() {
 	const isLoggedIn = Boolean(Cookies.get('token'));
@@ -28,6 +30,10 @@ function App() {
 			<Header />
 			<main>
 				<Routes>
+					{/* atskaites */}
+					<Route path='/reports/warehouse' element={<WarehouseReport />} />
+					<Route path='/reports/products' element={<ProductsReport />} />
+
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
