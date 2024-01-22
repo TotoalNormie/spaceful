@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('reports')->default(true);
             $table->boolean('itemsearch')->default(true);
             $table->boolean('productsearch')->default(true);
+            $table->boolean('orders')->default(true);
             $table->timestamps();
         });
         
