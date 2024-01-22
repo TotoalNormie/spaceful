@@ -10,6 +10,9 @@ const AddNewProduct = () => {
     const [quantity, setQuantity] = useState('');
     const [image, setImage] = useState('');
     const [other, setOther] = useState('');
+    const { warehouseId } = useParams();
+    const [appId, setAppId] = useState(warehouseId);
+    setAppId()
     const navigate = useNavigate();
 
     const insert = e => {
@@ -80,6 +83,7 @@ const AddNewProduct = () => {
                                 onChange={e => setOther(e.target.value)}
                                 value={other}
                             />
+                            <input type="hidden" name="appId" value={warehouseId}/>
                         </div>
                         <button className={css.button}>Add new product</button>
                     </form>

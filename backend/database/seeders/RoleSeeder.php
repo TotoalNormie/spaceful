@@ -50,7 +50,7 @@ class RoleSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'amog',
             'password' => '$argon2id$v=19$m=65536,t=4,p=1$V3hocGpmbTRobmJsLnAvYw$ZUTkpVTisNKg7PXzEV+3eoqiHpQUERrODyGM1VLHMxQ',
-            'roles_id' => 1,
+            'roles_id' => 3,
         ]);
         DB::table('categories')->insert([
             'id' => 1,
