@@ -40,10 +40,9 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::post('/roles', [RolesController::class, 'create']);
 Route::post('/roles/url', [RolesUrlsController::class, 'create']);
-Route::get('/warehouse/{id}', [WarehouseController::class, 'getWarehouse']);
 // Route::delete('/{id}', [TodoController::class, 'destroy']);
 
-Route::post('/products/create', [ProductsController::class, 'create']);
+Route::post('/products/create/', [ProductsController::class, 'create']);
 Route::delete('/products/delete/{id}', [ProductsController::class, 'destroy']);
 Route::post('/test/{id}', [ProductsController::class, 'update']);
 
@@ -59,5 +58,11 @@ Route::get('/workers/name', [AuthController::class, 'generateName']);
 Route::post('/workers/{id}', [AuthController::class, 'generateName']);
 
 // warehouse workers
+// reports
 Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);
+Route::get('/warehouse/legit/', [WarehouseController::class, 'getLegitNumbers']);
+Route::get('/fitogus/', [WarehouseController::class, 'fitogusCharts']);
+// sito apaksa nekustinat savadak warehouse reports neies
+Route::get('/warehouse/{id}', [WarehouseController::class, 'getWarehouse']);
+

@@ -11,6 +11,9 @@ const AddNewProduct = () => {
     const [category, setCategory] = useState('');
     const [supplier, setSupplier] = useState('');
     const [image, setImage] = useState('');
+    const [other, setOther] = useState('');
+    const { warehouseId } = useParams();
+    const [appId, setAppId] = useState(warehouseId);
     const [supplierDescription, setSupplierDescription] = useState('');
     const navigate = useNavigate();
 
@@ -92,6 +95,7 @@ const AddNewProduct = () => {
                                 onChange={e => setSupplierDescription(e.target.value)}
                                 value={supplierDescription}
                             />
+                            <input type="hidden" name="appId" value={warehouseId}/>
                         </div>
                         <div className={css.splitContainer}>
                             <select className={css.select}>
