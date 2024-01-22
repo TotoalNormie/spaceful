@@ -70,6 +70,22 @@ body{
     width: 100%;
     min-height: 15%;
 
+    .select{
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 8px;
+        width: 45%;
+        padding: .5rem;
+        background-color: #252525;
+        border: none;
+        border-bottom: 1px solid #A0BFE0;
+        border-radius: 4px 4px 0px 0px;
+        color: #505050;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    }
+
     ::placeholder{
         color: #505050;
     }
