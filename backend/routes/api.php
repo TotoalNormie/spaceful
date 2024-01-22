@@ -7,6 +7,7 @@ use App\Http\Controllers\RolesUrlsController;
 use App\Http\Controllers\WarehouseAppController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,8 +55,8 @@ Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
 
 // warehouse workers
 
-Route::get('/workers/name', [Auth::class, 'generateName']);
-Route::post('/workers/{id}', [Auth::class, 'generateName']);
+Route::get('/workers/name', [AuthController::class, 'generateName']);
+Route::post('/workers/{id}', [AuthController::class, 'generateName']);
 
 // warehouse workers
 Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
