@@ -12,17 +12,12 @@ const AddNewProduct = () => {
     const [category, setCategory] = useState('');
     const [supplier, setSupplier] = useState('');
     const [image, setImage] = useState('');
-    const [categoryArray, setCategoryArray] = useState([]);
-    const { warehouseId } = useParams();
-    const [appId, setAppId] = useState(warehouseId);
-    setAppId(warehouseId);
+    const [categoryArray, setCategoryArray] = useState([]); 
 
     const [supplierDescription, setSupplierDescription] = useState('');
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
-    console.log(category);
-
-    const categoryoptions = categoryArray.map((category) => <option value={category.id}>{category.categoryName}</option>) 
+    const categoryoptions = categoryArray.map((category) => <option key={category.id} value={category.id}>{category.categoryName}</option>) 
 
     const config = {
 		headers: { Authorization: `Bearer ${Cookies.get('token')}` },
@@ -40,7 +35,6 @@ const AddNewProduct = () => {
         })
         .catch(function (error) {
             //fail
-            alert('Failed to add new product!');
             console.error(error);
         });
     }, [])
@@ -66,6 +60,7 @@ const AddNewProduct = () => {
             .then(function (response) {
                 //success
                 console.log(response.data);
+                alert('Product added Sucessfully!');
 
             })
             .catch(function (error) {
@@ -130,7 +125,7 @@ const AddNewProduct = () => {
                         </div>
                         <div className={css.splitContainer}>
                             <select className={css.select} onChange={e => setCategory(e.target.value)}>
-                                <option selected disabled>Select a category</option>
+                                <option selected hidden>Select a category</option>
                                 { categoryoptions} 
                             </select>
                         </div>
