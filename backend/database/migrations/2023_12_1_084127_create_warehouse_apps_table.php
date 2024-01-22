@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 return new class extends Migration
 {
@@ -19,6 +20,9 @@ return new class extends Migration
             $table->string('name', 25);
             $table->string('description', 4096)->default('');
         });
+        Artisan::call( 'db:seed', [
+            '--class' => 'RoleSeeder']
+        );
     }
 
     /**
