@@ -21,6 +21,15 @@ class ProductsController extends Controller
         return response()->json($products);
     }
 
+    function select($id)
+    {
+        $products = Products::where('warehouse_app_id', $id)->get();
+
+        return response()->json(
+            $products
+        );
+    }
+
     function create(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string'],
