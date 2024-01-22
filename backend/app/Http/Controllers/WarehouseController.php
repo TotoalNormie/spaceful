@@ -10,12 +10,12 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class WarehouseController extends Controller
 {
-    public function getWarehouse($id)
+    public function getWarehouse($id, Warehouse $warehouse)
     {
-
+            $items = Warehouse::where('warehouse_app_id', $id)->get();
         return response()->json([
             'success' => 'you did it :3',
-            'id' => $id
+            'data' => $items
         ]);
     }
 
