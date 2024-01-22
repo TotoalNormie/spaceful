@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Products::class)->constrained()->cascadeOnDelete();
-            $table->string('orderType');
+            $table->string('orderType', 4);
             $table->string('supplier');
             $table->boolean('status');
-            $table->float('sum');
+            $table->integer('amount', false, true);
+            $table->decimal('sum', 8, 2, true);
             $table->timestamps();
         });
     }
