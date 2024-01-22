@@ -20,6 +20,7 @@ import WarehouseReport from './components/WarehouseReport';
 import ProductsReport from './components/ProductsReport';
 import { useState } from 'react';
 import WarehouseSettings from './components/warehouseSettings';
+import ItemSearch from './components/ItemSearch';
 
 const WarehouseCheck = ({ children }) => {
 	const location = useLocation();
@@ -65,6 +66,7 @@ function App() {
 									<Route path='addtowarehouse' element={<AddToWarehouse />} />
 									<Route path='reports' element={<Reports />} />
 									<Route path='productsearch' element={<ProductSearch />} />
+									<Route path='itemsearch' element={<ItemSearch />} />
 									<Route path='settings/*' element={<WarehouseSettings />} />
 								</Route>,
 								<Route path='/createwarehouse' element={<CreateWarehouse />} />,

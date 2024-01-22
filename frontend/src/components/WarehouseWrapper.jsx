@@ -26,6 +26,7 @@ const WarehouseWrapper = ( {seen} ) => {
 				<NavLink to='reports'>Reports</NavLink>
 				<NavLink to='settings'>settings</NavLink>
 				<NavLink to='productsearch'>Product search</NavLink>
+				<NavLink to='itemsearch'>Item search</NavLink>
 			</Sidebar>
 		</div>
 	);
