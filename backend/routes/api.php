@@ -47,7 +47,16 @@ Route::delete('/products/delete/{id}', [ProductsController::class, 'destroy']);
 Route::post('/test/{id}', [ProductsController::class, 'update']);
 
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
+Route::post('/warehouse-app/update/{id}', [WarehouseAppController::class, 'update']);
 Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
 // atskaites
+
+
+// warehouse workers
+
+Route::get('/workers/name', [Auth::class, 'generateName']);
+Route::post('/workers/{id}', [Auth::class, 'generateName']);
+
+// warehouse workers
 Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);
