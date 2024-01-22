@@ -2,21 +2,26 @@ import { useState } from 'react';
 import css from "../style/AddNewProduct.module.css";
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const AddNewProduct = () => {
     const [product, setProduct] = useState('');
     const [price, setPrice] = useState('');
-    const [description, setDescription] = useState('');
-    const [quantity, setQuantity] = useState('');
+    const [categoty, setCategory] = useState('');
+    const [supplier, setSupplier] = useState('');
     const [image, setImage] = useState('');
-    const [other, setOther] = useState('');
+    const [supplierDescription, setSupplierDescription] = useState('');
     const navigate = useNavigate();
+
+    const config = {
+		headers: { Authorization: `Bearer ${Cookies.get('token')}` },
+	};
 
     const insert = e => {
         e.preventDefault();
         const result = axios
             .post(
-                'http://localhost:8000/api/new-product/insert',
+                'http://localhost:8000/api/products/create',
                 {
                     withCredentials: true,   
                 },
@@ -56,15 +61,15 @@ const AddNewProduct = () => {
                         <div className={css.splitContainer}>
                             <input className={css.input} 
                                 type='text' 
-                                placeholder='Product description' 
-                                onChange={e => setDescription(e.target.value)}
-                                value={description}
+                                placeholder='Product category' 
+                                onChange={e => setCategory(e.target.value)}
+                                value={category}
                             />
                             <input className={css.input} 
                                 type='text' 
-                                placeholder='Product quantity' 
-                                onChange={e => setQuantity(e.target.value)}
-                                value={quantity}
+                                placeholder='Supplier' 
+                                onChange={e => setSupplier(e.target.value)}
+                                value={supplier}
                             />
                         </div>
                         <div className={css.splitContainer}>
@@ -76,9 +81,9 @@ const AddNewProduct = () => {
                             />
                             <textarea className={css.textarea} 
                                 type='text'  
-                                placeholder='Other information about product' 
-                                onChange={e => setOther(e.target.value)}
-                                value={other}
+                                placeholder='Supplier description' 
+                                onChange={e => setSupplierDescription(e.target.value)}
+                                value={supplierDescription}
                             />
                         </div>
                         <button className={css.button}>Add new product</button>
