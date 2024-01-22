@@ -64,6 +64,8 @@ Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);
 
 Route::get('/categories/{id}', [CategoriesController::class, 'select']);
+Route::get('/products/{id}', [ProductsController::class, 'select']);
+
 
 Route::get('/warehouse/legit/', [WarehouseController::class, 'getLegitNumbers']);
 Route::get('/fitogus/', [WarehouseController::class, 'fitogusCharts']);
