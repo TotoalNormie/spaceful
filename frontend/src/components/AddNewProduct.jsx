@@ -1,26 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import css from "../style/AddNewProduct.module.css";
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const AddNewProduct = () => {
+    const { warehouseId } = useParams();
     const [product, setProduct] = useState('');
     const [price, setPrice] = useState('');
     const [weight, setWeight] = useState('');
     const [category, setCategory] = useState('');
     const [supplier, setSupplier] = useState('');
     const [image, setImage] = useState('');
+    const [categoryArray, setCategoryArray] = useState([]);
     const [supplierDescription, setSupplierDescription] = useState('');
     const navigate = useNavigate();
+
+    console.log(category);
+
+    const categoryoptions = categoryArray.map((category) => <option value={category.id}>{category.categoryName}</option>) 
 
     const config = {
 		headers: { Authorization: `Bearer ${Cookies.get('token')}` },
 	};
 
+    useEffect(()=> {
+        axios
+        .get(
+            'http://localhost:8000/api/categories/'+warehouseId,
+        )
+        .then(function (response) {
+            //success
+            console.log(response.data);
+            setCategoryArray(response.data);
+        })
+        .catch(function (error) {
+            //fail
+            alert('Failed to add new product!');
+            console.error(error);
+        });
+    }, [])
+
     const insert = e => {
         e.preventDefault();
-        const result = axios
+        axios
             .post(
                 'http://localhost:8000/api/products/create',
                 {
@@ -30,6 +53,8 @@ const AddNewProduct = () => {
                     supplier:supplier,
                     supplier_description:supplierDescription,
                     category:category,
+                    image:image,
+                    appId:warehouseId,
 
                 },
                 config
@@ -37,6 +62,7 @@ const AddNewProduct = () => {
             .then(function (response) {
                 //success
                 console.log(response.data);
+
             })
             .catch(function (error) {
                 //fail
@@ -63,6 +89,8 @@ const AddNewProduct = () => {
                                 placeholder='Product price' 
                                 onChange={e => setPrice(e.target.value)}
                                 value={price}
+                                min="0" 
+                                step=".01"
                             />
                         </div>
                         <div className={css.splitContainer}>
@@ -71,6 +99,8 @@ const AddNewProduct = () => {
                                 placeholder='Product weight' 
                                 onChange={e => setWeight(e.target.value)}
                                 value={weight}
+                                min="0" 
+                                step=".01"
                             />
                             <input className={css.input} 
                                 type='text' 
@@ -94,11 +124,9 @@ const AddNewProduct = () => {
                             />
                         </div>
                         <div className={css.splitContainer}>
-                            <select className={css.select}>
+                            <select className={css.select} onChange={e => setCategory(e.target.value)}>
                                 <option selected disabled>Select a category</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
+                                { categoryoptions} 
                             </select>
                         </div>
                         <button className={css.button}>Add new product</button>
