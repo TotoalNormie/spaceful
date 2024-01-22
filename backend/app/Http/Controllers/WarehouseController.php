@@ -6,14 +6,29 @@ use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
-use App\Models\Warehouse;
-
+use App\Models\warehouse_app;
+use Illuminate\Support\Facades\DB;
 
 class WarehouseController extends Controller
 {
-    function report($id){
+    function report(Request $request){
         // $warehouse->join('products', 'warehouses.products_id', '=', 'products.id')->select('warehouses.*')->get();
-        $warehouse = Warehouse::where('warehouses.id', $id)->join('products', 'warehouses.products_id', '=', 'products.id')->select('warehouses.amount', 'products.name', 'warehouses.shelfId')->get();
+        $fullToken = $request->bearerToken();
+        $tokenId = explode("|", $fullToken);
+        $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
+        if(!$token){
+            return response()->json(['error' => 'not logged in']);
+        }
+        $warehouseId = warehouse_app::where('user_id', $token->tokenable_id);
+        if(!$warehouseId){
+            return response()->json(['error' => 'not logged in']);
+        }
+
+        // $warehouse = Warehouse::where('warehouse_app_id', 1)->join('products', 'warehouses.products_id', '=', 'products.id')->select('warehouses.id', 'warehouses.amount', 'products.name', 'warehouses.shelfId')->get();
+        $warehouse = DB::table('warehouses')->where('warehouses.warehouse_app_id', 1)->join('products', 'warehouses.products_id', '=', 'products.id')->select('warehouses.id', 'warehouses.amount', 'products.name', 'warehouses.shelfId')->get();
+        if(!$warehouse){
+            return response()->json(['error' => 'not logged in']);
+        }
         return response()->json($warehouse);
     }
   
@@ -29,6 +44,7 @@ class WarehouseController extends Controller
 
     public function create(Request $request, Warehouse $warehouse, $id)
     {
+
         $fullToken = $request->bearerToken();
         $tokenId = explode("|", $fullToken);
         $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();

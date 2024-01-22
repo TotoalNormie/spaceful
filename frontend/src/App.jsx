@@ -45,6 +45,7 @@ function App() {
 					{/* atskaites */}
 					<Route path='/reports/warehouse' element={<WarehouseReport />} />
 					<Route path='/reports/products' element={<ProductsReport />} />
+					<Route path='/test' element={<Test />} />
 
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />
