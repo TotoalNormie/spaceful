@@ -7,7 +7,8 @@ import Cookies from 'js-cookie';
 const AddNewProduct = () => {
     const [product, setProduct] = useState('');
     const [price, setPrice] = useState('');
-    const [categoty, setCategory] = useState('');
+    const [weight, setWeight] = useState('');
+    const [category, setCategory] = useState('');
     const [supplier, setSupplier] = useState('');
     const [image, setImage] = useState('');
     const [supplierDescription, setSupplierDescription] = useState('');
@@ -23,7 +24,13 @@ const AddNewProduct = () => {
             .post(
                 'http://localhost:8000/api/products/create',
                 {
-                    withCredentials: true,   
+                    name:product,
+                    price:price,
+                    weight:weight,
+                    supplier:supplier,
+                    supplier_description:supplierDescription,
+                    category:category,
+
                 },
                 config
             )
@@ -52,7 +59,7 @@ const AddNewProduct = () => {
                                 value={product}
                             />
                             <input className={css.input} 
-                                type='text' 
+                                type='number' 
                                 placeholder='Product price' 
                                 onChange={e => setPrice(e.target.value)}
                                 value={price}
@@ -60,10 +67,10 @@ const AddNewProduct = () => {
                         </div>
                         <div className={css.splitContainer}>
                             <input className={css.input} 
-                                type='text' 
-                                placeholder='Product category' 
-                                onChange={e => setCategory(e.target.value)}
-                                value={category}
+                                type='number' 
+                                placeholder='Product weight' 
+                                onChange={e => setWeight(e.target.value)}
+                                value={weight}
                             />
                             <input className={css.input} 
                                 type='text' 
@@ -85,6 +92,14 @@ const AddNewProduct = () => {
                                 onChange={e => setSupplierDescription(e.target.value)}
                                 value={supplierDescription}
                             />
+                        </div>
+                        <div className={css.splitContainer}>
+                            <select className={css.select}>
+                                <option selected disabled>Select a category</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
                         </div>
                         <button className={css.button}>Add new product</button>
                     </form>
