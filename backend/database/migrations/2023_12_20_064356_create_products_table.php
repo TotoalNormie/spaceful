@@ -22,7 +22,8 @@ return new class extends Migration
             $table->decimal('price', 6, 2, true);
             $table->decimal('weight', 6, 2, true);
             $table->string('supplier');
-            $table->string('supplierDescription')->nullable();
+            $table->string('img');
+            $table->string('supplierDescription')->nullable(); 
             $table->timestamps();
         });
     }

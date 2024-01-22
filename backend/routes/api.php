@@ -7,6 +7,7 @@ use App\Http\Controllers\RolesUrlsController;
 use App\Http\Controllers\WarehouseAppController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,11 +47,22 @@ Route::delete('/products/delete/{id}', [ProductsController::class, 'destroy']);
 Route::post('/test/{id}', [ProductsController::class, 'update']);
 
 Route::post('/warehouse-app/create', [WarehouseAppController::class, 'create']);
+Route::post('/warehouse-app/update/{id}', [WarehouseAppController::class, 'update']);
 Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
 // atskaites
+
+
+// warehouse workers
+
+Route::get('/workers/name', [AuthController::class, 'generateName']);
+Route::post('/workers/{id}', [AuthController::class, 'generateName']);
+
+// warehouse workers
+// reports
 Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);
 Route::get('/warehouse/legit/', [WarehouseController::class, 'getLegitNumbers']);
 Route::get('/fitogus/', [WarehouseController::class, 'fitogusCharts']);
 // sito apaksa nekustinat savadak warehouse reports neies
 Route::get('/warehouse/{id}', [WarehouseController::class, 'getWarehouse']);
+
