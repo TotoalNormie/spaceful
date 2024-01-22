@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PasswordEmail;
 use App\Models\User;
 use App\Models\WarehouseWorkers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
