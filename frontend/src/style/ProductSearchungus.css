@@ -82,15 +82,27 @@ img {
 
 .FilterHeader {
 background-color: #4A55A2;
-opacity: 80%;
+/* opacity: 80%; */
 width: 100%;
 text-align: center;
 }
 
 .FilterBox {
-    display:grid;
-    width:100%;
+    display: none;
+    position: absolute;
+    background-color: #545660;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    min-width: 30rem;
 }
+
+.showFilters {
+    display:grid;
+}
+
+
+
 
 p {
     color: white;
@@ -102,6 +114,7 @@ p {
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    opacity: 80%;
+    /* opacity: 80%; */
+    padding-inline: 15px;
     width: 100%;
 }

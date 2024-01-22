@@ -1,10 +1,28 @@
 import axios from "axios";
 import "../style/ProductSearchungus.css";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 const ProductSearch = () => {
   const {warehouseId}=useParams();
   console.log(warehouseId);
+
+  const [showFilter, setShowFilters]=useState(false);
+  let filterClass;
+  if(showFilter) {
+    filterClass="showFilters";
+  }
+  else {
+    filterClass="";
+  };
+
+  const [ByType]=useState(false);
+
+  const [ByExpiration]=useState(false);
+
+  const [ByAmount ]=useState(false);
+
+  const [DescendingAscending]=useState(false);
 
   axios
     .get(
@@ -97,12 +115,12 @@ const ProductSearch = () => {
       <>
         <div className="SearchBox">
           <input type="text" placeholder="Search..." className="Search" />
-          <button className="FilterButton">filter options</button>
+          <button className="FilterButton" onClick={() => setShowFilters(!showFilter)}>filter options</button>
         </div>
         <div className="ProductList">{listProducts}</div>
       </>
 
-      <div className="FilterBox">
+      <div className={'FilterBox ' + filterClass}>
         <div className="FilterHeader">
           <p>filters</p>
         </div>
