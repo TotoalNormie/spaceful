@@ -14,7 +14,6 @@ const CreateWarehouse = () => {
 		headers: { Authorization: `Bearer ${Cookies.get('token')}` },
 	};
 	const create = e => {
-		alert('CreateWarehouse');
 		e.preventDefault();
 		const result = axios
 			.post(
@@ -29,7 +28,9 @@ const CreateWarehouse = () => {
 			.then(function (response) {
 				//success
 				console.log(response.data);
-				// navigate(/)
+				const id = response.data.id;
+				if(!id) return;
+				navigate(`/warehouse/${id}`);
 			})
 			.catch(function (error) {
 				//fail
