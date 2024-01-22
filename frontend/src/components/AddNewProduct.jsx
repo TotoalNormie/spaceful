@@ -12,7 +12,7 @@ const AddNewProduct = () => {
     const [other, setOther] = useState('');
     const { warehouseId } = useParams();
     const [appId, setAppId] = useState(warehouseId);
-    setAppId()
+    setAppId(warehouseId);
     const navigate = useNavigate();
 
     const insert = e => {
