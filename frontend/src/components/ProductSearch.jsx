@@ -103,13 +103,22 @@ const ProductSearch = () => {
       </>
 
       <div className="FilterBox">
-        <div className="FilterHeader"></div>
-        <div className="Filters"></div>
-        <div className="Filters"></div>
-        <div className="Filters"></div>
-        <div className="Filters"></div>
+        <div className="FilterHeader">
+          <p>filters</p>
+        </div>
+        <div className="Filters">
+          <p>By Type</p>
+        </div>
+        <div className="Filters">
+          <p>By Expiration</p>
+        </div>
+        <div className="Filters">
+          <p>By Amount</p>
+        </div>
+        <div className="Filters">
+          <p>Descending/Ascending</p>
+        </div>
       </div>
-
 
     </div>
   );
