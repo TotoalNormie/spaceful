@@ -14,6 +14,7 @@ const AddNewProduct = () => {
     const [other, setOther] = useState('');
     const { warehouseId } = useParams();
     const [appId, setAppId] = useState(warehouseId);
+    setAppId(warehouseId);
     const [supplierDescription, setSupplierDescription] = useState('');
     const navigate = useNavigate();
 
