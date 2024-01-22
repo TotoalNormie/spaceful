@@ -17,35 +17,26 @@ class RoleSeeder extends Seeder
         //
         DB::table('roles')->insert([
             'id' => 1,
-            'roleName' => 'Plauktu Kartotajs',
-            'read' => true,
-            'write' => true,
-            'manageUser' => false,
-            'manageRoles' => false,
+            'roleName' => 'Administrator',
         ]);
         DB::table('roles')->insert([
-            'id' => 2,
-            'roleName' => 'Noliktavas Darbinieks',
-            'read' => true,
-            'write' => true,
-            'manageUser' => false,
-            'manageRoles' => false,
-            'createReports' => true,
-            'createOrders' => true,
-            'manageCategories' => true
+            'roleName' => 'Shelve Sorter',
+            'addnewproduct' => false,
+            'addtowarehouse' => true,
+            'itemsearch' => true,
+            'productsearch' => false,
+            'orders' => false,
+            'reports' => false,
+        ]);
+        DB::table('roles')->insert([
+            'roleName' => 'Warehouse Worker',
+            'addnewproduct' => true,
+            'addtowarehouse' => false,
+            'itemsearch' => false,
+            'productsearch' => true,
+            'orders' => true,
+            'reports' => true,
 
-        ]);
-        DB::table('roles')->insert([
-            'id' => 3,
-            'roleName' => 'Administrators',
-            'read' => true,
-            'write' => true,
-            'manageUser' => true,
-            'manageRoles' => true,
-            'managePermissions' => true,
-            'createReports' => true,
-            'createOrders' => true,
-            'manageCategories' => true
         ]);
         DB::table('users')->insert([
             'name' => 'amog',

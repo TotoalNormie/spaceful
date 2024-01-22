@@ -48,6 +48,10 @@ img {
 	object-fit: cover;
 }
 
+main {
+	position: relative;
+}
+
 h1 {
 	font-family: 'Arvo', serif;
 	font-size: clamp(2em, calc(3vw + 1rem), 2.75em);
@@ -118,7 +122,7 @@ a {
 }
 
 ::-webkit-scrollbar {
-	width: 12px;
+	width: 1rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -127,10 +131,15 @@ a {
 
 ::-webkit-scrollbar-thumb {
 	background-color: var(--gray, #303030);
+	border: .25rem solid var(--dark-gray);
 	border-radius: 100vw;
 	transition: background-color 0.3s ease-in;
 }
 
 ::-webkit-scrollbar-thumb:hover {
 	background-color: var(--light-gray, #505050);
+}
+
+a.active {
+	border-color: var(--main-color);
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\warehouse_app;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('categoryName');
+            $table->foreignIdFor(warehouse_app::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
