@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RolesUrlsController;
@@ -61,8 +62,12 @@ Route::post('/workers/{id}', [AuthController::class, 'generateName']);
 // reports
 Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);
+
+Route::get('/categories/{id}', [CategoriesController::class, 'select']);
+
 Route::get('/warehouse/legit/', [WarehouseController::class, 'getLegitNumbers']);
 Route::get('/fitogus/', [WarehouseController::class, 'fitogusCharts']);
 // sito apaksa nekustinat savadak warehouse reports neies
 Route::get('/warehouse/{id}', [WarehouseController::class, 'getWarehouse']);
+
 

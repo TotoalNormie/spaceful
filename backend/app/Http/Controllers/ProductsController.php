@@ -29,6 +29,7 @@ class ProductsController extends Controller
             'supplier' => ['required', 'string'],
             'appId' => ['required', 'integer'],
             'supplier_description' => ['string'],
+            'image' => ['string'],
             'category' => ['integer'],
         ]);
         if($validator->fails()){
@@ -37,7 +38,6 @@ class ProductsController extends Controller
                 'error' => $validator->errors()->toArray()
             ], 422);
         }
-        $request = (object) $validator->validated();
 
         $product = new Products();
         $product->name = $request->name;
@@ -45,6 +45,8 @@ class ProductsController extends Controller
         $product->weight = $request->weight;
         $product->supplier = $request->supplier;
         $product->supplierDescription = $request->supplier_description;
+        $product->categories_id = $request->category;
+        $product->img = $request->image;    
         $product->warehouse_app_id = $request->appId;
         if(empty($request->category)){
             $product->categories_id = 1;
