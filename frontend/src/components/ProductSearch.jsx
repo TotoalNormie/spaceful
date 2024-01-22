@@ -108,15 +108,19 @@ const ProductSearch = () => {
         </div>
         <div className="Filters">
           <p>By Type</p>
+          <input type="checkbox"></input>
         </div>
         <div className="Filters">
           <p>By Expiration</p>
+          <input type="checkbox"></input>
         </div>
         <div className="Filters">
-          <p>By Amount</p>
+             <p>By Amount</p>
+             <input type="checkbox"></input>
         </div>
         <div className="Filters">
           <p>Descending/Ascending</p>
+          <input type="checkbox"></input>
         </div>
       </div>
 
