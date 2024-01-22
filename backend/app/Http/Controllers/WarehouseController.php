@@ -35,7 +35,8 @@ class WarehouseController extends Controller
     public function getWarehouse($id, Warehouse $warehouse)
 
     {
-            $items = Warehouse::where('warehouse_app_id', $id)->get();
+            // $items = Warehouse::where('warehouse_app_id', $id)->get();
+            $items = DB::table('warehouses')->join('products', 'warehouses.products_id', '=', 'products.id')->select('*')->where('warehouses.warehouse_app_id', $id)->get();
         return response()->json([
             'success' => 'you did it :3',
             'data' => $items

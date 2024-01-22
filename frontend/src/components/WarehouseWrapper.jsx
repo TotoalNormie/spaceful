@@ -22,7 +22,10 @@ const WarehouseWrapper = ( {seen} ) => {
 				<NavLink to='main'>main page</NavLink>
 				<NavLink to='addnewproduct'>Add new product</NavLink>
 				<NavLink to='addtowarehouse'>Add to warehouse</NavLink>
+				<NavLink to='addtowarehouse'>Add to warehouse</NavLink>
 				<NavLink to='reports'>Reports</NavLink>
+				<NavLink to='settings'>settings</NavLink>
+				<NavLink to='productsearch'>Product search</NavLink>
 			</Sidebar>
 		</div>
 	);
