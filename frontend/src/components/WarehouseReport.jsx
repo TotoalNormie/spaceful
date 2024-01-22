@@ -36,7 +36,7 @@ const WarehouseReport = () => {
                 <th>Product amount</th>
                 <th>Product name</th>
                 <th>Product ShelfId</th>
-                <th>Total</th>
+                {/* <th>Total</th> */}
             </tr>
         </thead>
         <tbody>
