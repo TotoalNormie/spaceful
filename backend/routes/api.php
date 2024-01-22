@@ -55,9 +55,8 @@ Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
 // warehouse workers
 
 Route::get('/workers/name', [AuthController::class, 'generateName']);
-Route::post('/workers/{id}', [AuthController::class, 'generateName']);
+Route::post('/workers', [AuthController::class, 'createWorker']);
 
-// warehouse workers
 // reports
 Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);

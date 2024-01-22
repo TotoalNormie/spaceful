@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\PasswordEmail;
 use App\Models\User;
+use App\Models\WarehouseWorkers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -245,15 +246,13 @@ class AuthController extends Controller
         }
     }
 
-    function createWorker(Request $request, User $user)
+    function createWorker(Request $request, User $user, WarehouseWorkers $warehouseWorkers)
     {
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string',
             'roles_id' => 'required|integer',
         ]);
-
-        // $user = new User();
 
         $password = Str::random(12);
 
@@ -263,7 +262,19 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->roles_id = $request->roles_id;
 
-        $passwordEmail = new PasswordEmail($user->username, $user->password);
+        if (!$user->save()) {
+            $errors = $user->getErrors();
+            return response()->json(['error' => $errors], 500);
+        }
+
+        $warehouseWorkersResult = WarehouseWorkersController::create($user->id, $request->appId);
+
+        if (isset($warehouseWorkersResult['error'])) {
+            $user->delete();
+            return response()->json(['error' => $warehouseWorkersResult['error']]);
+        }
+        
+        $passwordEmail = new PasswordEmail($request->name, $password);
         Mail::to($user->email)->send($passwordEmail);
 
         return response()->json(['succes' => 'worker account created successfully']);

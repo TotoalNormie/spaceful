@@ -78,40 +78,4 @@ class WarehouseAppController extends Controller
         ]);
 
     }
-
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'string'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation error',
-                'errors' => $validator->errors(),
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $warehouse_app = warehouse_app::find($id);
-
-        if (!$warehouse_app) {
-            return response()->json(['error' => 'Warehouse app not found'], 404);
-        }
-
-        $warehouse_app->name = $request->name;
-        $warehouse_app->description = $request->description ?? '';
-
-        if ($warehouse_app->save()) {
-            // Retrieve the ID of the saved row
-
-            return response()->json([
-                'success' => 'Warehouse app updated successfully',
-            ]);
-        } else {
-            // Failed to save - Display specific error messages
-            $errors = $warehouse_app->getErrors();
-            return response()->json(['error' => $errors], 500);
-        }
-    }
 }
