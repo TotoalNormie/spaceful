@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/products/', [ProductsController::class, 'show']);
 
 Route::get('/user', [AuthController::class, 'getUserData']);
+Route::post('/user/data', [AuthController::class, 'update']);
+
 Route::post('/warehouse/{id}/addtowarehouse', [WarehouseController::class, 'create']);
 
 Route::post('/user', [AuthController::class, 'create']);

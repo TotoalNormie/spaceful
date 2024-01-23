@@ -218,4 +218,25 @@ class AuthController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    function update(Request $request){
+        $fullToken = $request->bearerToken();
+        $tokenId = explode("|", $fullToken);
+        $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
+
+        if (!$token) {
+            return response()->json(['error' => 'not logged in'], 500);
+        }
+
+        $user_id = $token->tokenable_id;
+
+        $user = User::find($user_id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if($user->save()){
+            return response()->json(['success' => 'User data edited successfuly!']);
+        }else{
+            return response()->json(['error' => 'Failed to edit user data!']);
+        }
+    }
+
 }
