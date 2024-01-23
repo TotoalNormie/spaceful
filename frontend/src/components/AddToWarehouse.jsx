@@ -43,11 +43,13 @@ const AddToWarehouse = () => {
             .post(
                 'http://localhost:8000/api/warehouse/'+{warehouseId}+'/addtowarehouse',
                 {
-                    product:product,
-                    amount:amount,
-                    shelfId:shelfId,
-                    products_id:product,
-                    date:date,
+                    params:{
+                        product:product,
+                        amount:amount,
+                        shelfId:shelfId,
+                        products_id:product,
+                        date:date,
+                    }
                 },
             )
             .then(function (response) {

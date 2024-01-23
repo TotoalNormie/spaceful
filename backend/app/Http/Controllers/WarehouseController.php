@@ -86,8 +86,6 @@ class WarehouseController extends Controller
             ], 422);
         }
 
-        echo $request->date;
-
         $warehouse->products_id = $request->product;
         $warehouse->warehouse_app_id = $id;
         $warehouse->shelfId = $request->shelfId;
