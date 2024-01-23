@@ -3,15 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\warehouse_app;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class ProductsController extends Controller
 {
     //
-    function show(){
-        $products = Products::all();
+    function show(Request $request){
+        $fullToken = $request->bearerToken();
+        $tokenId = explode("|", $fullToken);
+        $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
+
+        if (!$token) {
+            return response()->json(['error' => 'not logged in'], 500);
+        }
+
+        $user_id = $token->tokenable_id;
+        $user_warehouses = warehouse_app::where('user_id', $user_id)->select('id')->first();
+        // return response()->json($user_warehouses->id);
+        $products = Products::all()->where('warehouse_app_id', $user_warehouses->id);
         return response()->json($products);
     }
 

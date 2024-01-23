@@ -33,7 +33,7 @@ const Sidebar = ({ children, seen }) => {
 	}, [navElement, isSeen]);
 
 	// useEffect(() =>
-	const noHeader = ['/login', '/register', '/createwarehouse'];
+	const noHeader = ['/login', '/register', '/createwarehouse', '/forgor'];
 	// console.log(location.pathname);
 	if (noHeader.includes(location.pathname)) return null;
 
