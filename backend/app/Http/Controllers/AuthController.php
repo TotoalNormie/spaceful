@@ -16,7 +16,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'password' => 'required|string',
-            'email' => 'string',
+            'email' => 'string|required',
             'roles_id' => 'integer',
         ]);
         if($validator->fails()){
@@ -218,4 +218,31 @@ class AuthController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    function passForgor(Request $request){
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string',
+            'email' => 'string|required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message' => 'Validation failed',
+                'error' => $validator->errors()->toArray()
+            ], 422);
+        }
+        $request = (object) $validator->validated();
+        $user = User::where('email', $request->email)->first();
+        if(!$user){
+            return response()->json([
+                'error' => 'User not found'
+            ], 404);
+        }
+        $user->password = Hash::make($request->password);
+        if($user->save()){
+            return response()->json([
+                'message' => 'Password changed sucessfuly'
+            ]);
+        }
+        // $token = $user->createToken('Reset Password Token');
+        // return ['token' => $token->plainTextToken];
+    }
 }

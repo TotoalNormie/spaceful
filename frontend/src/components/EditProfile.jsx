@@ -54,8 +54,8 @@ const EditProfile = () => {
                             <input className={css.input} type='text' placeholder='Name' />
                             <input className={css.input} type='text' placeholder='Surname' />
                             <input className={css.input} type='text' placeholder='Email' />
-                            <button className={css.resetButton} onClick={togglePasswordDisplay}>Reset password</button>
                             <button className={css.saveButton}>Save changes</button>
+                            <button className={css.resetButton} onClick={togglePasswordDisplay}>Reset password</button>
                         </div>
                     </div>
                 </div>

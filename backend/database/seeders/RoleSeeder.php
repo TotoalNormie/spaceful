@@ -47,6 +47,7 @@ class RoleSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'amog',
             'password' => '$argon2id$v=19$m=65536,t=4,p=1$V3hocGpmbTRobmJsLnAvYw$ZUTkpVTisNKg7PXzEV+3eoqiHpQUERrODyGM1VLHMxQ',
+            'email' => 'amog@amog.com',
             'roles_id' => 3,
         ]);
         DB::table('warehouse_apps')->insert([
@@ -89,7 +90,7 @@ class RoleSeeder extends Seeder
             'supplier' => 'Mognus llc.',
         ]);
         DB::table('products')->insert([
-            'name' => 'Amognst a Cake in a cup?',
+            'name' => 'Amogns keyčain?',
             'categories_id' => 3,
             'warehouse_app_id' => 1,
             'price' => 1.99,
