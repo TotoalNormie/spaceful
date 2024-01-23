@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/user', [AuthController::class, 'getUserData']);
+Route::post('/user/data', [AuthController::class, 'update']);
+
 Route::post('/warehouse/{id}/addtowarehouse', [WarehouseController::class, 'create']);
 
 Route::post('/user', [AuthController::class, 'create']);
@@ -62,6 +64,8 @@ Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);
 
 Route::get('/categories/{id}', [CategoriesController::class, 'select']);
+Route::get('/products/{id}', [ProductsController::class, 'select']);
+
 
 Route::get('/warehouse/legit/', [WarehouseController::class, 'getLegitNumbers']);
 Route::get('/fitogus/', [WarehouseController::class, 'fitogusCharts']);

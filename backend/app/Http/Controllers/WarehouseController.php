@@ -11,8 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Models\warehouse_app;
+use Dotenv\Validator;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class WarehouseController extends Controller
 {
@@ -70,28 +72,30 @@ class WarehouseController extends Controller
     public function create(Request $request, Warehouse $warehouse, $id)
     {
 
-        $fullToken = $request->bearerToken();
-        $tokenId = explode("|", $fullToken);
-        $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
-        // var_dump($token);
-        if(!$token){
-            return response()->json(['error' => 'not logged in']);
-        }
-
-        $request->validate([
+        $validator = FacadesValidator::make($request->all(), [
             'product' => 'required|string',
-            'quantity' => 'required|integer',
-            'supplier' => 'required|string',
-            'product_id' => 'required|integer',
+            'shelfId' => 'required|string',
+            'amount' => 'required|integer',
+            'products_id' => 'required|integer',
             'date' => 'required|date',
         ]);
+        if($validator->fails()){
+            return response()->json([
+                'message' => 'Validation failed',
+                'error' => $validator->errors()->toArray()
+            ], 422);
+        }
 
-        $warehouse->product = $request->product;
-        $warehouse->quantity = $request->quantity;
+        $warehouse->products_id = $request->product;
         $warehouse->warehouse_app_id = $id;
-        $warehouse->product_id = $request->product_id;
-        $warehouse->supplier = $request->supplier;
+        $warehouse->shelfId = $request->shelfId;
+        $warehouse->amount = $request->amount;
+        $warehouse->products_id = $request->products_id;
         $warehouse->date = $request->date;
+        echo '\n';
+        // echo $warehouse->date;
+
+
 
         if($warehouse->save()){
             return response()->json(['success' => 'Product added to warehouse.']);
