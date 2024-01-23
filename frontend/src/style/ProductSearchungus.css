@@ -45,7 +45,7 @@ body {
 
 .ProductList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
 
 @media only screen and (max-width: 600px) {
@@ -83,6 +83,10 @@ img {
     
 }
 
+.image {
+    width: 30%;
+}
+
 .FilterHeader {
 background-color: #4A55A2;
 /* opacity: 80%; */
@@ -104,9 +108,6 @@ text-align: center;
     display:grid;
 }
 
-
-
-
 p {
     color: white;
 }
@@ -120,4 +121,22 @@ p {
     /* opacity: 80%; */
     padding-inline: 15px;
     width: 100%;
+}
+
+.NotFound {
+    display: none;
+    margin: 10px;
+    border-radius: 5px 5px 30px 30px;
+    flex-direction: column;
+    background: #393939;
+    width: 100%;
+    height: 15%;
+    text-align: center;
+    padding-top: 40px;
+    align-items: center;
+    
+}
+
+.ShowNotFound {
+    display: flex
 }

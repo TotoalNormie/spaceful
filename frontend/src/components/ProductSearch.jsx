@@ -4,33 +4,36 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ProductSearch = () => {
-  const {warehouseId}=useParams();
+  const { warehouseId } = useParams();
   console.log(warehouseId);
-
-  const [showFilter, setShowFilters]=useState(false);
+  const [search, setSearch] = useState("");
+  console.log(search);
+  const [showFilter, setShowFilters] = useState(false);
   let filterClass;
-  if(showFilter) {
-    filterClass="showFilters";
+  if (showFilter) {
+    filterClass = "showFilters";
+  } else {
+    filterClass = "";
   }
-  else {
-    filterClass="";
-  };
 
-  const [byType, showByType]=useState(false);
+  const [byType, showByType] = useState(false);
 
-  const [byExpiration, showByExpiration]=useState(false);
+  const [byExpiration, showByExpiration] = useState(false);
 
-  const [byAmount, showByAmount]=useState(false);
+  const [byAmount, showByAmount] = useState(false);
 
-  const [descendingAscending, showByDescendingAscending]=useState(false);
+  const [descendingAscending, showByDescendingAscending] = useState(false);
 
-  const [productArray, setProductArray]=useState([]);
+  const [productArray, setProductArray] = useState([]);
 
-  useEffect(()=> {
+  let neverFound = "";
+  if (productArray.length == 0) {
+    neverFound = "ShowNotFound";
+  }
+
+  useEffect(() => {
     axios
-      .get(
-        "http://localhost:8000/api/warehouse/"+warehouseId,
-      )
+      .get("http://localhost:8000/api/warehouse/" + warehouseId)
       .then(function (response) {
         //success
         console.log(response.data);
@@ -40,92 +43,49 @@ const ProductSearch = () => {
         //fail
         console.error(error);
       });
-  }, [])
+  }, []);
 
-
-  // const productArray = [
-  //   {
-  //     id: "value1",
-  //     productName: "name",
-  //     img: (
-  //       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>
-  //     ),
-  //     shelfNumber: "number",
-  //     inStock: "amount",
-  //   },
-  //   {
-  //     id: "value2",
-  //     productName: "name2",
-  //     img: (
-  //       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>
-  //     ),
-  //     shelfNumber: "number2",
-  //     inStock: "amount2",
-  //   },
-  //   {
-  //     id: "value3",
-  //     productName: "name3",
-  //     img: (
-  //       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>
-  //     ),
-  //     shelfNumber: "number3",
-  //     inStock: "amount3",
-  //   },
-  //   {
-  //     id: "value4",
-  //     productName: "name4",
-  //     img: (
-  //       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>
-  //     ),
-  //     shelfNumber: "number4",
-  //     inStock: "amount4",
-  //   },
-  //   {
-  //     id: "value5",
-  //     productName: "name5",
-  //     img: (
-  //       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>
-  //     ),
-  //     shelfNumber: "number5",
-  //     inStock: "amount5",
-  //   },
-  //   {
-  //     id: "value6",
-  //     productName: "name6",
-  //     img: (
-  //       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/laptops-2048px-5607.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"></img>
-  //     ),
-  //     shelfNumber: "number6",
-  //     inStock: "amount6",
-  //   },
-  // ];
-  const listProducts = productArray.map((products) => (
-    <div className="ProductBox">
-      <div className="wrapper">
-        <strong>{products.name}</strong>
-        <p>ID: {products.id}</p>
+  const listProducts = productArray
+    .filter((products) => {
+      return search.toLowerCase() === '' ? products : products.name.toLowerCase().includes(search);
+    })
+    .map((products) => (
+      <div className="ProductBox">
+        <div className="wrapper">
+          <strong>{products.name}</strong>
+          <p key={products.id}>ID: {products.id}</p>
+        </div>
+        <div className="wrapper2">
+          <img src={products.img} alt="" />
+        </div>
+        <div className="wrapper3">
+          <p>Shelf: {products.shelfId}</p>
+          <p>In stock: {products.amount}</p>
+        </div>
       </div>
-      <div className="wrapper2">
-        <img src={products.img} alt="" />
-      </div>
-      <div className="wrapper3">
-        <p>Shelf: {products.shelfId}</p>
-        <p>In stock: {products.amount}</p>
-      </div>
-    </div>
-  ));
+    ));
 
   return (
     <div className="center">
       <>
         <div className="SearchBox">
-          <input type="text" placeholder="Search..." className="Search" />
-          <button className="FilterButton" onClick={() => setShowFilters(!showFilter)}>filter options</button>
+          <input
+            type="text"
+            placeholder="Search..."
+            className="Search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button
+            className="FilterButton"
+            onClick={() => setShowFilters(!showFilter)}
+          >
+            filter options
+          </button>
         </div>
         <div className="ProductList">{listProducts}</div>
       </>
 
-      <div className={'FilterBox ' + filterClass}>
+      <div className={"FilterBox " + filterClass}>
         <div className="FilterHeader">
           <p>filters</p>
         </div>
@@ -138,8 +98,8 @@ const ProductSearch = () => {
           <input type="checkbox"></input>
         </div>
         <div className="Filters">
-             <p>By Amount</p>
-             <input type="checkbox"></input>
+          <p>By Amount</p>
+          <input type="checkbox"></input>
         </div>
         <div className="Filters">
           <p>Descending/Ascending</p>
@@ -147,6 +107,13 @@ const ProductSearch = () => {
         </div>
       </div>
 
+      <div className={"NotFound " + neverFound}>
+        <img
+          className="image"
+          src="https://cdn.discordapp.com/attachments/1158383864197157018/1199266019328401479/skull-75-256.png?ex=65c1ea84&is=65af7584&hm=27521eec766011082aea66ce112cda5337ed8cc24ec1ad10d4da1e7727203c6c&"
+        ></img>
+        <h1>No results found...</h1>
+      </div>
     </div>
   );
 };
