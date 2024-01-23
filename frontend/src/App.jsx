@@ -1,4 +1,5 @@
 import { BrowserRouter, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import './style/main.css';
 import Home from './components/Home';
 import Header from './components/Header';
@@ -18,8 +19,8 @@ import Sidebar from './components/Sidebar';
 import WarehouseWrapper from './components/WarehouseWrapper';
 import WarehouseReport from './components/WarehouseReport';
 import ProductsReport from './components/ProductsReport';
-import { useState } from 'react';
 import WarehouseSettings from './components/warehouseSettings';
+import ForgorPass from './components/ForgorPass';
 
 const WarehouseCheck = ({ children }) => {
 	const location = useLocation();
@@ -46,6 +47,7 @@ function App() {
 					<Route path='/reports/warehouse' element={<WarehouseReport />} />
 					<Route path='/reports/products' element={<ProductsReport />} />
 
+					<Route path='/forgor' element={<ForgorPass />} />
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />

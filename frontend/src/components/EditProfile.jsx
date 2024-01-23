@@ -83,6 +83,13 @@ const EditProfile = () => {
                         </div>
                     <div className={css.editBox}>
                         <h1>Edit Profile</h1>
+                        <div className={css.inputBox}>
+                            <input className={css.input} type='text' placeholder='Name' />
+                            <input className={css.input} type='text' placeholder='Surname' />
+                            <input className={css.input} type='text' placeholder='Email' />
+                            <button className={css.saveButton}>Save changes</button>
+                            <button className={css.resetButton} onClick={togglePasswordDisplay}>Reset password</button>
+                        </div>
                         <form className={css.form} onSubmit={edit}>
                             <div className={css.inputBox}>
                                 <input className={css.input} 
