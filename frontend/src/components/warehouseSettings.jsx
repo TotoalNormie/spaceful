@@ -6,43 +6,40 @@ import {
 	MagnifyingGlass,
 	PencilLine,
 	Plus,
+	SquareHalf,
+	X,
 } from '@phosphor-icons/react';
 import { NavLink, Route, Routes, useParams } from 'react-router-dom';
 import css from '../style/WarehouseSettings.module.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { stringSimilarity } from 'string-similarity-js';
 
 const General = ({ nameProp, descriptionProp }) => {
 	const { warehouseId } = useParams();
 	const [name, setName] = useState(nameProp);
 	const [description, setDescription] = useState(descriptionProp);
 
-
-	
 	useEffect(() => setName(nameProp), [nameProp]);
 	useEffect(() => setDescription(descriptionProp), [descriptionProp]);
 
-	const update = (e) => {
+	const update = e => {
 		e.preventDefault();
 		axios
-			.post(
-				'http://localhost:8000/api/warehouse-app/update/'+warehouseId,
-				{
-					name: name,
-					description: description,
-				},
-			)
+			.post('http://localhost:8000/api/warehouse-app/update/' + warehouseId, {
+				name: name,
+				description: description,
+			})
 			.then(function (response) {
 				//success
-				console.log(response.data);
+				// console.log(response.data);
 				const id = response.data.id;
 				if (!id) return;
 				navigate(`/warehouse/${id}`);
 			})
 			.catch(function (error) {
 				//fail
-				alert('Failed to createWarehouse');
 				console.error(error);
 			});
 	};
@@ -69,96 +66,273 @@ const General = ({ nameProp, descriptionProp }) => {
 	);
 };
 
-
 const Employees = () => {
+	const { warehouseId } = useParams();
+	const [popUpSeen, setPopUpSeen] = useState(false);
+
+	const [edit, setEdit] = useState(false);
+	const [name, setName] = useState('');
+	const [surname, setSurname] = useState('');
+	const [role, setRole] = useState(0);
+	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
+
+	const [workers, setWorkers] = useState([]);
+	const [userId, setuserId] = useState('');
+	const [typingTimeout, setTypingTimeout] = useState(null);
+
+	const [search, setSearch] = useState('');
+
+	const [rolesArray, setRolesArray] = useState([]);
+
+	const link = edit
+		? 'http://localhost:8000/api/warehouse/workers/update/' + userId
+		: 'http://localhost:8000/api/warehouse/workers/add';
+
+	const getworkers = () => {
+		axios
+			.get('http://localhost:8000/api/warehouse/workers/' + warehouseId)
+			.then(function (response) {
+				setWorkers(response.data);
+			})
+			.catch(function (error) {
+				console.log(error.response.data.error);
+				// alert(error.response.data.error);
+			});
+	};
+	useEffect(() => {
+		axios
+			.get('http://localhost:8000/api/roles')
+			.then(function (response) {
+				setRolesArray(response.data);
+			})
+			.catch(function (error) {
+				console.log(error.response.data.error);
+				// alert(error.response.data.error);
+			});
+	}, []);
+
+	useEffect(() => getworkers, []);
+
+	useEffect(() => {
+		if (!name || !surname) return;
+		console.log('works');
+		if (typingTimeout) {
+			clearTimeout(typingTimeout);
+		}
+		const newTimeout = setTimeout(() => {
+			axios
+				.get('http://localhost:8000/api/workers/name', {
+					params: {
+						name: name,
+						surname: surname,
+					},
+				})
+				.then(function (response) {
+					console.log(response.data);
+					// setRolesArray(response.data);
+					setUsername(response.data.generatedUsername);
+				})
+				.catch(function (error) {
+					console.log(error.response);
+					// alert(error.response.data.error);
+				});
+		}, 500);
+		setTypingTimeout(newTimeout);
+	}, [name, surname]);
+
+	const showAddWorker = () => {
+		setName('');
+		setSurname('');
+		setEmail('');
+		setRole(0);
+		setuserId('');
+		setEdit(false);
+		setPopUpSeen(true);
+	};
+
+	const showEditWorker = (editUsername, editEmail, editRole, editUserId) => {
+		setUsername(editUsername);
+		setEmail(editEmail);
+		setRole(editRole);
+		setuserId(editUserId);
+		setEdit(true);
+		setPopUpSeen(true);
+	};
+
+	function submit(e) {
+		e.preventDefault();
+		axios
+			.post(link, {
+				name: username,
+				email: email,
+				roles_id: role,
+				appId: warehouseId,
+			})
+			.then(function (response) {
+				console.log(response.data);
+				setPopUpSeen(false);
+				getworkers();
+			})
+			.catch(function (error) {
+				console.log(error.response);
+			});
+	}
+
+	const deleteWorker = id => {
+		axios
+			.delete('http://localhost:8000/api/user/' + id)
+			.then(() => {
+				getworkers();
+			})
+			.catch(response => {
+				console.error(response.data);
+			});
+	};
+
 	return (
 		<div className={css.employees}>
 			<div className={css.top}>
 				<div className={css.search}>
-					<input type='text' placeholder='Search' />
+					<input
+						type='text'
+						value={search}
+						onChange={e => setSearch(e.target.value)}
+						placeholder='Search'
+					/>
 					<MagnifyingGlass size={32} color='#ffffff' />
 				</div>
-				<button>
+				<button onClick={showAddWorker}>
 					Add worker <Plus size={32} color='#ffffff' />
 				</button>
 			</div>
 			<div className={css.workers}>
-				<div>
-					<h3 className={css.number}>1.</h3>
-					<div className={css.bar}></div>
-					<p>John Doe</p>
-					<div className={css.bar}></div>
-					<small>role</small>
-					<div className={css.bar}></div>
-					<div className={[css.bar, css.left].join(' ')}></div>
-					<button>
-						<PencilLine size={'1.5rem'} color='#ffffff' />
-					</button>
-					<button>
-						<Eraser size={'1.5rem'} color='#ffffff' />
-					</button>
-				</div>
-				<div>
-					<h3 className={css.number}>1.</h3>
-					<div className={css.bar}></div>
-					<p>John Doe</p>
-					<div className={css.bar}></div>
-					<small>role</small>
-					<div className={css.bar}></div>
-					<div className={[css.bar, css.left].join(' ')}></div>
-					<button>
-						<PencilLine size={'1.5rem'} color='#ffffff' />
-					</button>
-					<button>
-						<Eraser size={'1.5rem'} color='#ffffff' />
-					</button>
-				</div>
-				<div>
-					<h3 className={css.number}>1.</h3>
-					<div className={css.bar}></div>
-					<p>John Doe</p>
-					<div className={css.bar}></div>
-					<small>role</small>
-					<div className={css.bar}></div>
-					<div className={[css.bar, css.left].join(' ')}></div>
-					<button>
-						<PencilLine size={'1.5rem'} color='#ffffff' />
-					</button>
-					<button>
-						<Eraser size={'1.5rem'} color='#ffffff' />
-					</button>
-				</div>
-				<div>
-					<h3 className={css.number}>1.</h3>
-					<div className={css.bar}></div>
-					<p>John Doe</p>
-					<div className={css.bar}></div>
-					<small>role</small>
-					<div className={css.bar}></div>
-					<div className={[css.bar, css.left].join(' ')}></div>
-					<button>
-						<PencilLine size={'1.5rem'} color='#ffffff' />
-					</button>
-					<button>
-						<Eraser size={'1.5rem'} color='#ffffff' />
-					</button>
-				</div>
-				<div>
-					<h3 className={css.number}>1.</h3>
-					<div className={css.bar}></div>
-					<p>John Doe</p>
-					<div className={css.bar}></div>
-					<small>role</small>
-					<div className={css.bar}></div>
-					<div className={[css.bar, css.left].join(' ')}></div>
-					<button>
-						<PencilLine size={'1.5rem'} color='#ffffff' />
-					</button>
-					<button>
-						<Eraser size={'1.5rem'} color='#ffffff' />
-					</button>
-				</div>
+				<h3>Workers:</h3>
+				{workers
+					.filter(worker => {
+						if (!search) return true;
+
+						console.log(
+							worker.name.substr(0, search.length).toLowerCase(),
+							search.toLowerCase(),
+							stringSimilarity(
+								worker.name.substr(0, search.length).toLowerCase(),
+								search.toLowerCase()
+							)
+						);
+						if (worker.user_id.toString() == search) return true;
+						if (
+							stringSimilarity(
+								worker.name.substr(0, search.length).toLowerCase(),
+								search.toLowerCase()
+							) >= 0.5
+						)
+							return true;
+						if (
+							stringSimilarity(
+								worker.email.substr(0, search.length).toLowerCase(),
+								search.toLowerCase()
+							) >= 0.5
+						)
+							return true;
+						if (
+							stringSimilarity(
+								worker.RoleName.substr(0, search.length).toLowerCase(),
+								search.toLowerCase()
+							) >= 0.5
+						)
+							return true;
+						// if(stringSimilarity(new String(worker.user_id), search) > 0.6) return true;
+					})
+					.map(worker => (
+						<div key={worker.user_id}>
+							<h3 className={css.number}>{worker.user_id}.</h3>
+							<div className={css.bar}></div>
+							<p>{worker.name}</p>
+							<div className={css.bar}></div>
+							<small>{worker.RoleName}</small>
+							<div className={css.bar}></div>
+							<div className={[css.bar, css.left].join(' ')}></div>
+							<button
+								onClick={() =>
+									showEditWorker(
+										worker.name,
+										worker.email,
+										worker.roles_id,
+										worker.user_id
+									)
+								}>
+								<PencilLine size={'1.5rem'} color='#ffffff' />
+							</button>
+							<button
+								className={css.delete}
+								onClick={() => deleteWorker(worker.user_id)}>
+								<Eraser size={'1.5rem'} color='#ffffff' />
+							</button>
+						</div>
+					))}
 			</div>
+			<form
+				onSubmit={submit}
+				className={css.workerOperation + ' ' + (popUpSeen ? '' : 'hidden')}>
+				<button type='button' onClick={() => setPopUpSeen(false)}>
+					<X size={24} color='#ffffff' />
+				</button>
+				{edit ? <h3>Edit worker</h3> : <h3>Add worker</h3>}
+				{edit ? null : (
+					<>
+						<label>
+							Name:
+							<input
+								type='text'
+								value={name}
+								onChange={e => setName(e.target.value)}
+							/>
+						</label>
+						<label>
+							Surname:
+							<input
+								type='text'
+								value={surname}
+								onChange={e => setSurname(e.target.value)}
+							/>
+						</label>
+					</>
+				)}
+				{edit ? (
+					<label>
+						Username:
+						<input
+							type='text'
+							value={username}
+							onChange={e => setUsername(e.target.value)}
+						/>
+					</label>
+				) : (
+					<label>
+						Auto-generated username:
+						<input type='text' disabled value={username} />
+					</label>
+				)}
+				<label>
+					Email:
+					<input type='email' value={email} onChange={e => setEmail(e.target.value)} />
+				</label>
+				<label>
+					Role:
+					<select name='' id='' value={role} onChange={e => setRole(e.target.value)}>
+						<option value='0' hidden>
+							Choose role
+						</option>
+						{rolesArray.map(role => (
+							<option key={role.id} value={role.id}>
+								{role.roleName}
+							</option>
+						))}
+					</select>
+				</label>
+				<input type='submit' value={edit ? 'Update' : 'Add'} />
+			</form>
 		</div>
 	);
 };
@@ -186,7 +360,7 @@ const WarehouseSettings = () => {
 					{ headers: { Authorization: `Bearer ${Cookies.get('token')}` } }
 				);
 
-				console.log(response);
+				// console.log(response);
 				setName(response.data.data.name);
 				setDescription(response.data.data.description);
 				setLoading(false);
@@ -223,8 +397,7 @@ const WarehouseSettings = () => {
 						<IdentificationCard size={32} color='#ffffff' /> roles
 					</CustomNavLink>
 					<CustomNavLink to='categories'>
-						<IdentificationCard size={32} color='#ffffff' />
-						categories
+						<SquareHalf size={32} color='#ffffff' /> categories
 					</CustomNavLink>
 				</div>
 				<div>

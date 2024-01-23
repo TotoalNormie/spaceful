@@ -27,7 +27,7 @@ const Sidebar = ({ children, seen }) => {
 			const newHeight = Math.floor(window.innerHeight - rect.top);
 			setHeight(newHeight);
 			setStick(Math.floor(rect.top));
-			// console.log('setStick: ',Math.ceil(rect.top));
+			console.log('setStick: ',Math.ceil(rect.top));
 			// console.log(rect);
 		}
 	}, [navElement, isSeen]);

@@ -36,4 +36,5 @@ header {
 	cursor: pointer;
 	padding: 0;
 	aspect-ratio: 1 / 1;
+	display: grid;
 }

@@ -3,7 +3,7 @@ nav {
 	/* left: 100%; */
 	position: absolute;
 	height: 100%;
-	box-shadow: 0 0 1rem .5rem rgba(0, 0, 0, 0.186);
+	box-shadow: 0 0 1rem 0.5rem rgba(0, 0, 0, 0.186);
 	top: 0;
 	right: 0;
 	display: none;
