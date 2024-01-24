@@ -20,6 +20,7 @@ import WarehouseWrapper from './components/WarehouseWrapper';
 import WarehouseReport from './components/WarehouseReport';
 import ProductsReport from './components/ProductsReport';
 import WarehouseSettings from './components/warehouseSettings';
+import ItemSearch from './components/ItemSearch';
 import ForgorPass from './components/ForgorPass';
 import axios from 'axios';
 
@@ -85,6 +86,7 @@ function App() {
 										<Route path='products' element={<ProductsReport />} />
 									</Route>
 									<Route path='productsearch' element={<ProductSearch />} />
+									<Route path='itemsearch' element={<ItemSearch />} />
 									<Route path='settings/*' element={<WarehouseSettings />} />
 								</Route>,
 								<Route

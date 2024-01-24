@@ -35,20 +35,17 @@ body {
 }
 
 .ProductBox {
-    flex-direction: row;
-    /* width: 18rem; */
-    /* height: 13rem; */
+    display: flex;
+    flex-direction: column;
     background: #393939;
     opacity: 80%;
     margin: 10px;
     padding: 10px;
-
-
 }
 
 .ProductList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
 
 @media only screen and (max-width: 600px) {
@@ -74,27 +71,73 @@ body {
     
 }
 
+.wrapper3 {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    text-align: center;
+}
+
 img {
     /* display: flex; */
     width: 100%;
     
 }
 
+.image {
+    width: 30%;
+}
+
 .FilterHeader {
 background-color: #4A55A2;
-opacity: 80%;
+/* opacity: 80%; */
 width: 100%;
-
-
+text-align: center;
 }
 
 .FilterBox {
-    display:flex;
-    width: 80%;
+    display: none;
+    position: absolute;
+    background-color: #545660;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    min-width: 30rem;
+}
+
+.showFilters {
+    display:grid;
+}
+
+p {
+    color: white;
 }
 
 .Filters {
+    display: flex;
     background-color: #545660;
-    opacity: 80%;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    /* opacity: 80%; */
+    padding-inline: 15px;
     width: 100%;
+}
+
+.NotFound {
+    display: none;
+    margin: 10px;
+    border-radius: 5px 5px 30px 30px;
+    flex-direction: column;
+    background: #393939;
+    width: 100%;
+    height: 15%;
+    text-align: center;
+    padding-top: 40px;
+    align-items: center;
+    
+}
+
+.ShowNotFound {
+    display: flex
 }

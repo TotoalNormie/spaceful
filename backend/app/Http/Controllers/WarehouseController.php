@@ -61,12 +61,15 @@ class WarehouseController extends Controller
         $warehouseId = warehouse_app::where('user_id', $token->tokenable_id)->select('id')->first();
         return response()->json([$warehouseId->id, $role->roleName]);
     }
-  
-    public function getWarehouse($id){
 
+    public function getWarehouse($id, Warehouse $warehouse)
+
+    {
+            // $items = Warehouse::where('warehouse_app_id', $id)->get();
+            $items = DB::table('warehouses')->join('products', 'warehouses.products_id', '=', 'products.id')->select('*')->where('warehouses.warehouse_app_id', $id)->get();
         return response()->json([
             'success' => 'you did it :3',
-            'id' => $id
+            'data' => $items
         ]);
     }
 
