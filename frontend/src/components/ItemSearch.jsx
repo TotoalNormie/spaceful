@@ -54,6 +54,7 @@ const ItemSearch = () => {
         <div className="wrapper2">
           <img src={products.img} alt="" />
           <p>Price: {products.price}</p>
+          <p>Shelf: {products.shelfId}</p>
         </div>
         <div className="wrapper3">
           <p>

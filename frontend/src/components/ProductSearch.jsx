@@ -33,11 +33,11 @@ const ProductSearch = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/warehouse/" + warehouseId)
+      .get("http://localhost:8000/api/products/" + warehouseId)
       .then(function (response) {
         //success
-        console.log(response.data);
-        setProductArray(response.data.data);
+        console.log(response);
+        setProductArray(response.data);
       })
       .catch(function (error) {
         //fail
@@ -47,7 +47,9 @@ const ProductSearch = () => {
 
   const listProducts = productArray
     .filter((products) => {
-      return search.toLowerCase() === '' ? products : products.name.toLowerCase().includes(search);
+      return search.toLowerCase() === ""
+        ? products
+        : products.name.toLowerCase().includes(search);
     })
     .map((products) => (
       <div className="ProductBox">
@@ -58,9 +60,22 @@ const ProductSearch = () => {
         <div className="wrapper2">
           <img src={products.img} alt="" />
         </div>
+
         <div className="wrapper3">
-          <p>Shelf: {products.shelfId}</p>
-          <p>In stock: {products.amount}</p>
+          <p>Price: {products.price}</p>
+          <p>Weight: {products.weight}</p>
+        </div>
+        <div className="wrapper3">
+          <p>
+            Supplier:
+            {products.supplier}
+          </p>
+        </div>
+        <div className="description">
+          <p>
+            Supplier Description:
+            {products.supplierDescription}
+          </p>
         </div>
       </div>
     ));

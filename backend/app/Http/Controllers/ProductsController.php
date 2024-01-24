@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\DB;
 class ProductsController extends Controller
 {
     //
-    function show(){
-        $products = Products::all();
+    function show($id){
+        $products = Products::all()->where('warehouse_app_id', $id);
+        
         return response()->json($products);
     }
 
