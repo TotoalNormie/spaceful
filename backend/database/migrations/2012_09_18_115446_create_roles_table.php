@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('itemsearch')->default(true);
             $table->boolean('productsearch')->default(true);
             $table->boolean('orders')->default(true);
+            $table->boolean('settings')->default(true);
             $table->timestamps();
         });
         

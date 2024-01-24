@@ -19,8 +19,7 @@ const WarehouseApp = () => {
 					`http://localhost:8000/api/warehouse-app/${warehouseId}`,
 					{ headers: { Authorization: `Bearer ${Cookies.get('token')}` } }
 				);
-                
-                console.log(response);
+
 				setName(response.data.data.name);
 				setDescription(response.data.data.description);
 				setLoading(false);
@@ -44,12 +43,13 @@ const WarehouseApp = () => {
 	}
 
 	return (
-		<div>
-			<p>Warehouse ID: {warehouseId}</p>
-			<h1>
-				<Warehouse /> {name}
-			</h1>
-			<p>{description}</p>
+		<div style={{ display: 'flex', justifyContent: 'center' }}>
+			<div>
+				<h1>
+					<Warehouse /> {name}
+				</h1>
+				<p>{description}</p>
+			</div>
 		</div>
 	);
 };

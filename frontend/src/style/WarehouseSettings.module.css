@@ -124,6 +124,7 @@
 
 .workers {
 	display: grid;
+	overflow-x: scroll;
 	& > div {
 		padding: 1rem 1.77778rem;
 		display: flex;
@@ -165,6 +166,7 @@
 	display: flex;
 	padding: 2.77778rem 1.77778rem 1.77778rem 1.77778rem;
 	align-items: stretch;
+	flex-direction: column;
 	gap: 1.77778rem;
 	position: absolute;
 	top: 50%;
@@ -226,8 +228,5 @@
 	}
 	.top {
 		grid-template-columns: auto;
-	}
-	.workers {
-		overflow-x: scroll;
 	}
 }

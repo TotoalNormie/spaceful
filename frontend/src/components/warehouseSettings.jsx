@@ -250,6 +250,8 @@ const Employees = () => {
 							<div className={css.bar}></div>
 							<p>{worker.name}</p>
 							<div className={css.bar}></div>
+							<p>{worker.email}</p>
+							<div className={css.bar}></div>
 							<small>{worker.RoleName}</small>
 							<div className={css.bar}></div>
 							<div className={[css.bar, css.left].join(' ')}></div>

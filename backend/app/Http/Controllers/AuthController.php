@@ -226,18 +226,20 @@ class AuthController extends Controller
         }
 
         $user_id = $token->tokenable_id;
-        $user = User::find($user_id)->first();
+        $user = User::findOrFail($user_id);
 
-        if (!$user)
-            return response()->json(['error' => 'user not found'], 500);
-
+        // echo $user->isWorker;
+        
+        
         if (!$user->isWorker)
-            return response()->json($user);
-
+        return response()->json($user);
+    
+        // echo $user_id;
         $data = DB::table('users')
             ->join('warehouse_workers', 'warehouse_workers.user_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->join('roles', 'roles.id', '=', 'users.roles_id')
             ->where('users.id', $user_id)
+            ->select('users.*', 'roles.*', 'warehouse_workers.warehouse_app_id')
             ->first();
 
         return response()->json($data);

@@ -24,6 +24,8 @@ class RoleSeeder extends Seeder
             'productsearch' => true,
             'orders' => true,
             'reports' => true,
+            'settings' => true,
+
         ]);
         DB::table('roles')->insert([
             'roleName' => 'Shelf Sorter',
@@ -33,6 +35,7 @@ class RoleSeeder extends Seeder
             'productsearch' => false,
             'orders' => false,
             'reports' => false,
+            'settings' => false,
         ]);
         DB::table('roles')->insert([
             'roleName' => 'Warehouse Worker',
@@ -42,7 +45,7 @@ class RoleSeeder extends Seeder
             'productsearch' => true,
             'orders' => true,
             'reports' => true,
-
+            'settings' => false,
         ]);
         DB::table('users')->insert([
             'name' => 'amog',

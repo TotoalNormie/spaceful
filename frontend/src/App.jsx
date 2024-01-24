@@ -1,5 +1,5 @@
 import { BrowserRouter, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/main.css';
 import Home from './components/Home';
 import Header from './components/Header';
@@ -21,6 +21,7 @@ import WarehouseReport from './components/WarehouseReport';
 import ProductsReport from './components/ProductsReport';
 import WarehouseSettings from './components/warehouseSettings';
 import ForgorPass from './components/ForgorPass';
+import axios from 'axios';
 
 const WarehouseCheck = ({ children }) => {
 	const location = useLocation();
@@ -34,21 +35,34 @@ const WarehouseCheck = ({ children }) => {
 function App() {
 	const isLoggedIn = Boolean(Cookies.get('token'));
 	const [sidebarSeen, setSidebarSeen] = useState(false);
+	const [userData, setUserData] = useState(null);
 
 	const toggleSidebar = () => {
 		setSidebarSeen(!sidebarSeen);
 	};
+
+	useEffect(() => {
+		axios
+			.get('http://localhost:8000/api/user/info', {
+				headers: { Authorization: `Bearer ${Cookies.get('token')}` },
+			})
+			.then(response => {
+				setUserData(response.data);
+			})
+			.catch(response => {
+				console.error(response.data);
+			});
+	}, []);
+
+	// if(!userData) return null;
+
 	return (
 		<BrowserRouter>
 			<Header hamburger={toggleSidebar} />
 			<main>
 				<Routes>
-					{/* atskaites */}
-					<Route path='/reports/warehouse' element={<WarehouseReport />} />
-					<Route path='/reports/products' element={<ProductsReport />} />
-
 					<Route path='/forgor' element={<ForgorPass />} />
-					<Route path='/' element={<Home />} />
+					<Route path='/' element={userData?.isWorker ? <Navigate replace to={'/warehouse/'+userData?.warehouse_app_id} /> :<Home />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
 					{/* <Route path='/addnewproduct' element={<AddNewProduct />} /> */}
@@ -60,16 +74,29 @@ function App() {
 						? [
 								<Route
 									path='/warehouse/:warehouseId/*'
-									element={<WarehouseWrapper seen={sidebarSeen} />}>
+									element={<WarehouseWrapper seen={sidebarSeen} userInfo={userData} />}>
 									<Route index element={<WarehouseApp />} />
 									<Route path='main' element={<WarehouseApp />} />
 									<Route path='addnewproduct' element={<AddNewProduct />} />
 									<Route path='addtowarehouse' element={<AddToWarehouse />} />
-									<Route path='reports' element={<Reports />} />
+									<Route path='reports/*'>
+										<Route index element={<Reports />} />
+										<Route path='warehouse' element={<WarehouseReport />} />
+										<Route path='products' element={<ProductsReport />} />
+									</Route>
 									<Route path='productsearch' element={<ProductSearch />} />
 									<Route path='settings/*' element={<WarehouseSettings />} />
 								</Route>,
-								<Route path='/createwarehouse' element={<CreateWarehouse />} />,
+								<Route
+									path='/createwarehouse'
+									element={
+										userData?.isWorker ? (
+											<Navigate replace to='/login' />
+										) : (
+											<CreateWarehouse />
+										)
+									}
+								/>,
 								<Route exact path='/editprofile' element={<EditProfile />} />,
 						  ]
 						: [
@@ -89,7 +116,7 @@ function App() {
 					<Route path='*' element={<Error404 />} />
 				</Routes>
 				<WarehouseCheck>
-					<Sidebar seen={sidebarSeen}></Sidebar>
+					<Sidebar seen={sidebarSeen} userInfo={userData}></Sidebar>
 				</WarehouseCheck>
 			</main>
 		</BrowserRouter>
