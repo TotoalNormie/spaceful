@@ -37,9 +37,7 @@ function App() {
 	const isLoggedIn = Boolean(Cookies.get('token'));
 	const [sidebarSeen, setSidebarSeen] = useState(false);
 	const [userData, setUserData] = useState(null);
-
-	console.log(isLoggedIn, Cookies.get('token'));
-
+	console.log(userData);
 	const toggleSidebar = () => {
 		setSidebarSeen(!sidebarSeen);
 	};
@@ -66,7 +64,8 @@ function App() {
 			<main>
 				<Routes>
 					<Route path='/forgor' element={<ForgorPass />} />
-					<Route path='/' element={userData?.isWorker ? <Navigate replace to={'/warehouse/'+userData?.warehouse_app_id} /> :<Home />} />
+					{/* { console.log(userData?.isWorker)} */}
+					<Route path='/' element={userData?.isWorker ? <Navigate replace to={'/warehouse/'+userData?.warehouse_app_id} /> : <Home />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
 					{/* <Route path='/addnewproduct' element={<AddNewProduct />} /> */}
