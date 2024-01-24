@@ -3,11 +3,10 @@ import "../style/ProductSearchungus.css";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const ProductSearch = () => {
+const ItemSearch = () => {
   const { warehouseId } = useParams();
   console.log(warehouseId);
   const [search, setSearch] = useState("");
-  console.log(search);
   const [showFilter, setShowFilters] = useState(false);
   let filterClass;
   if (showFilter) {
@@ -26,18 +25,13 @@ const ProductSearch = () => {
 
   const [productArray, setProductArray] = useState([]);
 
-  let neverFound = "";
-  if (productArray.length == 0) {
-    neverFound = "ShowNotFound";
-  }
-
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/products/" + warehouseId)
+      .get("http://localhost:8000/api/warehouse/" + warehouseId)
       .then(function (response) {
         //success
-        console.log(response);
-        setProductArray(response.data);
+        console.log(response.data);
+        setProductArray(response.data.data);
       })
       .catch(function (error) {
         //fail
@@ -59,19 +53,14 @@ const ProductSearch = () => {
         </div>
         <div className="wrapper2">
           <img src={products.img} alt="" />
-        </div>
-
-        <div className="wrapper3">
           <p>Price: {products.price}</p>
-          <p>Weight: {products.weight}</p>
+          <p>Shelf: {products.shelfId}</p>
         </div>
         <div className="wrapper3">
           <p>
             Supplier:
             {products.supplier}
           </p>
-        </div>
-        <div className="description">
           <p>
             Supplier Description:
             {products.supplierDescription}
@@ -121,16 +110,8 @@ const ProductSearch = () => {
           <input type="checkbox"></input>
         </div>
       </div>
-
-      <div className={"NotFound " + neverFound}>
-        <img
-          className="image"
-          src="https://cdn.discordapp.com/attachments/1158383864197157018/1199266019328401479/skull-75-256.png?ex=65c1ea84&is=65af7584&hm=27521eec766011082aea66ce112cda5337ed8cc24ec1ad10d4da1e7727203c6c&"
-        ></img>
-        <h1>No results found...</h1>
-      </div>
     </div>
   );
 };
 
-export default ProductSearch;
+export default ItemSearch;

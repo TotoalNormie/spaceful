@@ -15,7 +15,7 @@ class OrdersController extends Controller
             'type' => ['required', 'string', 'min:3', 'max:4'],
             'supplier' => ['required', 'string', 'min:1', 'max:255'],
             'status' => ['required', 'int'],
-            'amount' => ['required', 'numeric'],
+            'amount' => ['required', 'numeric', 'min:1'],
         ]);
         if ($validator->fails()) {
             return response()->json([

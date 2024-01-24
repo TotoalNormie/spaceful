@@ -15,6 +15,7 @@ use Dotenv\Validator;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Support\Carbon;
 
 class WarehouseController extends Controller
 {
@@ -60,12 +61,15 @@ class WarehouseController extends Controller
         $warehouseId = warehouse_app::where('user_id', $token->tokenable_id)->select('id')->first();
         return response()->json([$warehouseId->id, $role->roleName]);
     }
-  
-    public function getWarehouse($id){
 
+    public function getWarehouse($id, Warehouse $warehouse)
+
+    {
+            // $items = Warehouse::where('warehouse_app_id', $id)->get();
+            $items = DB::table('warehouses')->join('products', 'warehouses.products_id', '=', 'products.id')->select('*')->where('warehouses.warehouse_app_id', $id)->get();
         return response()->json([
             'success' => 'you did it :3',
-            'id' => $id
+            'data' => $items
         ]);
     }
 
@@ -77,7 +81,7 @@ class WarehouseController extends Controller
             'shelfId' => 'required|string',
             'amount' => 'required|integer',
             'products_id' => 'required|integer',
-            'date' => 'required|date',
+            // 'date' => 'required|date',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -85,14 +89,16 @@ class WarehouseController extends Controller
                 'error' => $validator->errors()->toArray()
             ], 422);
         }
+        // return var_dump($id);
+        // "SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '[object Object]' for column `spaceful`.`warehouses`.`warehouse_app_id` at row 1 (Connection: mysql, SQL: insert into `warehouses` (`products_id`, `warehouse_app_id`, `shelfId`, `amount`, `date`, `updated_at`, `created_at`) values (1, [object Object], A1, 2, 2024-01-24 06:51:37, 2024-01-24 06:51:37, 2024-01-24 06:51:37))"
 
         $warehouse->products_id = $request->product;
         $warehouse->warehouse_app_id = $id;
         $warehouse->shelfId = $request->shelfId;
         $warehouse->amount = $request->amount;
         $warehouse->products_id = $request->products_id;
-        $warehouse->date = $request->date;
-        echo '\n';
+        // $warehouse->date = strtotime($request->date);
+        $warehouse->date = Carbon::now();
         // echo $warehouse->date;
 
 
