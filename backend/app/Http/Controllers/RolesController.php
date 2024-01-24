@@ -28,4 +28,9 @@ class RolesController extends Controller
             return response()->json(['error' => 'Fill all parameters.']);
         }
     }
+
+    function get() {
+        $roles = Roles::all();
+        return response()->json($roles);
+    }
 }

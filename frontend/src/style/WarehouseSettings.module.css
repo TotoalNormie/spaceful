@@ -5,7 +5,7 @@
 	height: 100%;
 	padding: 4rem 2rem;
 	margin-inline: auto;
-	width: fit-content;
+	max-width: 70rem;
 	& h2 {
 		margin: 0;
 	}
@@ -18,7 +18,7 @@
 		display: flex;
 		flex-direction: column;
 		padding: 0.5rem 1rem;
-		border-right: 1px solid var(--gray, #505050);
+		border-right: 1px solid var(--light-gray, #505050);
 		& a {
 			display: flex;
 			padding: 0.5rem;
@@ -99,7 +99,7 @@
 			width: 100%;
 			display: flex;
 			width: 100%;
-			border-radius: .25rem;
+			border-radius: 0.25rem;
 			appearance: none;
 			padding: 0.25rem 0.5rem;
 			justify-content: space-between;
@@ -113,6 +113,7 @@
 		font: inherit;
 		display: flex;
 		padding: 0.25rem 0.5rem;
+		justify-content: space-between;
 		align-items: center;
 		gap: 0.55556rem;
 		border-radius: 0.5rem;
@@ -123,13 +124,14 @@
 
 .workers {
 	display: grid;
+	overflow-x: scroll;
 	& > div {
 		padding: 1rem 1.77778rem;
 		display: flex;
 		align-items: center;
 		gap: 10px;
 		border-bottom: 1px solid var(--light-gray, #505050);
-		& h3{
+		& h3 {
 			margin: 0;
 		}
 		& .bar {
@@ -152,6 +154,79 @@
 			align-items: center;
 			border-radius: 0.5rem;
 			background: var(--main-color, #4a55a2);
+			cursor: pointer;
+			&.delete {
+				background-color: var(--red);
+			}
 		}
+	}
+}
+
+.workerOperation {
+	display: flex;
+	padding: 2.77778rem 1.77778rem 1.77778rem 1.77778rem;
+	align-items: stretch;
+	flex-direction: column;
+	gap: 1.77778rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 0.5rem;
+	background: var(--gray, #303030);
+	width: min(100%, 20rem);
+
+	& h3 {
+		text-align: center;
+		margin: 0;
+	}
+
+	& button {
+		position: absolute;
+		background-color: transparent;
+		padding: 0.25rem;
+		border-radius: 50%;
+		top: 0.25rem;
+		right: 0.25rem;
+		display: grid;
+		border: none;
+		transition: background-color 0.3s ease;
+		cursor: pointer;
+		&:hover {
+			background-color: var(--light-gray);
+		}
+	}
+
+	& input[type='submit'] {
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		background: var(--main-color, #4a55a2);
+		border: none;
+		cursor: pointer;
+	}
+
+	& label {
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	& input {
+		width: 100%;
+	}
+}
+
+@media (width < 40rem) {
+	.wrapper {
+		grid-template-columns: auto;
+		& > div:first-of-type {
+			flex-direction: row;
+			overflow-x: scroll;
+			border: none;
+			border-bottom: 1px solid var(--light-gray, #505050);
+			padding-bottom: 1rem;
+		}
+	}
+	.top {
+		grid-template-columns: auto;
 	}
 }

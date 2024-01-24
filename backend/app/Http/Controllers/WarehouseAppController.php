@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\warehouse_app;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -64,17 +65,22 @@ class WarehouseAppController extends Controller
 
         $user_id = $token->tokenable_id;
 
-        $matchedData = $warehouse_app
-            ->where('user_id', $user_id)
-            ->where('id', $id)
-            ->get();
-        if ($matchedData->isEmpty()) {
-            return response()->json(['error' => 'warehouse app does not exist'], 404);
+        $warehouseApp = warehouse_app::find($id); // Assuming you have a WarehouseApp model
+
+        $isOwner = $warehouseApp->where('user_id', $user_id)->count();
+
+        $hasAccess = warehouse_app::join('warehouse_workers', 'warehouse_workers.warehouse_app_id', '=', 'warehouse_apps.id')
+            ->where('warehouse_workers.user_id', $user_id)
+            ->select('warehouse_apps.*')
+            ->count();
+
+        if ($isOwner === 0 && $hasAccess === 0) {
+            return response()->json(['error' => 'Don\'t have access to the warehouse app'], 403);
         }
 
         return response()->json([
             'success' => 'Data retrieved successfully',
-            'data' => $matchedData->first(), // Access the first item in the collection
+            'data' => $warehouseApp,
         ]);
 
     }

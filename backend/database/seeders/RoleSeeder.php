@@ -24,15 +24,18 @@ class RoleSeeder extends Seeder
             'productsearch' => true,
             'orders' => true,
             'reports' => true,
+            'settings' => true,
+
         ]);
         DB::table('roles')->insert([
-            'roleName' => 'Shelve Sorter',
+            'roleName' => 'Shelf Sorter',
             'addnewproduct' => false,
             'addtowarehouse' => true,
             'itemsearch' => true,
             'productsearch' => false,
             'orders' => false,
             'reports' => false,
+            'settings' => false,
         ]);
         DB::table('roles')->insert([
             'roleName' => 'Warehouse Worker',
@@ -42,7 +45,7 @@ class RoleSeeder extends Seeder
             'productsearch' => true,
             'orders' => true,
             'reports' => true,
-
+            'settings' => false,
         ]);
         DB::table('users')->insert([
             'name' => 'amog',
@@ -52,9 +55,9 @@ class RoleSeeder extends Seeder
         ]);
         DB::table('warehouse_apps')->insert([
             'id' => 1,
-            'name' => 'amog',
+            'name' => 'Warehouse 1',
             'user_id' => 1,
-            'description' => 'Fitogus whyy chungbyte?',
+            'description' => 'Warehouse 1 description',
         ]);
         DB::table('categories')->insert([
             'id' => 1,
@@ -118,6 +121,7 @@ class RoleSeeder extends Seeder
         ]);
         DB::table('orders')->insert([
             'products_id' => 1,
+            'warehouse_app_id' => 1,
             'orderType' => 'Buy',
             'supplier' => 'ChungByte Industries Inc.',
             'amount' => 11,
@@ -126,6 +130,7 @@ class RoleSeeder extends Seeder
         ]);
         DB::table('orders')->insert([
             'products_id' => 1,
+            'warehouse_app_id' => 1,
             'orderType' => 'Sell',
             'supplier' => 'ChungByte Industries Inc.',
             'amount' => 5,
@@ -134,6 +139,7 @@ class RoleSeeder extends Seeder
         ]);
         DB::table('orders')->insert([
             'products_id' => 2,
+            'warehouse_app_id' => 1,
             'orderType' => 'Sell',
             'supplier' => 'ChungByte Industries Inc.',
             'amount' => 7,
@@ -142,6 +148,7 @@ class RoleSeeder extends Seeder
         ]);
         DB::table('orders')->insert([
             'products_id' => 3,
+            'warehouse_app_id' => 1,
             'orderType' => 'Buy',
             'supplier' => 'ChungByte Industries Inc.',
             'amount' => 27,
@@ -150,6 +157,7 @@ class RoleSeeder extends Seeder
         ]);
         DB::table('orders')->insert([
             'products_id' => 1,
+            'warehouse_app_id' => 1,
             'orderType' => 'Sell',
             'supplier' => 'ChungByte Industries Inc.',
             'amount' => 71,

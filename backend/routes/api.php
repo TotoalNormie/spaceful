@@ -8,6 +8,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RolesUrlsController;
 use App\Http\Controllers\WarehouseAppController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\WarehouseWorkersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::post('/warehouse/{id}/addtowarehouse', [WarehouseController::class, 'crea
 Route::post('/user', [AuthController::class, 'create']);
 Route::delete('/user/{id}', [AuthController::class, 'destroy']);
 Route::get('/status', [AuthController::class, 'status']);
+Route::get('/user/info', [AuthController::class, 'getUserData']);
 // Route::get('/user/warehouses/', [AuthController::class, 'getWarehouses']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
@@ -56,9 +58,16 @@ Route::get('/warehouse-app/{id}', [WarehouseAppController::class, 'get']);
 // warehouse workers
 
 Route::get('/workers/name', [AuthController::class, 'generateName']);
-Route::post('/workers/{id}', [AuthController::class, 'generateName']);
+Route::post('/warehouse/workers/add', [AuthController::class, 'createWorker']);
+Route::post('/warehouse/workers/update/{user_id}', [AuthController::class, 'updateWorker']);
 
-// warehouse workers
+// get roles
+Route::get('/roles', [RolesController::class, 'get']);
+
+Route::get('/warehouse/workers/{id}', [WarehouseWorkersController::class, 'get']);
+
+
+
 // reports
 Route::get('/warehouse/report/', [WarehouseController::class, 'report']);
 Route::get('/products/report/', [ProductsController::class, 'report']);
@@ -66,9 +75,8 @@ Route::get('/products/report/', [ProductsController::class, 'report']);
 Route::get('/categories/{id}', [CategoriesController::class, 'select']);
 Route::get('/products/{id}', [ProductsController::class, 'select']);
 
-
 Route::get('/warehouse/legit/', [WarehouseController::class, 'getLegitNumbers']);
-Route::get('/fitogus/', [WarehouseController::class, 'fitogusCharts']);
+Route::get('/fitogus', [WarehouseController::class, 'fitogusCharts']);
 // sito apaksa nekustinat savadak warehouse reports neies
 Route::get('/warehouse/{id}', [WarehouseController::class, 'getWarehouse']);
 
