@@ -39,17 +39,17 @@ const AddToWarehouse = () => {
 
     const insert = e => {
         e.preventDefault();
+        console.log(date);
         const result = axios
             .post(
-                'http://localhost:8000/api/warehouse/'+{warehouseId}+'/addtowarehouse',
+                'http://localhost:8000/api/warehouse/'+warehouseId+'/addtowarehouse',
                 {
-                    params:{
                         product:product,
                         amount:amount,
                         shelfId:shelfId,
                         products_id:product,
                         date:date,
-                    }
+                    
                 },
             )
             .then(function (response) {
