@@ -42,7 +42,7 @@ const CreateWarehouse = () => {
 	return (
 		<div className={css.wrapper}>
 			<div className={css.warehouse}>
-				<h1>Create warehouse</h1>
+				<h1>Create Warehouse App</h1>
 				<form className={css.form} onSubmit={create}>
 					<input
 						type='text'

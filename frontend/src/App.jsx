@@ -54,7 +54,7 @@ function App() {
 			});
 	}, []);
 
-	// if(!userData) return null;
+	if(!userData) return null;
 
 	return (
 		<BrowserRouter>

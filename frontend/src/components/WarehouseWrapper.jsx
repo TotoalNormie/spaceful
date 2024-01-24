@@ -38,7 +38,11 @@ const WarehouseWrapper = ({ seen, userInfo }) => {
 				{links
 					.filter(
 						link =>
-							info && typeof info === 'object' && link.url in info && info[link.url]
+							(info &&
+								typeof info === 'object' &&
+								link.url in info &&
+								info[link.url]) ||
+							!info?.isWorker
 					)
 					.map(link => (
 						<NavLink to={link.url}>{link.text}</NavLink>
