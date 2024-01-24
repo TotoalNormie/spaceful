@@ -34,7 +34,7 @@ const Sidebar = ({ children, seen, userInfo }) => {
 			// console.log('setStick: ',Math.ceil(rect.top));
 			// console.log(rect);
 		}
-	}, [navElement, isSeen]);
+	}, [navElement, isSeen, userInfo]);
 
 	// useEffect(() =>
 	const noSidebar = ['/login', '/register', '/createwarehouse', '/forgor'];

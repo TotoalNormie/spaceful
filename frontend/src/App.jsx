@@ -38,6 +38,8 @@ function App() {
 	const [sidebarSeen, setSidebarSeen] = useState(false);
 	const [userData, setUserData] = useState(null);
 
+	console.log(isLoggedIn, Cookies.get('token'));
+
 	const toggleSidebar = () => {
 		setSidebarSeen(!sidebarSeen);
 	};
@@ -51,11 +53,12 @@ function App() {
 				setUserData(response.data);
 			})
 			.catch(response => {
-				console.error(response.data);
+				if(response.response.data.error === 'not logged in') 
+				setUserData(false);
 			});
 	}, []);
 
-	// if(!userData) return null;
+	if(userData === null) return null;
 
 	return (
 		<BrowserRouter>

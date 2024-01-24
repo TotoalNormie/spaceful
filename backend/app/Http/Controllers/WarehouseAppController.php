@@ -15,7 +15,6 @@ class WarehouseAppController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'description' => 'string'
         ]);
 
         if ($validator->fails()) {
