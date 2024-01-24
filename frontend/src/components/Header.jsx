@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Header = ({ hamburger }) => {
 	const location = useLocation();
-	const noHeader = ['/login', '/register', '/createwarehouse'];
+	const noHeader = ['/login', '/register', '/createwarehouse', '/forgor'];
 	// console.log(location.pathname);
 	if (noHeader.includes(location.pathname)) return null;
 	return (

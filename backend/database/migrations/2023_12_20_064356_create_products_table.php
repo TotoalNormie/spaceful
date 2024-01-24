@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(warehouse_app::class)->constrained()->cascadeOnDelete();
             // $table->integer('productId');
             $table->decimal('price', 6, 2, true);
-            $table->decimal('weight', 6, 2, true);
+            $table->decimal('weight', 8, 3, true);
             $table->string('supplier');
             $table->string('img');
             $table->string('supplierDescription')->nullable(); 

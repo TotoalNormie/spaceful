@@ -9,10 +9,12 @@ import { User, Lock } from '@phosphor-icons/react/dist/ssr';
 import Cookies from 'js-cookie';
 
 const Login = () => {
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState(undefined);
 	const [usernameError, setusernameError] = useState(false);
-	const [password, setPassword] = useState('');
+	const [password, setPassword] = useState(undefined);
 	const [passError, setpassError] = useState(false);
+	const [axiosError, setAxiosError] = useState(false);
+	const [errMsg, setErrMsg] = useState('');
 	const navigate = useNavigate();
 
 	// Cookies.remove('token');
@@ -27,18 +29,25 @@ const Login = () => {
 	}, [navigate]);
 
 	function login() {
-		if (username == undefined && password == undefined) {
+		if (username == undefined && password == undefined || username == "" && password == "") {
 			setusernameError(true);
 			setpassError(true);
 			return;
+		}else{
+			setusernameError(false);
+			setpassError(false);
 		}
-		if (username == undefined) {
+		if (username == undefined || username == "") {
 			setusernameError(true);
 			return;
+		}else{
+			setusernameError(false);
 		}
-		if (password == undefined) {
+		if (password == undefined || password == "") {
 			setpassError(true);
 			return;
+		}else{
+			setpassError(false);
 		}
 		axios
 			.post('http://localhost:8000/api/login', {
@@ -52,6 +61,8 @@ const Login = () => {
 			})
 			.catch(function (error) {
 				console.log(error.response.data.error);
+				setAxiosError(true);
+				setErrMsg(error.response.data.error);
 				// alert(error.response.data.error);
 			});
 	}
@@ -94,13 +105,15 @@ const Login = () => {
 						</div>
 					</div>
 				</label>
+				{axiosError && <p className={style.error}>{errMsg}</p>}
 				<button onClick={login} className={style.button}>
 					Sign In
 				</button>
 				<img src={logo} className={[style.logo].join(' ')} />
 				<p className={style.redirect}>
-					Don’t have an account? <Link to='/register'>Sign Up here!</Link>
+					Don’t have an account? <Link className={style.link} to='/register'>Sign Up here!</Link>
 				</p>
+				<Link className={style.link} to='/forgor'>Forgot password?💀</Link>
 			</div>
 		</div>
 	);

@@ -30,19 +30,19 @@ const Register = () => {
 		} else {
 			setRepeatError(false);
 		}
-		if (!email) {
+		if (email == undefined || email == "") {
 			setEmailError(true);
 			// return;
 		} else {
 			setEmailError(false);
 		}
-		if (!password) {
+		if (password == undefined || password == "") {
 			setPasswordError(true);
 			// return;
 		} else {
 			setPasswordError(false);
 		}
-		if (!username) {
+		if (username == undefined || username == "") {
 			setUsernameError(true);
 			return;
 		} else {
@@ -75,6 +75,7 @@ const Register = () => {
 				<label>
 					<div className={[style.border_bot, flex.flex_cen].join(' ')}>
 						<User fill='#000000' size='1.5rem' />
+						<div className={[flex.flex_c].join(' ')}>
 						<input
 							type='text'
 							placeholder='Username'
@@ -84,11 +85,13 @@ const Register = () => {
 							className={style.input}
 						/>
 						{userNameError && <p className={style.error}>Username can't be empty.</p>}
+						</div>
 					</div>
 				</label>
 				<label>
 					<div className={[style.border_bot, flex.flex_cen].join(' ')}>
 						<Envelope fill='#000000' size='1.5rem' />
+						<div className={[flex.flex_c].join(' ')}>
 						<input
 							type='email'
 							placeholder='Email'
@@ -98,11 +101,13 @@ const Register = () => {
 							className={style.input}
 						/>
 						{emailError && <p className={style.error}>Email can't be empty.</p>}
+						</div>
 					</div>
 				</label>
 				<label>
 					<div className={[style.border_bot, flex.flex_cen].join(' ')}>
 						<Lock fill='#000000' size='1.5rem' />
+						<div className={[flex.flex_c].join(' ')}>
 						<input
 							type='password'
 							placeholder='Password'
@@ -112,11 +117,13 @@ const Register = () => {
 							className={style.input}
 						/>
 						{passwordError && <p className={style.error}>Password can't be empty.</p>}
+						</div>
 					</div>
 				</label>
 				<label>
 					<div className={[style.border_bot, flex.flex_cen].join(' ')}>
 						<Lock fill='#000000' size='1.5rem' />
+						<div className={[flex.flex_c].join(' ')}>
 						<input
 							type='password'
 							placeholder='Repeat Password'
@@ -125,13 +132,14 @@ const Register = () => {
 							onChange={e => setRepeat(e.target.value)}
 						/>
 						{repeatError && <p className={style.error}>Passwords must match.</p>}
+						</div>
 					</div>
 				</label>
 				<button onClick={register} className={style.button}>
 					Register
 				</button>
 				<p className={style.redirect}>
-					Already have an account? <Link to='/login'>Sign In here!</Link>
+					Already have an account? <Link className={style.link} to='/login'>Sign In here!</Link>
 				</p>
 			</div>
 			<img src={logo} className={[style.logo].join(' ')} />

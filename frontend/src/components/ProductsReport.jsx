@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { useParams } from 'react-router-dom';
 
 const ProductsReport = () => {
-    // let warehouseid = 1;
+    const { warehouseId } = useParams();
     const doc = new jsPDF();
     const [products, setProducts] = useState([]);
     // async function getReport(){

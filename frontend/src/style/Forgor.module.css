@@ -1,0 +1,68 @@
+.bg {
+    background-image: url('../assets/space-bg.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+    height: 100%;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+	padding: 1rem;
+}
+.box {
+    width: min(25rem, 100%);
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 3.5rem;
+}
+.button{
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--main-color);
+    border: none;
+    cursor: pointer;
+}
+.error {
+	font-weight: bolder;
+	color: red;
+	background-color: rgba(255, 0, 0, 0);
+}
+.sucess {
+	font-weight: bolder;
+	color: rgb(51, 207, 69);
+	background-color: rgba(255, 0, 0, 0);
+}
+.input {
+	border: none;
+	color: black;
+	padding: 0.4rem 0.4rem 0 0.4rem;
+	border-radius: 0.1rem;
+	margin: 1rem 0 1rem;
+	outline: none;
+	font-size: 1rem;
+    background-color: rgb(255, 255, 255);
+	/* background-color: transparent; */
+	/* text-align: start; */
+}
+.input::placeholder {
+	color: black;
+	font-weight: 700;
+	font-size: 1rem;
+}
+.border_bot {
+	border-bottom: 1px solid black;
+}
+.title {
+	color: black;
+	font-size: 2.88889rem;
+	font-weight: 900;
+	margin: 0;
+	margin-bottom: 2rem;
+}
+.logo {
+	position: fixed;
+	bottom: 1rem;
+	left: 1rem;
+	width: 3.66667rem;
+	height: 2.38889rem;
+	opacity: 0.65;
+}

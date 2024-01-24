@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Mail\PasswordEmail;
 use App\Models\User;
+use App\Models\WarehouseWorkers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -19,13 +20,19 @@ class AuthController extends Controller
 {
     function create(Request $request, User $user)
     {
-
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'password' => 'required|string',
-            'email' => 'string',
+            'email' => 'string|required',
             'roles_id' => 'integer',
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'error' => $validator->errors()->toArray()
+            ], 422);
+        }
+        $request = (object) $validator->validated();
 
         $found = User::where('name', $request->name)->first();
         if ($found) {
@@ -171,7 +178,10 @@ class AuthController extends Controller
         }
     }
 
-    function getWarehouses(Request $request, User $user)
+
+
+
+    function getWarehouses(Request $request)
     {
         // $foundUser = User::where('name', $request->name)->select('id')->first();
         // $userId = 0;
@@ -216,9 +226,23 @@ class AuthController extends Controller
         }
 
         $user_id = $token->tokenable_id;
-        $data = User::find($user_id);
+        $user = User::findOrFail($user_id);
 
-        return response()->json(['data' => $data]);
+        // echo $user->isWorker;
+        
+        
+        if (!$user->isWorker)
+        return response()->json($user);
+    
+        // echo $user_id;
+        $data = DB::table('users')
+            ->join('warehouse_workers', 'warehouse_workers.user_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'users.roles_id')
+            ->where('users.id', $user_id)
+            ->select('users.*', 'roles.*', 'warehouse_workers.warehouse_app_id')
+            ->first();
+
+        return response()->json($data);
     }
 
     function generateName(Request $request)
@@ -237,23 +261,78 @@ class AuthController extends Controller
 
         $iterator = 0;
         while (true) {
-            $username = $request->name . "_" . $request->surname . ($iterator ?? "");
-            if (!User::where('name', $request->name)->first()) {
+            $username = $request->name . "_" . $request->surname . "_" . ($iterator ?? "");
+            if (!User::where('name', $username)->first()) {
                 return response()->json(['generatedUsername' => $username]);
             }
             $iterator++;
         }
     }
-
-    function createWorker(Request $request, User $user)
+    function passForgor(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string',
+            'email' => 'string|required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'error' => $validator->errors()->toArray()
+            ], 422);
+        }
+        $request = (object) $validator->validated();
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json([
+                'error' => 'User not found'
+            ], 404);
+        }
+        $user->password = Hash::make($request->password);
+        if ($user->save()) {
+            return response()->json([
+                'message' => 'Password changed sucessfuly'
+            ]);
+        }
+        // $token = $user->createToken('Reset Password Token');
+        // return ['token' => $token->plainTextToken];
+    }
+
+    function update(Request $request)
+    {
+        $fullToken = $request->bearerToken();
+        $tokenId = explode("|", $fullToken);
+        $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
+
+        if (!$token) {
+            return response()->json(['error' => 'not logged in'], 500);
+        }
+
+        $user_id = $token->tokenable_id;
+
+        $user = User::find($user_id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($user->save()) {
+            return response()->json(['success' => 'User data edited successfuly!']);
+        } else {
+            return response()->json(['error' => 'Failed to edit user data!']);
+        }
+    }
+
+    function createWorker(Request $request, User $user, WarehouseWorkers $warehouseWorkers)
+    {
+        // print_r($request);
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|string',
             'roles_id' => 'required|integer',
         ]);
-
-        // $user = new User();
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'error' => $validator->errors()->toArray(),
+            ], 422);
+        }
 
         $password = Str::random(12);
 
@@ -263,9 +342,50 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->roles_id = $request->roles_id;
 
-        $passwordEmail = new PasswordEmail($user->username, $user->password);
+        if (!$user->save()) {
+            $errors = $user->getErrors();
+            return response()->json(['error' => $errors], 500);
+        }
+
+        $warehouseWorkersResult = WarehouseWorkersController::create($user->id, $request->appId);
+
+        if (isset($warehouseWorkersResult['error'])) {
+            $user->delete();
+            return response()->json(['error' => $warehouseWorkersResult['error']]);
+        }
+
+        $passwordEmail = new PasswordEmail($request->name, $password);
         Mail::to($user->email)->send($passwordEmail);
 
         return response()->json(['succes' => 'worker account created successfully']);
+    }
+
+    function updateWorker(Request $request, $user_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|string|unique:users,email,' . $user_id,
+            'roles_id' => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'error' => $validator->errors()->toArray(),
+                'id' => $user_id
+            ], 422);
+        }
+
+        $user = User::find($user_id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->roles_id = $request->roles_id;
+
+        if (!$user->save()) {
+            $errors = $user->getErrors();
+            return response()->json(['error' => $errors], 500);
+        }
+
+        return response()->json(['succes' => ':3']);
     }
 }

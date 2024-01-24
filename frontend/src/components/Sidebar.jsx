@@ -4,18 +4,22 @@ import css from '../style/Sidebar.module.css';
 import { useEffect, useRef, useState } from 'react';
 import Logout from '../global/Logout';
 
-const Sidebar = ({ children, seen }) => {
+const Sidebar = ({ children, seen, userInfo }) => {
 	const isLoggedIn = Boolean(Cookies.get('token'));
 	const navElement = useRef(null);
 	const location = useLocation();
 	const [height, setHeight] = useState();
 	const [stick, setStick] = useState();
 	const [isSeen, setIsSeen] = useState(seen);
-	const [width, setWidth] = useState('-100%');
+	const [info, setinfo] = useState(userInfo);
 
 	useEffect(() => {
 		setIsSeen(seen);
 	}, [seen]);
+
+	useEffect(() => {
+		setinfo(userInfo);
+	}, [userInfo]);
 
 	// console.log('isSeen: ', isSeen);
 
@@ -33,9 +37,10 @@ const Sidebar = ({ children, seen }) => {
 	}, [navElement, isSeen]);
 
 	// useEffect(() =>
-	const noHeader = ['/login', '/register', '/createwarehouse'];
+	const noSidebar = ['/login', '/register', '/createwarehouse', '/forgor'];
 	// console.log(location.pathname);
-	if (noHeader.includes(location.pathname)) return null;
+	if (noSidebar.includes(location.pathname)) return null;
+	// console.log(info);
 
 	return (
 		<nav ref={navElement} className={isSeen ? css.seen : null}>
@@ -45,8 +50,9 @@ const Sidebar = ({ children, seen }) => {
 						<div className={css.buttons}>
 							{isLoggedIn ? (
 								<>
-									{/* <NavLink>See warehouses</NavLink> */}
-									<NavLink to='/createwarehouse'>Create warehouse</NavLink>
+									{info?.isWorker ? null : (
+										<NavLink to='/createwarehouse'>Create warehouse</NavLink>
+									)}
 									<NavLink to='/editprofile'>Edit profile</NavLink>
 								</>
 							) : null}

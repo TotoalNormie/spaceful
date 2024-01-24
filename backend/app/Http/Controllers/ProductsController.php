@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\warehouse_app;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class ProductsController extends Controller
 {
     //
+
     function show($id){
         $products = Products::all()->where('warehouse_app_id', $id);
-        
         return response()->json($products);
     }
 
@@ -20,6 +22,15 @@ class ProductsController extends Controller
         $products = DB::table('products')->join('categories', 'products.categories_id', '=', 'categories.id')->select('products.name', 'categories.categoryName', 'products.price', 'products.weight', 'products.supplier')->get();
         // $products = Products::where(1)->join('categories', 'products.categories_id', '=', 'categories.id')->select('products.name', 'categories.categoryName', 'products.price', 'products.weight', 'products.supplier')->get();
         return response()->json($products);
+    }
+
+    function select($id)
+    {
+        $products = Products::where('warehouse_app_id', $id)->get();
+
+        return response()->json(
+            $products
+        );
     }
 
     function create(Request $request){
