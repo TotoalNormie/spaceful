@@ -11,8 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Models\warehouse_app;
+use Dotenv\Validator;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Support\Carbon;
 
 class WarehouseController extends Controller
 {
@@ -70,28 +73,32 @@ class WarehouseController extends Controller
     public function create(Request $request, Warehouse $warehouse, $id)
     {
 
-        $fullToken = $request->bearerToken();
-        $tokenId = explode("|", $fullToken);
-        $token = PersonalAccessToken::where('id', $tokenId[0])->select('tokenable_id')->first();
-        // var_dump($token);
-        if(!$token){
-            return response()->json(['error' => 'not logged in']);
-        }
-
-        $request->validate([
+        $validator = FacadesValidator::make($request->all(), [
             'product' => 'required|string',
-            'quantity' => 'required|integer',
-            'supplier' => 'required|string',
-            'product_id' => 'required|integer',
-            'date' => 'required|date',
+            'shelfId' => 'required|string',
+            'amount' => 'required|integer',
+            'products_id' => 'required|integer',
+            // 'date' => 'required|date',
         ]);
+        if($validator->fails()){
+            return response()->json([
+                'message' => 'Validation failed',
+                'error' => $validator->errors()->toArray()
+            ], 422);
+        }
+        // return var_dump($id);
+        // "SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '[object Object]' for column `spaceful`.`warehouses`.`warehouse_app_id` at row 1 (Connection: mysql, SQL: insert into `warehouses` (`products_id`, `warehouse_app_id`, `shelfId`, `amount`, `date`, `updated_at`, `created_at`) values (1, [object Object], A1, 2, 2024-01-24 06:51:37, 2024-01-24 06:51:37, 2024-01-24 06:51:37))"
 
-        $warehouse->product = $request->product;
-        $warehouse->quantity = $request->quantity;
+        $warehouse->products_id = $request->product;
         $warehouse->warehouse_app_id = $id;
-        $warehouse->product_id = $request->product_id;
-        $warehouse->supplier = $request->supplier;
-        $warehouse->date = $request->date;
+        $warehouse->shelfId = $request->shelfId;
+        $warehouse->amount = $request->amount;
+        $warehouse->products_id = $request->products_id;
+        // $warehouse->date = strtotime($request->date);
+        $warehouse->date = Carbon::now();
+        // echo $warehouse->date;
+
+
 
         if($warehouse->save()){
             return response()->json(['success' => 'Product added to warehouse.']);
